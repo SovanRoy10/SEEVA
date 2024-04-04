@@ -24,6 +24,8 @@ import ErrorPage from './components/Pages/ErrorPage';
 import Layout5 from './components/Layout/Layout5';
 import HomeStyle5 from './components/Pages/HomeStyle5';
 import HomeStyle6 from './components/Pages/HomeStyle6';
+import Login from './components/Pages/Login';
+import Register from './components/Pages/Register';
 
 function App() {
   const { pathname } = useLocation();
@@ -35,6 +37,8 @@ function App() {
     <Routes>
       <Route path="/" element={<Layout />}>
         <Route index element={<Home />} />
+        <Route path="login"  element={<Login />} />
+        <Route path='register' element = {<Register/>}/>
         <Route path="about" element={<About />} />
         <Route path="doctors" element={<Doctors />} />
         <Route path="doctors/:doctorId" element={<DoctorDetails />} />
