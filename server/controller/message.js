@@ -29,7 +29,7 @@ export const sendMessage = catchAsyncErros(async (req, res, next) => {
   let messageDetails = {
     from: process.env.MAIL_USER,
     to: userEmail,
-    subject: `Portfolio Contact Us from ${data.senderEmail}`,
+    subject: `SEEVA message from ${data.senderEmail}`,
     html: `<!DOCTYPE html>
       <html lang="en">
       <head>
