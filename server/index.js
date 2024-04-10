@@ -4,6 +4,7 @@ import connectDB from "./config/connection.js";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import fileUpload from "express-fileupload";
+import morgan from "morgan";
 import authRouter from "./router/auth.js";
 
 // routers
@@ -28,6 +29,7 @@ app.use(
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(morgan("dev"));
 
 // https://www.npmjs.com/package/express-fileupload
 app.use(
