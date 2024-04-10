@@ -8,10 +8,14 @@ import fileUpload from "express-fileupload";
 // routers
 import messageRouter from "./router/messageRouter.js";
 
+// middlewares
+import { errorMiddleware } from "./middlewares/errorMiddleware.js";
+
 const app = express();
 
 const port = process.env.PORT || 4000;
 
+// cors for connecting frontend with backend
 app.use(
   cors({
     origin: [process.env.FORNTEND_URL, process.env.DASHBOARD_URL],
@@ -34,6 +38,10 @@ app.use(
 
 // routes
 app.use("/api/v1/message", messageRouter);
+
+// middlewares
+app.use(errorMiddleware);
+
 
 app.get("/", (req, res) => {
   res.send("Hello World!");

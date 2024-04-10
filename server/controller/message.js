@@ -1,38 +1,36 @@
 import nodemailer from "nodemailer";
 import { Message } from "../models/message.js";
+import { catchAsyncErros } from "../middlewares/catchAsyncErros.js";
+import ErrorHandler from "../middlewares/errorMiddleware.js";
 
-export const sendMessage = async (req, res) => {
-  try {
-    const { firstName, lastName, email, message } = req.body;
-    if (!firstName || !lastName || !email || !message)
-      return res.status(400).json({
-        success: false,
-        message: "Please Fill Full Form",
-      });
+export const sendMessage = catchAsyncErros(async (req, res, next) => {
+  const { firstName, lastName, email, message } = req.body;
+  if (!firstName || !lastName || !email || !message)
+    return next(new ErrorHandler("Please Fill Full Form!", 400));
 
-    await Message.create({ firstName, lastName, email, message });
+  await Message.create({ firstName, lastName, email, message });
 
-    const data = {
-      senderEmail: email,
-      message,
-    };
+  const data = {
+    senderEmail: email,
+    message,
+  };
 
-    const userEmail = "interestinglehmann@ysosirius.com";
-    let config = {
-      host: process.env.MAIL_HOST,
-      auth: {
-        user: process.env.MAIL_USER,
-        pass: process.env.MAIL_PASS,
-      },
-    };
+  const userEmail = "interestinglehmann@ysosirius.com";
+  let config = {
+    host: process.env.MAIL_HOST,
+    auth: {
+      user: process.env.MAIL_USER,
+      pass: process.env.MAIL_PASS,
+    },
+  };
 
-    const transporter = nodemailer.createTransport(config);
+  const transporter = nodemailer.createTransport(config);
 
-    let messageDetails = {
-      from: process.env.MAIL_USER,
-      to: userEmail,
-      subject: `Portfolio Contact Us from ${data.senderEmail}`,
-      html: `<!DOCTYPE html>
+  let messageDetails = {
+    from: process.env.MAIL_USER,
+    to: userEmail,
+    subject: `Portfolio Contact Us from ${data.senderEmail}`,
+    html: `<!DOCTYPE html>
       <html lang="en">
       <head>
           <meta charset="UTF-8">
@@ -43,17 +41,11 @@ export const sendMessage = async (req, res) => {
           ${data.message}
       </body>
       </html>`,
-    };
+  };
 
-    let info = await transporter.sendMail(messageDetails);
+  let info = await transporter.sendMail(messageDetails);
 
-    return res
-      .status(200)
-      .json({ success: true, message: "Mail send successfully" });
-  } catch (error) {
-    console.log(error);
-    return res
-      .status(400)
-      .json({ success: true, message: "There is a Problem" });
-  }
-};
+  return res
+    .status(200)
+    .json({ success: true, message: "Mail send successfully" });
+});
