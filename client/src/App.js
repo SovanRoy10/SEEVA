@@ -1,31 +1,33 @@
-import { Route, Routes, useLocation } from 'react-router-dom';
-import Layout from './components/Layout';
-import Layout2 from './components/Layout/Layout2';
-import Layout3 from './components/Layout/Layout3';
-import Layout4 from './components/Layout/Layout4';
-import Home from './components/Pages/Home';
-import HomeStyle2 from './components/Pages/HomeStyle2';
-import HomeStyle3 from './components/Pages/HomeStyle3';
-import HomeStyle4 from './components/Pages/HomeStyle4';
-import About from './components/Pages/About';
-import Doctors from './components/Pages/Doctors';
-import Blog from './components/Pages/Blog';
-import Appointments from './components/Pages/Appointments';
-import Departments from './components/Pages/Departments';
-import DepartmentDetails from './components/Pages/DepartmentDetails';
-import BlogDetails from './components/Pages/BlogDetails';
-import DoctorDetails from './components/Pages/DoctorDetails';
-import PricingPlan from './components/Pages/PricingPlan';
-import Gallery from './components/Pages/Gallery';
-import Timetable from './components/Pages/Timetable';
-import Contact from './components/Pages/Contact';
-import { useEffect } from 'react';
-import ErrorPage from './components/Pages/ErrorPage';
-import Layout5 from './components/Layout/Layout5';
-import HomeStyle5 from './components/Pages/HomeStyle5';
-import HomeStyle6 from './components/Pages/HomeStyle6';
-import Login from './components/Pages/Login';
-import Register from './components/Pages/Register';
+import { Route, Routes, useLocation } from "react-router-dom";
+import Layout from "./components/Layout";
+import Layout2 from "./components/Layout/Layout2";
+import Layout3 from "./components/Layout/Layout3";
+import Layout4 from "./components/Layout/Layout4";
+import Home from "./components/Pages/Home";
+import HomeStyle2 from "./components/Pages/HomeStyle2";
+import HomeStyle3 from "./components/Pages/HomeStyle3";
+import HomeStyle4 from "./components/Pages/HomeStyle4";
+import About from "./components/Pages/About";
+import Doctors from "./components/Pages/Doctors";
+import Blog from "./components/Pages/Blog";
+import Appointments from "./components/Pages/Appointments";
+import Departments from "./components/Pages/Departments";
+import DepartmentDetails from "./components/Pages/DepartmentDetails";
+import BlogDetails from "./components/Pages/BlogDetails";
+import DoctorDetails from "./components/Pages/DoctorDetails";
+import PricingPlan from "./components/Pages/PricingPlan";
+import Gallery from "./components/Pages/Gallery";
+import Timetable from "./components/Pages/Timetable";
+import Contact from "./components/Pages/Contact";
+import { useEffect } from "react";
+import ErrorPage from "./components/Pages/ErrorPage";
+import Layout5 from "./components/Layout/Layout5";
+import HomeStyle5 from "./components/Pages/HomeStyle5";
+import HomeStyle6 from "./components/Pages/HomeStyle6";
+import Login from "./components/Pages/Login";
+import Register from "./components/Pages/Register";
+import ForgotPassword from "./components/Pages/ForgotPassword";
+import ResetPassword from "./components/Pages/ResetPassword";
 
 function App() {
   const { pathname } = useLocation();
@@ -37,8 +39,11 @@ function App() {
     <Routes>
       <Route path="/" element={<Layout />}>
         <Route index element={<Home />} />
-        <Route path="login"  element={<Login />} />
-        <Route path='register' element = {<Register/>}/>
+        <Route path="login" element={<Login />} />
+        <Route path="forgot-password" element={<ForgotPassword />} />
+        <Route path="reset-password/:id/:token" element={<ResetPassword />} />
+
+        <Route path="register" element={<Register />} />
         <Route path="about" element={<About />} />
         <Route path="doctors" element={<Doctors />} />
         <Route path="doctors/:doctorId" element={<DoctorDetails />} />

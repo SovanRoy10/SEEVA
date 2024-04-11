@@ -1,199 +1,199 @@
-import React from 'react';
-import BannerSectionStyle5 from '../Section/BannerSection/BannerSectionStyle5';
-import Section from '../Section';
-import parse from 'html-react-parser';
-import { pageTitle } from '../../helpers/PageTitle';
+import React from "react";
+import BannerSectionStyle5 from "../Section/BannerSection/BannerSectionStyle5";
+import Section from "../Section";
+import parse from "html-react-parser";
+import { pageTitle } from "../../helpers/PageTitle";
 const timeTable = [
   {
-    day: 'Monday',
+    day: "Monday",
     schedules: [
-      { hour: 1, department: '', doctor: '', roomNumber: '' },
+      { hour: 1, department: "", doctor: "", roomNumber: "" },
       {
         hour: 3,
-        department: 'Pediatric Department <br />9:00 AM - 12:00 PM',
-        doctor: 'Dr. Sarah Patel <br />Dr. David Nguyen',
-        roomNumber: 'Room 101',
+        department: "Pediatric Department <br />9:00 AM - 12:00 PM",
+        doctor: "Dr. Sarah Patel <br />Dr. David Nguyen",
+        roomNumber: "Room 101",
       },
       {
         hour: 2,
-        department: 'Cardiology Department <br />1:00 PM - 2:00 PM',
-        doctor: 'Dr. James Lee <br />Dr. Michelle Kim',
-        roomNumber: 'Room 202',
+        department: "Cardiology Department <br />1:00 PM - 2:00 PM",
+        doctor: "Dr. James Lee <br />Dr. Michelle Kim",
+        roomNumber: "Room 202",
       },
       {
         hour: 3,
-        department: 'Psychiatry Department <br />2:00 PM - 2:00 PM',
-        doctor: 'Dr. Rachel Jones <br />Dr. David Park',
-        roomNumber: 'Room 303',
+        department: "Psychiatry Department <br />2:00 PM - 2:00 PM",
+        doctor: "Dr. Rachel Jones <br />Dr. David Park",
+        roomNumber: "Room 303",
       },
       {
         hour: 3,
-        department: 'Physical Therapy Department <br />2:00 PM - 2:00 PM',
-        doctor: 'Dr. Susan Kim',
-        roomNumber: 'Gymnasium',
+        department: "Physical Therapy Department <br />2:00 PM - 2:00 PM",
+        doctor: "Dr. Susan Kim",
+        roomNumber: "Gymnasium",
       },
-      { hour: 1, department: '', doctor: '', roomNumber: '' },
+      { hour: 1, department: "", doctor: "", roomNumber: "" },
     ],
   },
   {
-    day: 'Tuesday',
+    day: "Tuesday",
     schedules: [
-      { hour: 1, department: '', doctor: '', roomNumber: '' },
+      { hour: 1, department: "", doctor: "", roomNumber: "" },
       {
         hour: 2,
         department:
-          'Obstetrics and Gynecology Department <br />9:00 AM - 11:00 AM',
-        doctor: 'Dr. Karen Lee',
-        roomNumber: 'Room 401',
+          "Obstetrics and Gynecology Department <br />9:00 AM - 11:00 AM",
+        doctor: "Dr. Karen Lee",
+        roomNumber: "Room 401",
       },
       {
         hour: 3,
-        department: 'Pulmonology Department <br />11:00 AM - 2:00 PM',
-        doctor: 'Dr. John Smith',
-        roomNumber: 'Room 502',
+        department: "Pulmonology Department <br />11:00 AM - 2:00 PM",
+        doctor: "Dr. John Smith",
+        roomNumber: "Room 502",
       },
-      { hour: 1, department: '', doctor: '', roomNumber: '' },
+      { hour: 1, department: "", doctor: "", roomNumber: "" },
       {
         hour: 3,
-        department: 'Neurology Department <br />3:00 PM - 6:00 PM',
-        doctor: 'Dr. Maria Rodriguez',
-        roomNumber: 'Room 603',
+        department: "Neurology Department <br />3:00 PM - 6:00 PM",
+        doctor: "Dr. Maria Rodriguez",
+        roomNumber: "Room 603",
       },
       {
         hour: 3,
-        department: 'Emergency Department <br />6:00 PM - 9:00 PM',
-        doctor: 'Dr. Michael Johnson <br />Dr. Lisa Chen',
-        roomNumber: 'Emergency Room',
+        department: "Emergency Department <br />6:00 PM - 9:00 PM",
+        doctor: "Dr. Michael Johnson <br />Dr. Lisa Chen",
+        roomNumber: "Emergency Room",
       },
     ],
   },
   {
-    day: 'Wednesday',
+    day: "Wednesday",
     schedules: [
       {
         hour: 4,
-        department: 'Pediatric Department <br />9:00 AM - 11:00 AM',
-        doctor: 'Dr. Sarah Patel <br />Dr. David Nguyen',
-        roomNumber: 'Room 101',
+        department: "Pediatric Department <br />9:00 AM - 11:00 AM",
+        doctor: "Dr. Sarah Patel <br />Dr. David Nguyen",
+        roomNumber: "Room 101",
       },
-      { hour: 1, department: '', doctor: '', roomNumber: '' },
+      { hour: 1, department: "", doctor: "", roomNumber: "" },
       {
         hour: 3,
-        department: 'Cardiology Department <br />1:00 PM - 4:00 PM',
-        doctor: 'Dr. James Lee <br />Dr. Michelle Kim',
-        roomNumber: 'Room 202',
+        department: "Cardiology Department <br />1:00 PM - 4:00 PM",
+        doctor: "Dr. James Lee <br />Dr. Michelle Kim",
+        roomNumber: "Room 202",
       },
       {
         hour: 2,
-        department: 'Psychiatry Department <br />4:00 PM - 6:00 PM',
-        doctor: 'Dr. Rachel Jones <br />Dr. David Park',
-        roomNumber: 'Room 303',
+        department: "Psychiatry Department <br />4:00 PM - 6:00 PM",
+        doctor: "Dr. Rachel Jones <br />Dr. David Park",
+        roomNumber: "Room 303",
       },
       {
         hour: 3,
-        department: 'Physical Therapy Department <br />6:00 PM - 9:00 PM',
-        doctor: 'Dr. Susan Kim',
-        roomNumber: 'Gymnasium',
+        department: "Physical Therapy Department <br />6:00 PM - 9:00 PM",
+        doctor: "Dr. Susan Kim",
+        roomNumber: "Gymnasium",
       },
     ],
   },
   {
-    day: 'Thrusday',
+    day: "Thrusday",
     schedules: [
-      { hour: 1, department: '', doctor: '', roomNumber: '' },
+      { hour: 1, department: "", doctor: "", roomNumber: "" },
       {
         hour: 2,
         department:
-          'Obstetrics and Gynecology Department <br />9:00 AM - 11:00 AM',
-        doctor: 'Dr. Karen Lee',
-        roomNumber: 'Room 401',
+          "Obstetrics and Gynecology Department <br />9:00 AM - 11:00 AM",
+        doctor: "Dr. Karen Lee",
+        roomNumber: "Room 401",
       },
       {
         hour: 3,
-        department: 'Pulmonology Department <br />11:00 AM - 2:00 PM',
-        doctor: 'Dr. John Smith',
-        roomNumber: 'Room 502',
+        department: "Pulmonology Department <br />11:00 AM - 2:00 PM",
+        doctor: "Dr. John Smith",
+        roomNumber: "Room 502",
       },
       {
         hour: 3,
-        department: 'Neurology Department <br />3:00 PM - 6:00 PM',
-        doctor: 'Dr. Maria Rodriguez',
-        roomNumber: 'Room 603',
+        department: "Neurology Department <br />3:00 PM - 6:00 PM",
+        doctor: "Dr. Maria Rodriguez",
+        roomNumber: "Room 603",
       },
       {
         hour: 4,
-        department: 'Emergency Department <br />5:00 PM - 9:00 PM',
-        doctor: 'Dr. Michael Johnson <br />Dr. Lisa Chen',
-        roomNumber: 'Emergency Room',
+        department: "Emergency Department <br />5:00 PM - 9:00 PM",
+        doctor: "Dr. Michael Johnson <br />Dr. Lisa Chen",
+        roomNumber: "Emergency Room",
       },
     ],
   },
   {
-    day: 'Friday',
+    day: "Friday",
     schedules: [
       {
         hour: 4,
-        department: 'Pediatric Department <br />9:00 AM - 11:00 AM',
-        doctor: 'Dr. Sarah Patel <br />Dr. David Nguyen',
-        roomNumber: 'Room 101',
+        department: "Pediatric Department <br />9:00 AM - 11:00 AM",
+        doctor: "Dr. Sarah Patel <br />Dr. David Nguyen",
+        roomNumber: "Room 101",
       },
       {
         hour: 3,
-        department: 'Cardiology Department <br />12:00 PM - 3:00 PM',
-        doctor: 'Dr. James Lee <br />Dr. Michelle Kim',
-        roomNumber: 'Room 202',
+        department: "Cardiology Department <br />12:00 PM - 3:00 PM",
+        doctor: "Dr. James Lee <br />Dr. Michelle Kim",
+        roomNumber: "Room 202",
       },
       {
         hour: 3,
-        department: 'Psychiatry Department <br />3:00 PM - 6:00 PM',
-        doctor: 'Dr. Rachel Jones <br />Dr. David Park',
-        roomNumber: 'Room 303',
+        department: "Psychiatry Department <br />3:00 PM - 6:00 PM",
+        doctor: "Dr. Rachel Jones <br />Dr. David Park",
+        roomNumber: "Room 303",
       },
       {
         hour: 2,
-        department: 'Physical Therapy Department <br />6:00 PM - 9:00 PM',
-        doctor: 'Dr. Susan Kim',
-        roomNumber: 'Gymnasium',
+        department: "Physical Therapy Department <br />6:00 PM - 9:00 PM",
+        doctor: "Dr. Susan Kim",
+        roomNumber: "Gymnasium",
       },
-      { hour: 1, department: '', doctor: '', roomNumber: '' },
+      { hour: 1, department: "", doctor: "", roomNumber: "" },
     ],
   },
   {
-    day: 'Saturday',
+    day: "Saturday",
     schedules: [
-      { hour: 1, department: '', doctor: '', roomNumber: '' },
+      { hour: 1, department: "", doctor: "", roomNumber: "" },
       {
         hour: 3,
         department:
-          'Obstetrics and Gynecology Department <br />9:00 AM - 12:00 AM',
-        doctor: 'Dr. Karen Lee',
-        roomNumber: 'Room 401',
+          "Obstetrics and Gynecology Department <br />9:00 AM - 12:00 AM",
+        doctor: "Dr. Karen Lee",
+        roomNumber: "Room 401",
       },
       {
         hour: 2,
-        department: 'Pulmonology Department <br />12:00 AM - 2:00 PM',
-        doctor: 'Dr. John Smith',
-        roomNumber: 'Room 502',
+        department: "Pulmonology Department <br />12:00 AM - 2:00 PM",
+        doctor: "Dr. John Smith",
+        roomNumber: "Room 502",
       },
-      { hour: 1, department: '', doctor: '', roomNumber: '' },
+      { hour: 1, department: "", doctor: "", roomNumber: "" },
       {
         hour: 2,
-        department: 'Neurology Department <br />3:00 PM - 6:00 PM',
-        doctor: 'Dr. Maria Rodriguez',
-        roomNumber: 'Room 603',
+        department: "Neurology Department <br />3:00 PM - 6:00 PM",
+        doctor: "Dr. Maria Rodriguez",
+        roomNumber: "Room 603",
       },
       {
         hour: 4,
-        department: 'Emergency Department <br />5:00 PM - 9:00 PM',
-        doctor: 'Dr. Michael Johnson <br />Dr. Lisa Chen',
-        roomNumber: 'Emergency Room',
+        department: "Emergency Department <br />5:00 PM - 9:00 PM",
+        doctor: "Dr. Michael Johnson <br />Dr. Lisa Chen",
+        roomNumber: "Emergency Room",
       },
     ],
   },
 ];
 
 export default function Timetable() {
-  pageTitle('Timetable');
+  pageTitle("Timetable");
   return (
     <>
       <BannerSectionStyle5

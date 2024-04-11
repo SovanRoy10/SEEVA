@@ -4,7 +4,11 @@ import connectDB from "./config/connection.js";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import fileUpload from "express-fileupload";
+
+import morgan from "morgan";
+import authRouter from "./router/auth.js";
 import path from "path";
+
 
 // routers
 import messageRouter from "./router/messageRouter.js";
@@ -17,10 +21,10 @@ const app = express();
 const port = process.env.PORT || 4000;
 
 // cors for connecting frontend with backend
+
 app.use(
   cors({
-    origin: [process.env.FORNTEND_URL, process.env.DASHBOARD_URL],
-    methods: ["GET", "POST", "DELETE", "PUT"],
+    origin: process.env.FRONTEND_URL,
     credentials: true,
   })
 );
@@ -29,6 +33,7 @@ app.use(express.static(path.resolve("./public")));
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(morgan("dev"));
 
 // https://www.npmjs.com/package/express-fileupload
 app.use(
@@ -40,6 +45,7 @@ app.use(
 
 // routes
 app.use("/api/v1/message", messageRouter);
+app.use("/api", authRouter);
 
 // middlewares
 app.use(errorMiddleware);
