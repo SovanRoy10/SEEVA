@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import mongoose from "mongoose";
 import validator from "validator";
 import { createHmac, randomBytes } from "node:crypto"; // for hashing the password
@@ -108,3 +109,46 @@ userSchema.static(
 );
 
 export const User = mongoose.model("User", userSchema);
+=======
+
+import mongoose from "mongoose";
+const { Schema } = mongoose;
+
+const userSchema = new Schema(
+  {
+    name: {
+      type: String,
+      trim: true,
+      required: true,
+    },
+    email: {
+      type: String,
+      trim: true,
+      required: true,
+      unique: true,
+    },
+    password: {
+      type: String,
+      required: true,
+      min: 6,
+      max: 64,
+    },
+    token: String,
+    image: {
+      url: String,
+      public_id: String,
+    },
+    role: {
+      type: [String],
+      default: ["Patient"],
+      enum: ["Patient", "Doctor"],
+    },
+  },
+  { timestamps: true }
+);
+
+export default mongoose.model("User", userSchema);
+
+
+
+>>>>>>> e3ecbcda15e6f13b7495e1681f49df534260ea7d

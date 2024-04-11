@@ -11,7 +11,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+<<<<<<< HEAD
     "axios": "^1.6.8",
+=======
+    "bcrypt": "^5.1.1",
+>>>>>>> e3ecbcda15e6f13b7495e1681f49df534260ea7d
     "cloudinary": "^2.1.0",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
@@ -20,6 +24,7 @@
     "express-fileupload": "^1.5.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.2.4",
+    "morgan": "^1.10.0",
     "nodemailer": "^6.9.13",
     "validator": "^13.11.0"
   }
