@@ -11,8 +11,8 @@ export const errorMiddleware = (err, req, res, next) => {
 
   // duplicate value error for example duplicate email
   if (err.code === 11000) {
-    const message = `Duplicate ${Object.keys(err.keyValue)} Entered`,
-      err = new ErrorHandler(message, 400);
+    const message = `Duplicate ${Object.keys(err.keyValue)} Entered`;
+    err = new ErrorHandler(message, 400);
   }
   if (err.name === "JsonWebTokenError") {
     const message = `Json Web Token is invalid, Try again!`;
@@ -24,8 +24,8 @@ export const errorMiddleware = (err, req, res, next) => {
   }
   // type error(string , number etc)
   if (err.name === "CastError") {
-    const message = `Invalid ${err.path}`,
-      err = new ErrorHandler(message, 400);
+    const message = `Invalid ${err.path}`;
+    err = new ErrorHandler(message, 400);
   }
 
   //   console.log(Object.values(err.errors).map((error)=> console.log(error.message)))

@@ -1,18 +1,14 @@
 import mongoose from "mongoose";
 import validator from "validator";
-const { createHmac, randomBytes } = require("node:crypto"); // for hashing the password
+import { createHmac, randomBytes } from "node:crypto"; // for hashing the password
+import { createTokenForUser } from "../service/auth.js";
 
 const userSchema = new mongoose.Schema(
   {
-    firstName: {
+    name: {
       type: String,
       required: true,
-      minLength: [3, "First Name Must Contain At Least 3 Characters!"],
-    },
-    lastName: {
-      type: String,
-      required: true,
-      minLength: [3, "Last Name Must Contain At Least 3 Characters!"],
+      minLength: [3, "Name Must Contain At Least 3 Characters!"],
     },
     email: {
       type: String,
@@ -38,18 +34,44 @@ const userSchema = new mongoose.Schema(
     },
     password: {
       type: String,
-      minLength: [7, "Password Must Contain At Least 7 Characters!"],
+      minLength: [6, "Password Must Contain At Least 6 Characters!"],
       required: true,
     },
     role: {
-      type: String,
+      type: [String],
       required: true,
       enum: ["Patient", "Doctor", "Admin"],
-      default: "Patient",
+      default: ["Patient"],
     },
     profileImageUrl: {
       type: String,
       default: "/images/default.png",
+    },
+    salt: {
+      type: String,
+    },
+    doctorDepartment: {
+      type: String,
+      enum: [
+        "Eye Care",
+        "Gynecologist",
+        "Psychotherapist",
+        "Orthopedic",
+        "Dentist",
+        "Gastrologist",
+        "Urologist",
+        "Neurologist",
+      ],
+    },
+    registrationNumber: {
+      type: String,
+      unique : true
+    },
+    smcId: {
+      type: String,
+    },
+    year: {
+      type: String,
     },
   },
   { timestamps: true }
@@ -70,4 +92,19 @@ userSchema.pre("save", function (next) {
   next();
 });
 
-export const user = mongoose.model("User", userSchema);
+userSchema.static(
+  "matchPasswordAndGenerateToken",
+  async function (email, password) {
+    const user = await this.findOne({ email });
+    if (!user) throw new Error("User not found!");
+    const salt = user.salt;
+    const userProvidedHash = createHmac("sha256", salt)
+      .update(password)
+      .digest("hex");
+
+    if (userProvidedHash === user.password) return createTokenForUser(user);
+    else throw new Error("Password is not correct");
+  }
+);
+
+export const User = mongoose.model("User", userSchema);
