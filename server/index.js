@@ -9,7 +9,7 @@ import morgan from "morgan";
 import authRouter from "./router/auth.js";
 import path from "path";
 
-<<<<<<< HEAD
+
 // cloudinary
 import cloudinary from "cloudinary";
 
@@ -35,12 +35,9 @@ const port = process.env.PORT || 4000;
 
 app.use(
   cors({
-<<<<<<< HEAD
     origin: [process.env.FRONTEND_URL, process.env.DASHBOARD_URL],
     methods: ["GET", "POST", "DELETE", "PUT"],
-=======
     origin: process.env.FRONTEND_URL,
->>>>>>> e3ecbcda15e6f13b7495e1681f49df534260ea7d
     credentials: true,
   })
 );
@@ -61,12 +58,10 @@ app.use(
 
 // routes
 app.use("/api/v1/message", messageRouter);
-<<<<<<< HEAD
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/appointment", appointmentRouter);
-=======
-app.use("/api", authRouter);
->>>>>>> e3ecbcda15e6f13b7495e1681f49df534260ea7d
+
+// app.use("/api", authRouter);  /* Rupal made this route */
 
 // middlewares
 app.use(errorMiddleware);

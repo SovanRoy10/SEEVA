@@ -7,6 +7,8 @@ import {
   logoutAdmin,
   logoutPatient,
   addNewDoctor,
+  forgotPassword,
+  resetPassword
 } from "../controller/user.js";
 import {
   isAdminAuthenticated,
@@ -17,6 +19,9 @@ const router = express.Router();
 
 router.post("/patient/register", patientRegister);
 router.post("/login", login);
+router.post("/forgot-password", forgotPassword);
+router.post("/reset-password/:id/:token", resetPassword);
+
 router.post("/admin/addnew", isAdminAuthenticated, addNewAdmin);
 router.get("/doctors", isAdminAuthenticated, getAllDoctors);
 router.post("/admin/logout", isAdminAuthenticated, logoutAdmin);

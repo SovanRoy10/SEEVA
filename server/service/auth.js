@@ -5,9 +5,8 @@ const secret = process.env.JWT_SECRET_KEY;
 export function createTokenForUser(user) {
   const payload = {
     _id: user._id,
-    fullName: user.fullName,
+    name: user.name,
     email: user.email,
-    profileImageUrl: user.profileImageUrl,
     role: user.role,
   };
 

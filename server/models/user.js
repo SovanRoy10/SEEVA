@@ -1,55 +1,55 @@
-<<<<<<< HEAD
 import mongoose from "mongoose";
+const { Schema } = mongoose;
 import validator from "validator";
-import { createHmac, randomBytes } from "node:crypto"; // for hashing the password
 import { createTokenForUser } from "../service/auth.js";
+import { comparePassword } from "../Helpers/auth.js";
 
-const userSchema = new mongoose.Schema(
+const userSchema = new Schema(
   {
     name: {
       type: String,
+      trim: true,
       required: true,
       minLength: [3, "Name Must Contain At Least 3 Characters!"],
     },
     email: {
       type: String,
+      trim: true,
       required: true,
       unique: true,
       validate: [validator.isEmail, "Please Provide A Valid Email"],
     },
+    password: {
+      type: String,
+      minLength: [6, "Password Must Contain At Least 6 Characters!"],
+      maxLength: [64, "Password Must Contain At Max 64 Characters!"],
+      required: true,
+    },
+    token: {
+      type: String,
+    },
     phone: {
       type: String,
-      required: true,
       unique: true,
       minLength: [10, "Phone Number Must Contain At Least 10 Digits!"],
       maxLength: [10, "Phone Number Must Contain At Max 10 Digits!"],
     },
     dob: {
       type: Date,
-      required: true,
     },
     gender: {
       type: String,
-      required: true,
       enum: ["Male", "Female", "Others"],
     },
-    password: {
+    profileImageUrl: {
       type: String,
-      minLength: [6, "Password Must Contain At Least 6 Characters!"],
-      required: true,
+      default: "/images/default.png",
     },
     role: {
       type: [String],
       required: true,
       enum: ["Patient", "Doctor", "Admin"],
       default: ["Patient"],
-    },
-    profileImageUrl: {
-      type: String,
-      default: "/images/default.png",
-    },
-    salt: {
-      type: String,
     },
     doctorDepartment: {
       type: String,
@@ -66,7 +66,7 @@ const userSchema = new mongoose.Schema(
     },
     registrationNumber: {
       type: String,
-      unique : true
+      unique: true,
     },
     smcId: {
       type: String,
@@ -78,77 +78,21 @@ const userSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-userSchema.pre("save", function (next) {
-  const user = this;
-  if (!user.isModified("password")) return;
-
-  const salt = randomBytes(16).toString();
-  const hashedPassword = createHmac("sha256", salt)
-    .update(user.password)
-    .digest("hex");
-
-  this.salt = salt;
-  this.password = hashedPassword;
-
-  next();
-});
-
 userSchema.static(
   "matchPasswordAndGenerateToken",
   async function (email, password) {
-    const user = await this.findOne({ email });
+    const user = await this.findOne({ email }).exec();
     if (!user) throw new Error("User not found!");
-    const salt = user.salt;
-    const userProvidedHash = createHmac("sha256", salt)
-      .update(password)
-      .digest("hex");
 
-    if (userProvidedHash === user.password) return createTokenForUser(user);
-    else throw new Error("Password is not correct");
+    const match = await comparePassword(password, user.password);
+    if (!match) throw new Error("Password is not correct");
+
+    const jwtToken = createTokenForUser(user);
+    this.password = undefined;
+    await this.findByIdAndUpdate(user._id, { token: jwtToken.token }, { new: true });
+
+    return jwtToken;
   }
 );
 
 export const User = mongoose.model("User", userSchema);
-=======
-
-import mongoose from "mongoose";
-const { Schema } = mongoose;
-
-const userSchema = new Schema(
-  {
-    name: {
-      type: String,
-      trim: true,
-      required: true,
-    },
-    email: {
-      type: String,
-      trim: true,
-      required: true,
-      unique: true,
-    },
-    password: {
-      type: String,
-      required: true,
-      min: 6,
-      max: 64,
-    },
-    token: String,
-    image: {
-      url: String,
-      public_id: String,
-    },
-    role: {
-      type: [String],
-      default: ["Patient"],
-      enum: ["Patient", "Doctor"],
-    },
-  },
-  { timestamps: true }
-);
-
-export default mongoose.model("User", userSchema);
-
-
-
->>>>>>> e3ecbcda15e6f13b7495e1681f49df534260ea7d
