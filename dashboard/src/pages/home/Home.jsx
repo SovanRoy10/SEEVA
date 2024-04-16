@@ -1,8 +1,17 @@
 import styles from "./Home.module.css";
 import TopBox from "../../components/topBox/TopBox";
 import ChartBox from "../../components/chartBox/ChartBox";
-import { chartBoxUser } from "../../data";
-
+import BarChartBox from "../../components/barChartBox/BarChartBox";
+import PieChartBox from "../../components/pieChartBox/PieChartBox";
+import BigChartBox from "../../components/bigChartBox/BigChartBox";
+import {
+  chartBoxUser,
+  chartBoxProduct,
+  chartBoxConversion,
+  chartBoxRevenue,
+  barChartBoxRevenue,
+  barChartBoxVisit,
+} from "../../data";
 
 export default function Home() {
   return (
@@ -14,25 +23,25 @@ export default function Home() {
         <ChartBox {...chartBoxUser} />
       </div>
       <div className={`${styles.box3} ${styles.box}`}>
-        {/* <ChartBox {...chartBoxProduct} /> */}
+        <ChartBox {...chartBoxProduct} />
       </div>
       <div className={`${styles.box4} ${styles.box}`}>
-        {/* <PieChartBox /> */}
+        <PieChartBox />
       </div>
       <div className={`${styles.box5} ${styles.box}`}>
-        {/* <ChartBox {...chartBoxConversion} /> */}
+        <ChartBox {...chartBoxConversion} />
       </div>
       <div className={`${styles.box6} ${styles.box}`}>
-        {/* <ChartBox {...chartBoxRevenue} /> */}
+        <ChartBox {...chartBoxRevenue} />
       </div>
       <div className={`${styles.box7} ${styles.box}`}>
-        {/* <BigChartBox /> */}
+        <BigChartBox />
       </div>
       <div className={`${styles.box8} ${styles.box}`}>
-        {/* <BarChartBox {...barChartBoxVisit} /> */}
+        <BarChartBox {...barChartBoxVisit} />
       </div>
       <div className={`${styles.box9} ${styles.box}`}>
-        {/* <BarChartBox {...barChartBoxRevenue} /> */}
+        <BarChartBox {...barChartBoxRevenue} />
       </div>
     </div>
   );
