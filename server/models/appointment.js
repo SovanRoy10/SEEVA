@@ -32,9 +32,10 @@ const appointmentSchema = new mongoose.Schema({
     required: [true, "Gender Is Required!"],
     enum: ["Male", "Female"],
   },
-  appointment_date: {
+  appointmentDateTime: {
     type: Date,
-    required: [true, "Appointment Date Is Required!"],
+    required: [true, "Appointment Date and Time Is Required!"],
+    unique: true, // Ensuring no two appointments can have the same date and time
   },
   department: {
     type: String,

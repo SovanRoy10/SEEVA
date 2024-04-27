@@ -8,7 +8,9 @@ import {
   logoutPatient,
   addNewDoctor,
   forgotPassword,
-  resetPassword
+  resetPassword,
+  getAllPatients,
+  getSingleUser
 } from "../controller/user.js";
 import {
   isAdminAuthenticated,
@@ -24,6 +26,9 @@ router.post("/reset-password/:id/:token", resetPassword);
 
 router.post("/admin/addnew", isAdminAuthenticated, addNewAdmin);
 router.get("/doctors", isAdminAuthenticated, getAllDoctors);
+router.get("/doctors/:id", isAdminAuthenticated, getSingleUser);
+router.get("/patients", isAdminAuthenticated, getAllPatients);
+router.get("/patients/:id", isAdminAuthenticated, getSingleUser);
 router.post("/admin/logout", isAdminAuthenticated, logoutAdmin);
 router.post("/patient/logout", isUserAuthenticated, logoutPatient);
 router.post("/doctor/addNew", addNewDoctor);

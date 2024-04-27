@@ -76,23 +76,9 @@ import jwt from "jsonwebtoken";
 // });
 
 export const addNewAdmin = catchAsyncErros(async (req, res, next) => {
-  const {
-    name,
-    email,
-    password,
-    dob,
-    gender,
-    profileImageUrl,
-    phone,
-  } = req.body;
-  if (
-    !name ||
-    !email ||
-    !password ||
-    !dob ||
-    !gender ||
-    !phone
-  )
+  const { name, email, password, dob, gender, profileImageUrl, phone } =
+    req.body;
+  if (!name || !email || !password || !dob || !gender || !phone)
     return next(new ErrorHandler("Please Fill Full Form!", 400));
 
   // Find the existing user by email
@@ -141,6 +127,7 @@ export const addNewAdmin = catchAsyncErros(async (req, res, next) => {
 
 export const getAllDoctors = catchAsyncErros(async (req, res, next) => {
   const doctors = await User.find({ role: "Doctor" });
+  if (!doctors) return next(ErrorHandler("No Doctor Found", 400));
   res.status(200).json({
     success: true,
     doctors,
@@ -183,31 +170,48 @@ export const addNewDoctor = catchAsyncErros(async (req, res, next) => {
     dob,
     gender,
     phone,
+    feePerConsultation,
+    startTime,
+    endTime,
+    monday,
+    tuesday,
+    wednesday,
+    thursday,
+    friday,
+    saturday,
+    sunday,
   } = req.body;
 
-  doctorDepartment = doctorDepartment.trim();
-  registrationNumber = registrationNumber.trim();
-  year = year.trim();
-  smcId = smcId.trim();
-  name = name.trim();
-  email = email.trim();
-  password = password.trim();
-  dob = dob.trim();
-  gender = gender.trim();
-  phone = phone.trim();
-  if (
-    !doctorDepartment ||
-    !registrationNumber ||
-    !year ||
-    !smcId ||
-    !name ||
-    !email ||
-    !password ||
-    !dob ||
-    !gender ||
-    !phone
-  ) {
-    return next(new ErrorHandler("Please Fill Full Form!", 400));
+  // console.log(req.body);
+
+  const fields = [
+    "doctorDepartment",
+    "registrationNumber",
+    "year",
+    "smcId",
+    "name",
+    "email",
+    "password",
+    "dob",
+    "gender",
+    "phone",
+    "feePerConsultation",
+    "startTime",
+    "endTime",
+    "monday",
+    "tuesday",
+    "wednesday",
+    "thursday",
+    "friday",
+    "saturday",
+    "sunday",
+  ];
+
+  // Check if all required fields are present
+  for (const field of fields) {
+    if (!req.body[field]) {
+      return next(new ErrorHandler(`Please fill the ${field} field.`, 400));
+    }
   }
 
   // Calculate age from dob
@@ -257,7 +261,7 @@ export const addNewDoctor = catchAsyncErros(async (req, res, next) => {
   )}&smcId=${encodeURIComponent(smcId)}&year=${encodeURIComponent(year)}`;
 
   const response = await axios.get(apiUrl);
-  //   console.log(year, response.data.data[0][1]);
+  // console.log(year, response.data.data[0][1]);
 
   // Check if the doctor is registered based on the response
   if (
@@ -325,6 +329,16 @@ export const addNewDoctor = catchAsyncErros(async (req, res, next) => {
             smcId,
             year,
             profileImageUrl: cloudinaryResponse.secure_url, // Update avatar URL
+            startTime,
+            endTime,
+            monday,
+            tuesday,
+            wednesday,
+            thursday,
+            friday,
+            saturday,
+            sunday,
+            feePerConsultation,
           },
         },
         { new: true } // Options: return updated document
@@ -349,6 +363,17 @@ export const addNewDoctor = catchAsyncErros(async (req, res, next) => {
         phone,
         role: ["Doctor"], // Assigning role as admin in an array
         profileImageUrl: cloudinaryResponse.secure_url,
+        startTime,
+        endTime,
+        monday,
+        tuesday,
+        wednesday,
+        thursday,
+        friday,
+        saturday,
+        sunday,
+        feePerConsultation,
+        doctorStatus: "Pending", // default status
       });
 
       return res.status(200).json({
@@ -368,6 +393,19 @@ export const patientRegister = catchAsyncErros(async (req, res, next) => {
   const { email, name, password } = req.body;
   if (!name || !email || !password)
     return next(new ErrorHandler("Please Fill Full Form!", 400));
+
+  // Password length validation
+  if (password.length < 6) {
+    return next(
+      new ErrorHandler("Password must contain at least 6 characters!", 400)
+    );
+  }
+
+  if (password.length > 64) {
+    return next(
+      new ErrorHandler("Password must contain atmax 64 characters!", 400)
+    );
+  }
 
   let userExist = await User.findOne({ email }).exec();
   if (userExist) return next(new ErrorHandler("User already exist!", 400));
@@ -471,8 +509,7 @@ export const forgotPassword = catchAsyncErros(async (req, res, next) => {
           
           <p>Best regards,<br>SEEVATeam</p>
       `,
-  };
-  
+    };
 
     let info = await transporter.sendMail(messageDetails);
     return res
@@ -483,14 +520,14 @@ export const forgotPassword = catchAsyncErros(async (req, res, next) => {
   }
 });
 
-export const resetPassword = catchAsyncErros(async (req, res,next) => {
+export const resetPassword = catchAsyncErros(async (req, res, next) => {
   const { id, token } = req.params;
   const { password } = req.body;
-  if(!password)   return next(new ErrorHandler("Enter Your New Password",400)); 
+  if (!password) return next(new ErrorHandler("Enter Your New Password", 400));
 
   jwt.verify(token, process.env.JWT_SECRET_KEY, function (err, decoded) {
     if (err) {
-      return next(new ErrorHandler("Invalid Token",400));
+      return next(new ErrorHandler("Invalid Token", 400));
     } else {
       bcrypt
         .hash(password, 10)
@@ -502,4 +539,22 @@ export const resetPassword = catchAsyncErros(async (req, res,next) => {
         .catch((err) => res.send({ Status: err }));
     }
   });
-})
+});
+
+export const getSingleUser = catchAsyncErros(async (req, res, next) => {
+  const user = await User.findById(req.params.id);
+  if (!user) return next(new ErrorHandler("User Not Found", 400));
+  return res.status(200).json({
+    success: true,
+    user,
+  });
+});
+
+export const getAllPatients = catchAsyncErros(async (req, res, next) => {
+  const patients = await User.find({ role: "Patient" });
+  if (!patients) return next(new ErrorHandler("No Patient Found", 400));
+  return res.status(200).json({
+    success: true,
+    patients,
+  });
+});

@@ -21,9 +21,10 @@ const userSchema = new Schema(
     },
     password: {
       type: String,
+      trim: true,
+      required: true,
       minLength: [6, "Password Must Contain At Least 6 Characters!"],
       maxLength: [64, "Password Must Contain At Max 64 Characters!"],
-      required: true,
     },
     token: {
       type: String,
@@ -74,6 +75,26 @@ const userSchema = new Schema(
     year: {
       type: String,
     },
+    feePerConsultation: {
+      type: Number,
+    },
+    startTime: {
+      type: String,
+    },
+    endTime: {
+      type: String,
+    },
+    monday: { type: Boolean },
+    tuesday: { type: Boolean },
+    wednesday: { type: Boolean },
+    thursday: { type: Boolean},
+    friday: { type: Boolean },
+    saturday: { type: Boolean },
+    sunday: { type: Boolean },
+    doctorStatus: {
+      type: String,
+      enum: ["Pending", "Accepted", "Rejected"],
+    },
   },
   { timestamps: true }
 );
@@ -89,7 +110,11 @@ userSchema.static(
 
     const jwtToken = createTokenForUser(user);
     this.password = undefined;
-    await this.findByIdAndUpdate(user._id, { token: jwtToken.token }, { new: true });
+    await this.findByIdAndUpdate(
+      user._id,
+      { token: jwtToken.token },
+      { new: true }
+    );
 
     return jwtToken;
   }
