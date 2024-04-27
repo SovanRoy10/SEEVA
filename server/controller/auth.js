@@ -1,6 +1,8 @@
+/* Rupal's code for auth */
+
 import { comparePassword, hashPassword } from "../Helpers/auth.js";
 import { catchAsyncErros } from "../middlewares/catchAsyncErros.js";
-import User from "./../models/user.js";
+import { User } from "./../models/user.js";
 import jwt from "jsonwebtoken";
 import nodemailer from "nodemailer";
 import bcrypt from "bcrypt";

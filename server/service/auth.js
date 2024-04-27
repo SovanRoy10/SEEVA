@@ -1,23 +1,23 @@
-const jwt = require("jsonwebtoken");
+import jwt from "jsonwebtoken";
 
 const secret = process.env.JWT_SECRET_KEY;
 
-function createTokenForUser(user) {
+export function createTokenForUser(user) {
   const payload = {
     _id: user._id,
-    fullName : user.fullName,
+    name: user.name,
     email: user.email,
-    profileImageUrl: user.profileImageUrl,
     role: user.role,
   };
-  return jwt.sign(payload, secret);
+
+  return {
+    token: jwt.sign(payload, secret, {
+      expiresIn: process.env.JWT_EXPIRES,
+    }),
+    tokenName: user.role.includes("Admin") ? "AdminToken" : "UserToken",
+  };
 }
 
-function validateToken(token) {
+export function validateToken(token) {
   return jwt.verify(token, secret);
 }
-
-module.exports = {
-  createTokenForUser,
-  validateToken,
-};

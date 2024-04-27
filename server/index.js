@@ -10,8 +10,19 @@ import authRouter from "./router/auth.js";
 import path from "path";
 
 
+// cloudinary
+import cloudinary from "cloudinary";
+
+cloudinary.v2.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
+
 // routers
 import messageRouter from "./router/messageRouter.js";
+import userRouter from "./router/userRouter.js";
+import appointmentRouter from "./router/appointmentRouter.js"
 
 // middlewares
 import { errorMiddleware } from "./middlewares/errorMiddleware.js";
@@ -24,6 +35,8 @@ const port = process.env.PORT || 4000;
 
 app.use(
   cors({
+    origin: [process.env.FRONTEND_URL, process.env.DASHBOARD_URL],
+    methods: ["GET", "POST", "DELETE", "PUT"],
     origin: process.env.FRONTEND_URL,
     credentials: true,
   })
@@ -45,7 +58,10 @@ app.use(
 
 // routes
 app.use("/api/v1/message", messageRouter);
-app.use("/api", authRouter);
+app.use("/api/v1/user", userRouter);
+app.use("/api/v1/appointment", appointmentRouter);
+
+// app.use("/api", authRouter);  /* Rupal made this route */
 
 // middlewares
 app.use(errorMiddleware);

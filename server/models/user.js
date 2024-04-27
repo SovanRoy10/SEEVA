@@ -1,6 +1,8 @@
-
 import mongoose from "mongoose";
 const { Schema } = mongoose;
+import validator from "validator";
+import { createTokenForUser } from "../service/auth.js";
+import { comparePassword } from "../Helpers/auth.js";
 
 const userSchema = new Schema(
   {
@@ -8,34 +10,89 @@ const userSchema = new Schema(
       type: String,
       trim: true,
       required: true,
+      minLength: [3, "Name Must Contain At Least 3 Characters!"],
     },
     email: {
       type: String,
       trim: true,
       required: true,
       unique: true,
+      validate: [validator.isEmail, "Please Provide A Valid Email"],
     },
     password: {
       type: String,
+      minLength: [6, "Password Must Contain At Least 6 Characters!"],
+      maxLength: [64, "Password Must Contain At Max 64 Characters!"],
       required: true,
-      min: 6,
-      max: 64,
     },
-    token: String,
-    image: {
-      url: String,
-      public_id: String,
+    token: {
+      type: String,
+    },
+    phone: {
+      type: String,
+      unique: true,
+      minLength: [10, "Phone Number Must Contain At Least 10 Digits!"],
+      maxLength: [10, "Phone Number Must Contain At Max 10 Digits!"],
+    },
+    dob: {
+      type: Date,
+    },
+    gender: {
+      type: String,
+      enum: ["Male", "Female", "Others"],
+    },
+    profileImageUrl: {
+      type: String,
+      default: "/images/default.png",
     },
     role: {
       type: [String],
+      required: true,
+      enum: ["Patient", "Doctor", "Admin"],
       default: ["Patient"],
-      enum: ["Patient", "Doctor"],
+    },
+    doctorDepartment: {
+      type: String,
+      enum: [
+        "Eye Care",
+        "Gynecologist",
+        "Psychotherapist",
+        "Orthopedic",
+        "Dentist",
+        "Gastrologist",
+        "Urologist",
+        "Neurologist",
+      ],
+    },
+    registrationNumber: {
+      type: String,
+      unique: true,
+    },
+    smcId: {
+      type: String,
+    },
+    year: {
+      type: String,
     },
   },
   { timestamps: true }
 );
 
-export default mongoose.model("User", userSchema);
+userSchema.static(
+  "matchPasswordAndGenerateToken",
+  async function (email, password) {
+    const user = await this.findOne({ email }).exec();
+    if (!user) throw new Error("User not found!");
 
+    const match = await comparePassword(password, user.password);
+    if (!match) throw new Error("Password is not correct");
 
+    const jwtToken = createTokenForUser(user);
+    this.password = undefined;
+    await this.findByIdAndUpdate(user._id, { token: jwtToken.token }, { new: true });
 
+    return jwtToken;
+  }
+);
+
+export const User = mongoose.model("User", userSchema);

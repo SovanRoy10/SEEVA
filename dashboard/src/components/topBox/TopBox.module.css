@@ -1,0 +1,73 @@
+/* topBox.module.css */
+
+.topBox h1 {
+  margin-bottom: 20px;
+}
+
+/* Adjust font size for large screens */
+@media screen and (min-width: 1600px) {
+  .topBox h1 {
+    font-size: 24px;
+  }
+}
+
+.topBox .list .listItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 30px;
+}
+
+.topBox .list .listItem .user img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* Hide user image on extra large screens */
+@media screen and (min-width: 1600px) {
+  .topBox .list .listItem .user img {
+    display: none;
+  }
+}
+
+/* Display user image on large screens */
+@media screen and (min-width: 1200px) {
+  .topBox .list .listItem .user img {
+    display: block;
+  }
+}
+
+.topBox .list .listItem .user .userTexts {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.topBox .list .listItem .user .userTexts .username {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.topBox .list .listItem .user .userTexts .email {
+  font-size: 12px;
+}
+
+/* Hide email on extra large screens */
+@media screen and (min-width: 1600px) {
+  .topBox .list .listItem .user .userTexts .email {
+    display: none;
+  }
+}
+
+/* Display email on large screens */
+@media screen and (min-width: 1200px) {
+  .topBox .list .listItem .user .userTexts .email {
+    display: block;
+  }
+}
+
+.topBox .list .listItem .amount {
+  font-weight: 500;
+}
