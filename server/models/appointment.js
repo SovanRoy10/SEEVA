@@ -2,16 +2,12 @@ import mongoose from "mongoose";
 import validator from "validator";
 
 const appointmentSchema = new mongoose.Schema({
-  firstName: {
+  name: {
     type: String,
     required: [true, "First Name Is Required!"],
     minLength: [3, "First Name Must Contain At Least 3 Characters!"],
   },
-  lastName: {
-    type: String,
-    required: [true, "Last Name Is Required!"],
-    minLength: [3, "Last Name Must Contain At Least 3 Characters!"],
-  },
+
   email: {
     type: String,
     required: [true, "Email Is Required!"],
@@ -51,6 +47,10 @@ const appointmentSchema = new mongoose.Schema({
     default: false,
   },
   address: {
+    type: String,
+    required: [true, "Address Is Required!"],
+  },
+  reason: {
     type: String,
     required: [true, "Address Is Required!"],
   },

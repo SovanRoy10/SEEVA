@@ -5,8 +5,8 @@ import { User } from "../models/user.js";
 
 export const postAppointment = catchAsyncErros(async (req, res, next) => {
   const {
-    firstName,
-    lastName,
+    name,
+
     email,
     phone,
     dob,
@@ -16,10 +16,10 @@ export const postAppointment = catchAsyncErros(async (req, res, next) => {
     doctor_name,
     hasVisited,
     address,
+    reason,
   } = req.body;
   if (
-    !firstName ||
-    !lastName ||
+    !name ||
     !email ||
     !phone ||
     !dob ||
@@ -27,7 +27,8 @@ export const postAppointment = catchAsyncErros(async (req, res, next) => {
     !appointment_date ||
     !department ||
     !doctor_name ||
-    !address
+    !address ||
+    !reason
   ) {
     return next(new ErrorHandler("Please Fill Full Form!", 400));
   }
@@ -51,8 +52,8 @@ export const postAppointment = catchAsyncErros(async (req, res, next) => {
   const doctorId = isConflict[0]._id;
   const patientId = req.user._id;
   const appointment = await Appointment.create({
-    firstName,
-    lastName,
+    name,
+
     email,
     phone,
     dob,
@@ -64,6 +65,7 @@ export const postAppointment = catchAsyncErros(async (req, res, next) => {
     },
     hasVisited,
     address,
+    reason,
     doctorId,
     patientId,
   });
@@ -92,7 +94,7 @@ export const updateAppointmentStatus = catchAsyncErros(
     appointment = await Appointment.findByIdAndUpdate(id, req.body, {
       new: true, // This option specifies that the method should return the modified document rather than the original one.
       runValidators: true, // This option tells Mongoose to run any validation defined in the schema on the updated data.
-    //   useFindAndModify: false,
+      //   useFindAndModify: false,
     });
     res.status(200).json({
       success: true,
@@ -102,14 +104,14 @@ export const updateAppointmentStatus = catchAsyncErros(
 );
 
 export const deleteAppointment = catchAsyncErros(async (req, res, next) => {
-    const { id } = req.params;
-    const appointment = await Appointment.findById(id);
-    if (!appointment) {
-      return next(new ErrorHandler("Appointment Not Found!", 404));
-    }
-    await appointment.deleteOne();
-    res.status(200).json({
-      success: true,
-      message: "Appointment Deleted!",
-    });
+  const { id } = req.params;
+  const appointment = await Appointment.findById(id);
+  if (!appointment) {
+    return next(new ErrorHandler("Appointment Not Found!", 404));
+  }
+  await appointment.deleteOne();
+  res.status(200).json({
+    success: true,
+    message: "Appointment Deleted!",
   });
+});

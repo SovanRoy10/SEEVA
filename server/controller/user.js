@@ -8,91 +8,10 @@ import bcrypt from "bcrypt";
 import { hashPassword } from "../Helpers/auth.js";
 import jwt from "jsonwebtoken";
 
-/* Sovan's Code for patient register 👇 */
-
-// export const patientRegister = catchAsyncErros(async (req, res, next) => {
-//   const {
-//     firstName,
-//     lastName,
-//     email,
-//     password,
-//     dob,
-//     gender,
-//     profileImageUrl,
-//     phone,
-//   } = req.body;
-//   if (
-//     !firstName ||
-//     !lastName ||
-//     !email ||
-//     !password ||
-//     !dob ||
-//     !gender ||
-//     !phone
-//   )
-//     return next(new ErrorHandler("Please Fill Full Form!", 400));
-
-//   const user = await User.create({
-//     firstName,
-//     lastName,
-//     email,
-//     password,
-//     dob,
-//     gender,
-//     profileImageUrl,
-//     phone,
-//   });
-
-//   return res.status(200).json({
-//     success: true,
-//     message: "User Registered!",
-//   });
-// });
-
-/* Sovan's Code for login 👇 */
-
-// export const login = catchAsyncErros(async (req, res, next) => {
-//   const { email, password } = req.body;
-
-//   if (!email || !password)
-//     return next(new ErrorHandler("Please Provide All Details!", 400));
-
-//   try {
-//     const jwtToken = await User.matchPasswordAndGenerateToken(email, password);
-//     // console.log(jwtToken.tokenName, jwtToken.token);
-//     return res
-//       .cookie(jwtToken.tokenName, jwtToken.token, {
-//         expires: new Date(
-//           Date.now() + process.env.COOKIE_EXPIRE * 24 * 60 * 60 * 1000
-//         ),
-//       })
-//       .json({
-//         success: true,
-//         message: "User logged in successfully!",
-//       });
-//   } catch (error) {
-//     return next(new ErrorHandler(error, 400));
-//   }
-// });
-
 export const addNewAdmin = catchAsyncErros(async (req, res, next) => {
-  const {
-    name,
-    email,
-    password,
-    dob,
-    gender,
-    profileImageUrl,
-    phone,
-  } = req.body;
-  if (
-    !name ||
-    !email ||
-    !password ||
-    !dob ||
-    !gender ||
-    !phone
-  )
+  const { name, email, password, dob, gender, profileImageUrl, phone } =
+    req.body;
+  if (!name || !email || !password || !dob || !gender || !phone)
     return next(new ErrorHandler("Please Fill Full Form!", 400));
 
   // Find the existing user by email
@@ -471,8 +390,7 @@ export const forgotPassword = catchAsyncErros(async (req, res, next) => {
           
           <p>Best regards,<br>SEEVATeam</p>
       `,
-  };
-  
+    };
 
     let info = await transporter.sendMail(messageDetails);
     return res
@@ -483,14 +401,14 @@ export const forgotPassword = catchAsyncErros(async (req, res, next) => {
   }
 });
 
-export const resetPassword = catchAsyncErros(async (req, res,next) => {
+export const resetPassword = catchAsyncErros(async (req, res, next) => {
   const { id, token } = req.params;
   const { password } = req.body;
-  if(!password)   return next(new ErrorHandler("Enter Your New Password",400)); 
+  if (!password) return next(new ErrorHandler("Enter Your New Password", 400));
 
   jwt.verify(token, process.env.JWT_SECRET_KEY, function (err, decoded) {
     if (err) {
-      return next(new ErrorHandler("Invalid Token",400));
+      return next(new ErrorHandler("Invalid Token", 400));
     } else {
       bcrypt
         .hash(password, 10)
@@ -502,4 +420,4 @@ export const resetPassword = catchAsyncErros(async (req, res,next) => {
         .catch((err) => res.send({ Status: err }));
     }
   });
-})
+});
