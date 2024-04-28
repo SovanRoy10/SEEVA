@@ -4,7 +4,7 @@ import styles from "./Menu.module.css";
 
 const Menu = () => {
   return (
-    <div className={styles.menu}>
+    <div className={`${styles.menu}`}>
       {menu.map((item) => (
         <div className={styles.item} key={item.id}>
           <span className={styles.title}>{item.title}</span>
@@ -20,8 +20,11 @@ const Menu = () => {
           ))}
         </div>
       ))}
+
     </div>
+    
   );
+
 };
 
 export default Menu;
