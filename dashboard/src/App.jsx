@@ -16,11 +16,13 @@ import Footer from "./components/footer/Footer.jsx";
 import Login from "./pages/login/Login.jsx";
 import Profile from "./components/doctorsProfile/Profile.jsx";
 import AddDoctor from "./components/addDoctorForm/AddDoctors.jsx";
+import Appointments from "./components/appointments/Appointments.jsx";
+import NewAppointment from "./components/appointments/NewAppointment.jsx"
 
 function App() {
   const Layout = () => {
     return (
-      <div className="main">
+      <div className="main overflow-hidden">
         <Navbar />
         <div className="container">
           <div className="menuContainer">
@@ -45,6 +47,8 @@ function App() {
         <Route path="doctors/add" element={<AddDoctor />} />
         <Route path="doctors/:id" element={<Profile />} />
         <Route path="patients" element={<Patients />} />
+        <Route path="appointments" element={<Appointments />} />
+        <Route path="appointments/add" element={<NewAppointment />} />
         <Route path="login" element={<Login />} />
       </Route>
     )
