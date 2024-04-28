@@ -15,7 +15,7 @@ export const sendMessage = catchAsyncErros(async (req, res, next) => {
     message,
   };
 
-  const userEmail = "interestinglehmann@ysosirius.com";
+  const userEmail = "hopefulbose@getsafesurfer.com";
   let config = {
     host: process.env.MAIL_HOST,
     auth: {

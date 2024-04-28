@@ -18,7 +18,7 @@ export const isAdminAuthenticated = catchAsyncErros(async (req, res, next) => {
 });
 
 export const isUserAuthenticated = catchAsyncErros(async (req, res, next) => {
-  const tokenCookieValue = req.cookies.UserToken;
+  const tokenCookieValue = req.cookies.UserToken || req.cookies.AdminToken;
   if (!tokenCookieValue)
     return next(new ErrorHandler("User Not Authenticated!", 400));
 

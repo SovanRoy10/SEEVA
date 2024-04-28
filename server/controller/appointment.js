@@ -11,13 +11,14 @@ export const postAppointment = catchAsyncErros(async (req, res, next) => {
     phone,
     dob,
     gender,
-    appointment_date,
+    appointmentDateTime,
     department,
     doctor_name,
     hasVisited,
     address,
     reason,
   } = req.body;
+
   if (
     !name ||
     !email ||
@@ -31,7 +32,39 @@ export const postAppointment = catchAsyncErros(async (req, res, next) => {
     !reason
   ) {
     return next(new ErrorHandler("Please Fill Full Form!", 400));
+
+
+  console.log(req.body);
+
+  const fields = [
+    "firstName",
+    "lastName",
+    "email",
+    "phone",
+    "dob",
+    "gender",
+    "appointmentDateTime",
+    "department",
+    "doctor_name",
+    "address",
+  ];
+
+  // Check if all required fields are present
+  for (const field of fields) {
+    if (!req.body[field]) {
+      return next(new ErrorHandler(`Please fill the ${field} field.`, 400));
+    }
+
   }
+
+  // Checking if there's an existing appointment at the same date and time
+  const existingAppointment = await Appointment.findOne({
+    appointmentDateTime,
+  });
+  if (existingAppointment) {
+    return next(new ErrorHandler("Appointment slot already booked!", 400));
+  }
+
   const isConflict = await User.find({
     name: doctor_name,
     doctorDepartment: department,
@@ -58,7 +91,7 @@ export const postAppointment = catchAsyncErros(async (req, res, next) => {
     phone,
     dob,
     gender,
-    appointment_date,
+    appointmentDateTime,
     department,
     doctor: {
       name: doctor_name,
