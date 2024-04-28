@@ -1,21 +1,12 @@
 import { useState } from "react";
-import AddDoctor from "../addDoctorForm/AddDoctor";
+import AddDoctor from "../addDoctorForm/DoctorForm";
+import { weekdays, addDoctorFieldsUpdate } from "../../data";
 
 export default function Profile() {
   const [selectedItem, setSelectedItem] = useState("Overview");
   const handleSelectedItem = (content) => {
     setSelectedItem(content);
   };
-
-  const weekdays = [
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
-    "Sunday",
-  ];
 
   let content = "";
   if (selectedItem === "Overview") {
@@ -46,8 +37,8 @@ export default function Profile() {
               <td className="py-4 px-6">2023</td>
             </tr>
             <tr className="bg-gray-300 ">
-              <td className="py-4 px-6">SMC ID</td>
-              <td className="py-4 px-6">25</td>
+              <td className="py-4 px-6">Council</td>
+              <td className="py-4 px-6">West Bengal Medical Council</td>
             </tr>
           </tbody>
         </table>
@@ -80,7 +71,7 @@ export default function Profile() {
                       />
                     </svg>
 
-                    {val}
+                    {val.charAt(0).toUpperCase() + val.slice(1)}
                   </td>
                   <td className="py-4 px-6">
                     Time : <span className="text-blue-600">8:00 - 12:00</span>
@@ -133,7 +124,8 @@ export default function Profile() {
           </div>
           <p className="text-xl font-bold">Email</p>
           <p className="text-sm text-center">
-          Great doctor if you need your family member to get effective immediate assistance
+            Great doctor if you need your family member to get effective
+            immediate assistance
           </p>
           <p className="text-blue-600">contact@example.com</p>
         </div>
@@ -141,8 +133,13 @@ export default function Profile() {
     );
   } else if (selectedItem === "Settings") {
     content = (
-       <AddDoctor/>
-    )
+      <AddDoctor
+        name="Settings"
+        button1="Update"
+        button2="Delete"
+        fields={addDoctorFieldsUpdate}
+      />
+    );
   }
 
   return (

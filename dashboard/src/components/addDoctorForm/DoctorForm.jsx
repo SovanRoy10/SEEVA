@@ -1,7 +1,9 @@
 import { useState } from "react";
-import { councils, weekdays, addDoctorFields } from "../../data";
+import { councils, weekdays } from "../../data";
 
-function DoctorRegistrationForm() {
+function DoctorRegistrationForm(props) {
+
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -49,7 +51,7 @@ function DoctorRegistrationForm() {
       }
     }
 
-    console.log(formData);
+    // console.log(formData);
 
     // try {
     //   const response = await axios.post(
@@ -72,9 +74,12 @@ function DoctorRegistrationForm() {
       onSubmit={handleSubmit}
       className="max-w-4xl mx-auto p-5 border border-gray-300 rounded-lg shadow-lg bg-white mt-5 grid grid-cols-2 gap-4 text-slate-800"
     >
-      {addDoctorFields.map((val, index) => {
+      {props.fields.map((val, index) => {
         return (
-          <div className="mb-4" key={index}>
+          <div
+            className={`mb-4 ${props.name==="Settings"&&index === 0 ? "col-span-2" : undefined}`}
+            key={index}
+          >
             <label
               htmlFor={val[1]}
               className="block text-gray-700 text-sm font-bold mb-2"
@@ -234,13 +239,13 @@ function DoctorRegistrationForm() {
           type="submit"
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline flex-grow"
         >
-          Update
+         {props.button1}
         </button>
         <button
           type="button"
           className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline flex-grow"
         >
-          Delete
+          {props.button2}
         </button>
       </div>
     </form>

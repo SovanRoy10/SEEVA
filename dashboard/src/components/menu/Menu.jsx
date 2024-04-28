@@ -14,7 +14,7 @@ const Menu = () => {
               className={styles.listItem}
               key={listItem.id}
             >
-              <img src={listItem.icon} alt="" />
+              <img src={listItem.icon} alt="" className="h-[20px]"/>
               <span>{listItem.title}</span>
             </Link>
           ))}

@@ -23,22 +23,16 @@ export const menu = [
       },
       {
         id: 2,
-        title: "Products",
-        url: "/products",
-        icon: "product.svg",
+        title: "Patients",
+        url: "/patients",
+        icon: "patients.svg",
       },
       {
         id: 3,
-        title: "Orders",
-        url: "/orders",
-        icon: "order.svg",
-      },
-      {
-        id: 4,
-        title: "Posts",
-        url: "/posts",
-        icon: "post2.svg",
-      },
+        title: "Appointments",
+        url: "/appointments",
+        icon: "appointment.svg",
+      }, 
     ],
   },
   {
@@ -47,27 +41,21 @@ export const menu = [
     listItems: [
       {
         id: 1,
-        title: "Elements",
-        url: "/",
-        icon: "element.svg",
+        title: "Blogs",
+        url: "/blogs",
+        icon: "post.svg",
       },
       {
         id: 2,
-        title: "Notes",
-        url: "/",
+        title: "Messages",
+        url: "/messages",
         icon: "note.svg",
       },
       {
-        id: 3,
-        title: "Forms",
-        url: "/",
-        icon: "form.svg",
-      },
-      {
         id: 4,
-        title: "Calendar",
-        url: "/",
-        icon: "calendar.svg",
+        title: "Admins",
+        url: "/admins",
+        icon: "admin.svg",
       },
     ],
   },
@@ -747,7 +735,7 @@ export const weekdays = [
   "sunday",
 ];
 
-export const addDoctorFields = [
+export const addDoctorFieldsUpdate = [
   ["Name", "name", "text"],
   ["Email", "email", "email"],
   ["Password", "password", "password"],
@@ -774,3 +762,232 @@ export const addDoctorFields = [
   ["Fee Per Consultation", "feePerConsultation", "number"],
   ["Status", "status", "select", ["Pending", "Accepted", "Rejected"]],
 ];
+
+export const addDoctorFields = [
+  ["Name", "name", "text"],
+  ["Email", "email", "email"],
+  ["Password", "password", "password"],
+  ["Phone", "phone", "text"],
+  ["Date of Birth", "dob", "date"],
+  ["Gender", "gender", "select", ["Male", "Female", "Other"]], // Added 'select' with options
+  [
+    "Department",
+    "doctorDepartment",
+    "select",
+    [
+      "Eye Care",
+      "Gynecologist",
+      "Psychotherapist",
+      "Orthopedic",
+      "Dentist",
+      "Gastrologist",
+      "Urologist",
+      "Neurologist",
+    ],
+  ],
+  ["Registration Number", "registrationNumber", "text"],
+  ["Year of Registration", "year", "text"],
+  ["Fee Per Consultation", "feePerConsultation", "number"],
+];
+
+export const fakePatients= [{
+  "id": 1,
+  "name": "Thelma Arnoll",
+  "email": "tarnoll0@netscape.com"
+}, {
+  "id": 2,
+  "name": "Celestina Rattray",
+  "email": "crattray1@digg.com"
+}, {
+  "id": 3,
+  "name": "Archie Le Breton",
+  "email": "ale2@google.it"
+}, {
+  "id": 4,
+  "name": "Ivonne Hollows",
+  "email": "ihollows3@amazon.com"
+}, {
+  "id": 5,
+  "name": "Lefty Whooley",
+  "email": "lwhooley4@cnet.com"
+}, {
+  "id": 6,
+  "name": "Mozes MacGaughy",
+  "email": "mmacgaughy5@google.fr"
+}, {
+  "id": 7,
+  "name": "Debi Porrett",
+  "email": "dporrett6@linkedin.com"
+}, {
+  "id": 8,
+  "name": "Leesa Kubach",
+  "email": "lkubach7@un.org"
+}, {
+  "id": 9,
+  "name": "Mira Haker",
+  "email": "mhaker8@liveinternet.ru"
+}, {
+  "id": 10,
+  "name": "Robena McCardle",
+  "email": "rmccardle9@japanpost.jp"
+}, {
+  "id": 11,
+  "name": "Burt Seawright",
+  "email": "bseawrighta@slashdot.org"
+}, {
+  "id": 12,
+  "name": "Thaddeus O'Cassidy",
+  "email": "tocassidyb@privacy.gov.au"
+}, {
+  "id": 13,
+  "name": "Birgitta Jeanequin",
+  "email": "bjeanequinc@fda.gov"
+}, {
+  "id": 14,
+  "name": "Joe Simenon",
+  "email": "jsimenond@symantec.com"
+}, {
+  "id": 15,
+  "name": "Maryann Isenor",
+  "email": "misenore@bluehost.com"
+}, {
+  "id": 16,
+  "name": "Mattheus Josefsohn",
+  "email": "mjosefsohnf@epa.gov"
+}, {
+  "id": 17,
+  "name": "Cherish Simmers",
+  "email": "csimmersg@addthis.com"
+}, {
+  "id": 18,
+  "name": "Cherish Addy",
+  "email": "caddyh@microsoft.com"
+}, {
+  "id": 19,
+  "name": "Miof mela Mottershead",
+  "email": "mmelai@icio.us"
+}, {
+  "id": 20,
+  "name": "Skelly Gresser",
+  "email": "sgresserj@twitpic.com"
+}, {
+  "id": 21,
+  "name": "Kirbee Bendixen",
+  "email": "kbendixenk@nhs.uk"
+}, {
+  "id": 22,
+  "name": "Costa Longo",
+  "email": "clongol@chicagotribune.com"
+}, {
+  "id": 23,
+  "name": "Adey Yuryshev",
+  "email": "ayuryshevm@biglobe.ne.jp"
+}, {
+  "id": 24,
+  "name": "Sherri Lefwich",
+  "email": "slefwichn@booking.com"
+}, {
+  "id": 25,
+  "name": "Violet Harrower",
+  "email": "vharrowero@instagram.com"
+}, {
+  "id": 26,
+  "name": "Gill Tiebe",
+  "email": "gtiebep@meetup.com"
+}, {
+  "id": 27,
+  "name": "Briny Fance",
+  "email": "bfanceq@ted.com"
+}, {
+  "id": 28,
+  "name": "Donny Killiam",
+  "email": "dkilliamr@pen.io"
+}, {
+  "id": 29,
+  "name": "Fidel Purple",
+  "email": "fpurples@upenn.edu"
+}, {
+  "id": 30,
+  "name": "Evangelina Fish",
+  "email": "efisht@bloglovin.com"
+}, {
+  "id": 31,
+  "name": "Bryon Firbanks",
+  "email": "bfirbanksu@last.fm"
+}, {
+  "id": 32,
+  "name": "Michel Jacke",
+  "email": "mjackev@live.com"
+}, {
+  "id": 33,
+  "name": "Ken Aspinall",
+  "email": "kaspinallw@twitpic.com"
+}, {
+  "id": 34,
+  "name": "Nichole Muncer",
+  "email": "nmuncerx@cbc.ca"
+}, {
+  "id": 35,
+  "name": "Pail Cannop",
+  "email": "pcannopy@intel.com"
+}, {
+  "id": 36,
+  "name": "Seumas O'Hare",
+  "email": "soharez@simplemachines.org"
+}, {
+  "id": 37,
+  "name": "Madelon Tohill",
+  "email": "mtohill10@eepurl.com"
+}, {
+  "id": 38,
+  "name": "Vivianne Yorke",
+  "email": "vyorke11@huffingtonpost.com"
+}, {
+  "id": 39,
+  "name": "Carissa Gergher",
+  "email": "cgergher12@nba.com"
+}, {
+  "id": 40,
+  "name": "Lance Gerty",
+  "email": "lgerty13@techcrunch.com"
+}, {
+  "id": 41,
+  "name": "Evelyn Knee",
+  "email": "eknee14@cnbc.com"
+}, {
+  "id": 42,
+  "name": "Haskell Baynom",
+  "email": "hbaynom15@wsj.com"
+}, {
+  "id": 43,
+  "name": "Bekki Southerden",
+  "email": "bsoutherden16@hubpages.com"
+}, {
+  "id": 44,
+  "name": "Fernando Cranefield",
+  "email": "fcranefield17@psu.edu"
+}, {
+  "id": 45,
+  "name": "Guy Robart",
+  "email": "grobart18@hexun.com"
+}, {
+  "id": 46,
+  "name": "Lock Busby",
+  "email": "lbusby19@pen.io"
+}, {
+  "id": 47,
+  "name": "Alfons Rizzotto",
+  "email": "arizzotto1a@livejournal.com"
+}, {
+  "id": 48,
+  "name": "Simonne Luxon",
+  "email": "sluxon1b@tinyurl.com"
+}, {
+  "id": 49,
+  "name": "Carlynn Dewhirst",
+  "email": "cdewhirst1c@xing.com"
+}, {
+  "id": 50,
+  "name": "Teresina Male",
+  "email": "tmale1d@amazon.co.uk"
+}]

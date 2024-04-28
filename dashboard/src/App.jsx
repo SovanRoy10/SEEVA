@@ -1,6 +1,6 @@
 import Home from "./pages/home/Home.jsx";
-import Products from "./pages/products/Products.jsx";
-import Doctors from "./pages/users/Doctors.jsx";
+import Patients from "./pages/patients/Patients.jsx";
+import Doctors from "./pages/doctors/Doctors.jsx";
 import {
   createBrowserRouter,
   RouterProvider,
@@ -15,6 +15,7 @@ import Navbar from "./components/navbar/Navbar.jsx";
 import Footer from "./components/footer/Footer.jsx";
 import Login from "./pages/login/Login.jsx";
 import Profile from "./components/doctorsProfile/Profile.jsx";
+import AddDoctor from "./components/addDoctorForm/AddDoctors.jsx";
 
 function App() {
   const Layout = () => {
@@ -41,8 +42,9 @@ function App() {
       <Route path="/" element={<Layout />}>
         <Route path="/" element={<Home />} />
         <Route path="doctors" element={<Doctors />} />
+        <Route path="doctors/add" element={<AddDoctor />} />
         <Route path="doctors/:id" element={<Profile />} />
-        <Route path="products" element={<Products />} />
+        <Route path="patients" element={<Patients />} />
         <Route path="login" element={<Login />} />
       </Route>
     )
