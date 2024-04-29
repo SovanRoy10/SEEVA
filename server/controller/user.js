@@ -497,7 +497,7 @@ export const forgotPassword = catchAsyncErros(async (req, res, next) => {
           
           <ol>
               <li>Click on the following link to reset your password:
-                  <a href="${process.env.FRONTEND_URL}/reset-password/${user.id}/${token}" target="_blank">Reset Password</a>
+                  <a href="${process.env.DASHBOARD_URL}/reset-password/${user.id}/${token}" target="_blank">Reset Password</a>
               </li>
               <li>If you're unable to click on the link, please copy and paste it into your web browser's address bar.</li>
               <li>Once the link is opened, you will be directed to a page where you can create a new password for your account.</li>

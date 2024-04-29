@@ -79,7 +79,9 @@ export default function Profile() {
             {weekdays.map((val, index) => {
               return (
                 <tr
-                  className={`border-white border-b-[2px] bg-gray-${index % 2 === 0 ? "300" : "100"} ${doctor[val] ? "bg-green-300" : "bg-red-300"}`}
+                  className={`border-white border-b-[2px] bg-gray-${
+                    index % 2 === 0 ? "300" : "100"
+                  } ${doctor[val] ? "bg-green-300" : "bg-red-300"}`}
                   key={val}
                 >
                   <td className="py-4 px-6 font-bold flex gap-3">
@@ -130,7 +132,7 @@ export default function Profile() {
             Great doctor if you need your family member to get effective
             immediate assistance
           </p>
-          <p className="text-blue-600">+152 534-468-854</p>
+          <p className="text-blue-600">+91 {doctor.phone}</p>
         </div>
         <div className="flex flex-col w-1/4 gap-5 items-center text-slate-800">
           <div className="bg-blue-200 w-fit p-2 rounded-lg">
@@ -154,13 +156,14 @@ export default function Profile() {
             Great doctor if you need your family member to get effective
             immediate assistance
           </p>
-          <p className="text-blue-600">contact@example.com</p>
+          <p className="text-blue-600">{doctor.email}</p>
         </div>
       </div>
     );
   } else if (selectedItem === "Settings") {
     content = (
       <AddDoctor
+        doctor={doctor}
         name="Settings"
         button1="Update"
         button2="Delete"

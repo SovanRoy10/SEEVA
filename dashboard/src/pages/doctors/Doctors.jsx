@@ -20,7 +20,7 @@ export default function Users() {
   return (
     <div>
       <div className="flex justify-between mb-5">
-        <p>Doctors</p>
+        <p className="text-2xl font-bold">Doctors</p>
         <Link to={"/doctors/add"} className="bg-blue-600 px-5 py-1 rounded-lg">
           Add new
         </Link>

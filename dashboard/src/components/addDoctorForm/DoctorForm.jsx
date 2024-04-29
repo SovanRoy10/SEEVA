@@ -2,30 +2,33 @@ import { useState } from "react";
 import { councils, weekdays } from "../../data";
 
 function DoctorRegistrationForm(props) {
-
+  // console.log(new Date(props.doctor.dob).toLocaleDateString())
 
   const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    password: "",
-    phone: "",
-    dob: "",
-    gender: "Male",
-    doctorDepartment: "",
-    registrationNumber: "",
-    smcId: "",
-    year: "",
-    feePerConsultation: "",
-    startTime: "",
-    endTime: "",
-    monday: false,
-    tuesday: false,
-    wednesday: false,
-    thursday: false,
-    friday: false,
-    saturday: false,
-    sunday: false,
-    docAvatar: null,
+    name: props.doctor?.name || "",
+    email: props.doctor?.email || "",
+    phone: props.doctor?.phone || "",
+    dob:
+      (props.doctor &&
+        new Date(props.doctor.dob).toISOString().split("T")[0]) ||
+      "",
+    gender: props.doctor?.gender || "",
+    doctorDepartment: props.doctor?.doctorDepartment || "",
+    registrationNumber: props.doctor?.registrationNumber || "",
+    smcId: props.doctor?.smcId || "",
+    year: props.doctor?.year || "",
+    feePerConsultation: props.doctor?.feePerConsultation || "",
+    status : props.doctor?.doctorStatus || "",
+    startTime: props.doctor?.startTime || "",
+    endTime: props.doctor?.endTime || "",
+    monday: props.doctor?.monday || "",
+    tuesday: props.doctor?.tuesday || "",
+    wednesday: props.doctor?.wednesday || "",
+    thursday: props.doctor?.thursday || "",
+    friday: props.doctor?.friday || "",
+    saturday: props.doctor?.staturday || "",
+    sunday: props.doctor?.sunday || "",
+    docAvatar: props.doctor?.profileImageUrl || null,
   });
 
   const handleChange = (e) => {
@@ -77,7 +80,7 @@ function DoctorRegistrationForm(props) {
       {props.fields.map((val, index) => {
         return (
           <div
-            className={`mb-4 ${props.name==="Settings"&&index === 0 ? "col-span-2" : undefined}`}
+            className={`mb-4 ${index === 0 ? "col-span-2" : undefined}`}
             key={index}
           >
             <label
@@ -143,25 +146,6 @@ function DoctorRegistrationForm(props) {
 
       <div className="mb-4">
         <label
-          htmlFor="year"
-          className="block text-gray-700 text-sm font-bold mb-2"
-        >
-          Year of Registration:
-        </label>
-        <input
-          type="text"
-          name="year"
-          id="year"
-          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          value={formData.year}
-          onChange={handleChange}
-          placeholder="Year of Registration"
-          required
-        />
-      </div>
-
-      <div className="mb-4">
-        <label
           htmlFor="startTime"
           className="block text-gray-700 text-sm font-bold mb-2"
         >
@@ -222,8 +206,15 @@ function DoctorRegistrationForm(props) {
           htmlFor="docAvatar"
           className="block text-gray-700 text-sm font-bold mb-2"
         >
-          Doctor Avatar:
+          Doctor Image:
         </label>
+        {props.doctor && (
+          <img
+            src={props.doctor.profileImageUrl}
+            alt="profileImage"
+            className="w-[150px] my-5 border border-black"
+          />
+        )}
         <input
           type="file"
           name="docAvatar"
@@ -239,7 +230,7 @@ function DoctorRegistrationForm(props) {
           type="submit"
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline flex-grow"
         >
-         {props.button1}
+          {props.button1}
         </button>
         <button
           type="button"

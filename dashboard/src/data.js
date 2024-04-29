@@ -65,14 +65,14 @@ export const menu = [
     listItems: [
       {
         id: 1,
-        title: "Settings",
-        url: "/",
-        icon: "setting.svg",
+        title: "Forgot Password",
+        url: "/forgot-password",
+        icon: "forgot-password.svg",
       },
       {
         id: 2,
         title: "Profile",
-        url: "/users/1",
+        url: "/profile",
         icon: "user.svg",
       },
     ],
@@ -738,7 +738,6 @@ export const weekdays = [
 export const addDoctorFieldsUpdate = [
   ["Name", "name", "text"],
   ["Email", "email", "email"],
-  ["Password", "password", "password"],
   ["Phone", "phone", "text"],
   ["Date of Birth", "dob", "date"],
   ["Gender", "gender", "select", ["Male", "Female", "Other"]], // Added 'select' with options

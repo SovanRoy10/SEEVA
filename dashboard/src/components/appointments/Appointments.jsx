@@ -21,6 +21,11 @@ export default function Appointments() {
   }, []);
 
   // console.log(appointments[0])
+  const getStatusStyle = (status) => {
+    if (status === "Accepted") return "text-green-600 font-bold";
+    else if (status === "Pending") return "text-orange-600 font-bold";
+    else return "text-red-600 font-bold";
+  };
 
   return (
     <div>
@@ -114,7 +119,7 @@ export default function Appointments() {
                       {appointment.hasVisited ? "Yes" : "No"}
                     </span>
                   </td>
-                  <td className="py-4 px-6">{appointment.status}</td>
+                  <td className={`py-4 px-6 ${getStatusStyle(appointment.status)}`}>{appointment.status}</td>
                   <td className="py-4 px-6 flex gap-5 items-center justify-center flex-col">
                     <div>
                       <svg
