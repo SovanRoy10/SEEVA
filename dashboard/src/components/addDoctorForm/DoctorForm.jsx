@@ -1,8 +1,12 @@
 import { useState } from "react";
 import { councils, weekdays } from "../../data";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function DoctorRegistrationForm(props) {
   // console.log(new Date(props.doctor.dob).toLocaleDateString())
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     name: props.doctor?.name || "",
@@ -18,16 +22,16 @@ function DoctorRegistrationForm(props) {
     smcId: props.doctor?.smcId || "",
     year: props.doctor?.year || "",
     feePerConsultation: props.doctor?.feePerConsultation || "",
-    status : props.doctor?.doctorStatus || "",
+    status: props.doctor?.doctorStatus || "",
     startTime: props.doctor?.startTime || "",
     endTime: props.doctor?.endTime || "",
-    monday: props.doctor?.monday || "",
-    tuesday: props.doctor?.tuesday || "",
-    wednesday: props.doctor?.wednesday || "",
-    thursday: props.doctor?.thursday || "",
-    friday: props.doctor?.friday || "",
-    saturday: props.doctor?.staturday || "",
-    sunday: props.doctor?.sunday || "",
+    monday: props.doctor?.monday || false,
+    tuesday: props.doctor?.tuesday || false,
+    wednesday: props.doctor?.wednesday || false,
+    thursday: props.doctor?.thursday || false,
+    friday: props.doctor?.friday || false,
+    saturday: props.doctor?.saturday || false,
+    sunday: props.doctor?.sunday || false,
     docAvatar: props.doctor?.profileImageUrl || null,
   });
 
@@ -47,29 +51,32 @@ function DoctorRegistrationForm(props) {
     e.preventDefault();
     const data = new FormData();
     for (const key in formData) {
-      if (key === "docAvatar" && formData[key]) {
-        data.append(key, formData[key]);
-      } else {
+      if (key !== "status") {
+        // console.log(key , formData[key])
         data.append(key, formData[key]);
       }
+
+      // console.log(data);
     }
 
-    // console.log(formData);
-
-    // try {
-    //   const response = await axios.post(
-    //     "http://localhost:4000/api/doctors/register",
-    //     data,
-    //     {
-    //       headers: { "Content-Type": "multipart/form-data" },
-    //     }
-    //   );
-    //   console.log("Success:", response.data);
-    //   alert("Doctor registered successfully!");
-    // } catch (error) {
-    //   console.error("Error:", error.response.data);
-    //   alert("Failed to register doctor.");
-    // }
+    // console.log(data);
+    try {
+      // console.log(formData);
+      const response = await axios.post(
+        "http://localhost:4000/api/v1/user/doctor/addNew",
+        data,
+        {
+          headers: { "Content-Type": "multipart/form-data" },
+        }
+      );
+      toast.success("Doctor registered successfully!");
+      navigate("/doctors");
+    } catch (error) {
+      console.error("Error:", error);
+      const errorMessage =
+        error.response?.data?.message || "Failed to register doctor.";
+      toast.error(errorMessage);
+    }
   };
 
   return (

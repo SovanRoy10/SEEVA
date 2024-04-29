@@ -9,7 +9,7 @@ export default function Messages() {
   useEffect(() => {
     const getAllMessages = async () => {
       const request = await axios.get(
-        "https://seeva-server.vercel.app/api/v1/message/getAll",
+        "http://localhost:4000/api/v1/message/getAll",
         { withCredentials: true }
       );
       setMessages(request.data.messages);

@@ -439,9 +439,9 @@ export const login = catchAsyncErros(async (req, res, next) => {
         expires: new Date(
           Date.now() + process.env.COOKIE_EXPIRE * 24 * 60 * 60 * 1000
         ),
-        httpOnly: true,
-        secure: true, // Ensure cookies are sent over HTTPS
-        sameSite: "None", // Essential for cross-site/cross-origin requests
+        // httpOnly: true,
+        // secure: true, // Ensure cookies are sent over HTTPS
+        // sameSite: "None", // Essential for cross-site/cross-origin requests
       })
       .json({
         success: true,

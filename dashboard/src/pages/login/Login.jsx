@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-import Cookies from "js-cookie"; // Importing js-cookie
 
 export default function Login() {
   const navigate = useNavigate();
@@ -23,14 +22,18 @@ export default function Login() {
     event.preventDefault();
     try {
       const response = await axios.post(
-        "https://seeva-server.vercel.app/api/v1/user/login",
+        "http://localhost:4000/api/v1/user/login",
         inputs,
         { withCredentials: true }
       );
       localStorage.setItem("user", JSON.stringify(response.data.user));
       toast.success("Login successful");
-      //   navigate("/"); // Redirect the user
+      navigate("/"); // Redirect the user
     } catch (error) {
+      setInputs({
+        email: "",
+        password: "",
+      });
       const errorMessage =
         error.response?.data?.message || "An unexpected error occurred";
       toast.error(errorMessage);
@@ -43,7 +46,7 @@ export default function Login() {
         <div className="w-full bg-white rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0">
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl">
-              Sign in to SEEVA
+              Sign in to SEEVA ADMIN
             </h1>
             <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit}>
               <div>
