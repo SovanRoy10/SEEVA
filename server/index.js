@@ -41,7 +41,7 @@ const port = process.env.PORT || 4000;
 
 app.use(
   cors({
-    origin: ["https://myseeva.vercel.app/", "https://seeva-admin.vercel.app/"], // Add your production frontend URL here
+    origin: ["https://myseeva.vercel.app", "https://seeva-admin.vercel.app"], // Add your production frontend URL here
     methods: ["GET", "POST", "DELETE", "PUT"],
     credentials: true, 
   })
