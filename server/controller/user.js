@@ -443,6 +443,7 @@ export const login = catchAsyncErros(async (req, res, next) => {
       .json({
         success: true,
         message: "User logged in successfully!",
+        user : jwtToken.user
       });
   } catch (error) {
     return next(new ErrorHandler(error, 400));
@@ -524,6 +525,15 @@ export const resetPassword = catchAsyncErros(async (req, res, next) => {
   const { id, token } = req.params;
   const { password } = req.body;
   if (!password) return next(new ErrorHandler("Enter Your New Password", 400));
+  if (password.length < 6)
+    return next(
+      new ErrorHandler("Password must contain atleast 6 characters", 400)
+    );
+
+  if (password.length > 64)
+    return next(
+      new ErrorHandler("Password must contain atmax 64 characters", 400)
+    );
 
   jwt.verify(token, process.env.JWT_SECRET_KEY, function (err, decoded) {
     if (err) {

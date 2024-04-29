@@ -1,6 +1,7 @@
 import MessageCard from "../../components/message/MessageCard";
 import axios from "axios";
 import { useState, useEffect } from "react";
+import toast from "react-hot-toast";
 
 export default function Messages() {
   const [messages, setMessages] = useState([]);
