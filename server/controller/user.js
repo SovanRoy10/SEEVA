@@ -439,11 +439,14 @@ export const login = catchAsyncErros(async (req, res, next) => {
         expires: new Date(
           Date.now() + process.env.COOKIE_EXPIRE * 24 * 60 * 60 * 1000
         ),
+        httpOnly: true,
+        secure: true, // Ensure cookies are sent over HTTPS
+        sameSite: "None", // Essential for cross-site/cross-origin requests
       })
       .json({
         success: true,
         message: "User logged in successfully!",
-        user : jwtToken.user
+        user: jwtToken.user,
       });
   } catch (error) {
     return next(new ErrorHandler(error, 400));

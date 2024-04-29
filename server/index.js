@@ -31,14 +31,21 @@ const port = process.env.PORT || 4000;
 
 // cors for connecting frontend with backend
 
+// app.use(
+//   cors({
+//     origin: [process.env.FRONTEND_URL, process.env.DASHBOARD_URL],
+//     methods: ["GET", "POST", "DELETE", "PUT"],
+//     credentials: true,
+//   })
+// );
+
 app.use(
   cors({
-    origin: [process.env.FRONTEND_URL, process.env.DASHBOARD_URL],
+    origin: ["https://myseeva.vercel.app/", "https://seeva-admin.vercel.app/"], // Add your production frontend URL here
     methods: ["GET", "POST", "DELETE", "PUT"],
-    credentials: true,
+    credentials: true, 
   })
 );
-
 
 app.use(express.static(path.resolve("./public")));
 app.use(cookieParser());

@@ -65,12 +65,18 @@ export const menu = [
     listItems: [
       {
         id: 1,
+        title: "Login",
+        url: "/login",
+        icon: "signin.svg",
+      },
+      {
+        id: 2,
         title: "Forgot Password",
         url: "/forgot-password",
         icon: "forgot-password.svg",
       },
       {
-        id: 2,
+        id: 3,
         title: "Profile",
         url: "/profile",
         icon: "user.svg",

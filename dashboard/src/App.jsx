@@ -21,6 +21,7 @@ import Messages from "./pages/messages/Messages.jsx";
 import ForgotPassword from "./components/auth/ForgotPassword.jsx";
 import ResetPassword from "./components/auth/ResetPassword.jsx";
 import Profile from "./pages/profile/Profile.jsx";
+import Login from "./pages/login/Login.jsx";
 
 import { Toaster } from "react-hot-toast";
 
@@ -57,6 +58,7 @@ function App() {
         <Route path="forgot-password" element={<ForgotPassword />} />
         <Route path="reset-password/:id/:token" element={<ResetPassword />} />
         <Route path="profile" element={<Profile />} />
+        <Route path="login" element={<Login />} />
       </Route>
     )
   );
