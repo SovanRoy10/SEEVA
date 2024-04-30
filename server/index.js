@@ -21,6 +21,7 @@ cloudinary.v2.config({
 import messageRouter from "./router/messageRouter.js";
 import userRouter from "./router/userRouter.js";
 import appointmentRouter from "./router/appointmentRouter.js";
+import blogRouter from "./router/blogRouter.js"
 
 // middlewares
 import { errorMiddleware } from "./middlewares/errorMiddleware.js";
@@ -65,6 +66,7 @@ app.use(
 app.use("/api/v1/message", messageRouter);
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/appointment", appointmentRouter);
+app.use("/api/v1/blog", blogRouter);
 
 // app.use("/api", authRouter);  /* Rupal made this route */
 

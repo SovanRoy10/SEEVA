@@ -25,6 +25,8 @@ import Login from "./pages/login/Login.jsx";
 import Admins from "./pages/admins/Admins.jsx";
 import AddAdmin from "./components/adminForm/AddAdmin.jsx";
 
+import RTE from "./components/editor/RTE.jsx";
+
 import { Toaster } from "react-hot-toast";
 
 function App() {
@@ -63,6 +65,7 @@ function App() {
         <Route path="reset-password/:id/:token" element={<ResetPassword />} />
         <Route path="profile" element={<Profile />} />
         <Route path="login" element={<Login />} />
+        <Route path="blogs/add" element={<RTE />} />
       </Route>
     )
   );
