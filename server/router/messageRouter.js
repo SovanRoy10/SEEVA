@@ -1,5 +1,5 @@
 import express from "express";
-import { sendMessage, getAllMessages } from "../controller/message.js";
+import { sendMessage, getAllMessages,deleteMessage } from "../controller/message.js";
 import {
   isUserAuthenticated,
   isAdminAuthenticated,
@@ -9,5 +9,6 @@ const router = express.Router();
 
 router.post("/send", isUserAuthenticated, sendMessage);
 router.get("/getAll", isAdminAuthenticated, getAllMessages);
+router.delete("/delete/:id", isAdminAuthenticated, deleteMessage);
 
 export default router;

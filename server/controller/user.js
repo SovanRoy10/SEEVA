@@ -76,61 +76,59 @@ import jwt from "jsonwebtoken";
 // });
 
 export const addNewAdmin = catchAsyncErros(async (req, res, next) => {
-  const { name, email, password, dob, gender, profileImageUrl, phone } =
-    req.body;
-  if (!name || !email || !password || !dob || !gender || !phone)
-    return next(new ErrorHandler("Please Fill Full Form!", 400));
+  const { name, email, password, dob, gender, phone } = req.body;
+
+  // Check for required fields
+  if (!name || !email || !password || !dob || !gender || !phone) {
+    return next(new ErrorHandler("Please fill all required fields!", 400));
+  }
 
   // Find the existing user by email
   const existingUser = await User.findOne({ email });
 
   if (existingUser) {
+    // Check if the existing user is already an admin
     if (existingUser.role.includes("Admin")) {
-      return next(
-        new ErrorHandler("The user of this email is already an admin", 400)
-      );
+      return next(new ErrorHandler("This user is already an admin.", 400));
     }
 
-    const updatedUser = await User.findOneAndUpdate(
-      // Query: Find user by email
-      { email },
-
-      // Update: Push "Admin" role into the role array
+    // Update the user to include "Admin" in their roles
+    const updatedUser = await User.findByIdAndUpdate(
+      existingUser._id,
       {
-        $push: {
-          role: ["Admin"],
-          dob,
-          gender,
-          phone,
-        },
+        $push: { role: "Admin" },  
+        $set: { dob, gender, phone },  // Update these fields only if provided
       },
-
-      //options: Return the modified document after update
-      { new: true }
+      { new: true, runValidators: true }  // Return the updated document and run validators
     );
 
     return res.status(200).json({
       success: true,
-      message: "User role updated to admin!",
+      message: "User role updated to admin successfully!",
+      user: updatedUser
     });
   } else {
+    // Hash the password before saving it in the database
+    const hashedPassword = await hashPassword(password);  
+
     const newUser = await User.create({
       name,
       email,
-      password,
+      password: hashedPassword,
       dob,
       gender,
-      profileImageUrl,
       phone,
-      role: ["Admin"], // Assigning role as admin in an array
+      role: ["Admin"]
     });
 
     return res.status(200).json({
       success: true,
       message: "Admin user created successfully!",
+      user: newUser
     });
   }
 });
+
 
 export const getAllDoctors = catchAsyncErros(async (req, res, next) => {
   const doctors = await User.find({ role: "Doctor" });

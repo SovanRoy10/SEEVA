@@ -22,6 +22,8 @@ import ForgotPassword from "./components/auth/ForgotPassword.jsx";
 import ResetPassword from "./components/auth/ResetPassword.jsx";
 import Profile from "./pages/profile/Profile.jsx";
 import Login from "./pages/login/Login.jsx";
+import Admins from "./pages/admins/Admins.jsx";
+import AddAdmin from "./components/adminForm/AddAdmin.jsx";
 
 import { Toaster } from "react-hot-toast";
 
@@ -55,6 +57,8 @@ function App() {
         <Route path="appointments" element={<Appointments />} />
         <Route path="appointments/add" element={<NewAppointment />} />
         <Route path="messages" element={<Messages />} />
+        <Route path="admins" element={<Admins />} />
+        <Route path="admins/add" element={<AddAdmin />} />
         <Route path="forgot-password" element={<ForgotPassword />} />
         <Route path="reset-password/:id/:token" element={<ResetPassword />} />
         <Route path="profile" element={<Profile />} />
