@@ -22,6 +22,7 @@ import Login from "./components/Pages/Login";
 import Register from "./components/Pages/Register";
 import ForgotPassword from "./components/Pages/ForgotPassword";
 import ResetPassword from "./components/Pages/ResetPassword";
+import DoctorSignup from "./components/Section/DoctorSignup/Page";
 
 function App() {
   const { pathname } = useLocation();
@@ -39,6 +40,7 @@ function App() {
 
         <Route path="register" element={<Register />} />
         <Route path="about" element={<About />} />
+        <Route path="doctor-signup" element={<DoctorSignup />} />
         <Route path="doctors" element={<Doctors />} />
         <Route path="doctors/:doctorId" element={<DoctorDetails />} />
         <Route path="blog" element={<Blog />} />

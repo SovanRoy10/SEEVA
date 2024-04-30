@@ -52,11 +52,15 @@ export default function Header({ logoSrc, variant }) {
                       <Link to="/about">About</Link>
                     </li>
                     <li>
+                      <Link to="/doctor-signup">Be our Doctor</Link>
+                    </li>
+                    <li>
                       <Link to="/doctors">Find Doctor</Link>
                     </li>
                     <li>
                       <Link to="/blog">Blog</Link>
                     </li>
+
                     <li className="menu-item-has-children">
                       <Link to="/">Pages</Link>
                       <DropDown>

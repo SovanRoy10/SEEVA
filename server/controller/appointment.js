@@ -32,7 +32,7 @@ export const postAppointment = catchAsyncErros(async (req, res, next) => {
     !reason
   ) {
     return next(new ErrorHandler("Please Fill Full Form!", 400));
-
+  }
 
   console.log(req.body);
 
@@ -54,7 +54,6 @@ export const postAppointment = catchAsyncErros(async (req, res, next) => {
     if (!req.body[field]) {
       return next(new ErrorHandler(`Please fill the ${field} field.`, 400));
     }
-
   }
 
   // Checking if there's an existing appointment at the same date and time
