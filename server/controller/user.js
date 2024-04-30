@@ -571,3 +571,136 @@ export const getAllPatients = catchAsyncErros(async (req, res, next) => {
     patients,
   });
 });
+
+export const removeUser = catchAsyncErros(async (req, res, next) => {
+  const { id } = req.params;
+  const user = await User.findById(id);
+  if (!user) {
+    return next(new ErrorHandler("User Not Found!", 404));
+  }
+  await user.deleteOne();
+  res.status(200).json({
+    success: true,
+    message: "User Deleted!",
+  });
+});
+
+export const getAllAdmins = catchAsyncErros(async (req, res, next) => {
+  const admins = await User.find({ role: "Admin" });
+  if (!admins) return next(ErrorHandler("No Admin Found", 400));
+  res.status(200).json({
+    success: true,
+    admins,
+  });
+});
+
+export const getAllApprovedDoctors = catchAsyncErros(async (req, res, next) => {
+  const doctors = await User.find({ doctorStatus: "Accepted" });
+
+  if (doctors.length === 0) {
+    return res.status(404).json({
+      success: false,
+      message: "No approved doctors found",
+    });
+  }
+  res.status(200).json({
+    success: true,
+    doctors,
+  });
+});
+
+export const updateDoctor = catchAsyncErros(async (req, res, next) => {
+  const { id } = req.params;
+
+  if (!id) return next(new ErrorHandler("Doctor ID is not found!", 400));
+
+  const {
+    doctorDepartment,
+    email,
+    gender,
+    phone,
+    feePerConsultation,
+    status,
+    startTime,
+    endTime,
+    monday,
+    tuesday,
+    wednesday,
+    thursday,
+    friday,
+    saturday,
+    sunday,
+  } = req.body;
+
+  if (
+    !doctorDepartment ||
+    !email ||
+    !gender ||
+    !phone ||
+    !feePerConsultation ||
+    !status ||
+    !startTime ||
+    !endTime ||
+    !monday ||
+    !tuesday ||
+    !wednesday ||
+    !thursday ||
+    !friday ||
+    !saturday ||
+    !sunday
+  )
+    return next(new ErrorHandler("Fill up form!", 400));
+
+  // Initialize update object
+  let updateData = {
+    doctorDepartment,
+    email,
+    gender,
+    phone,
+    feePerConsultation,
+    startTime,
+    endTime,
+    monday,
+    tuesday,
+    wednesday,
+    thursday,
+    friday,
+    saturday,
+    sunday,
+    doctorStatus: status,
+  };
+
+  // Handling profile image update
+  if (req.files && req.files.docAvatar) {
+    const { docAvatar } = req.files;
+    const allowedFormats = ["image/png", "image/jpeg", "image/webp"];
+    if (!allowedFormats.includes(docAvatar.mimetype)) {
+      return next(new ErrorHandler("File format not supported!", 400));
+    }
+
+    const cloudinaryResponse = await cloudinary.uploader.upload(
+      docAvatar.tempFilePath
+    );
+    if (cloudinaryResponse.error) {
+      return next(
+        new ErrorHandler("Failed to upload doctor avatar to Cloudinary", 500)
+      );
+    }
+    updateData.profileImageUrl = cloudinaryResponse.secure_url;
+  }
+
+  // Perform the update
+  const updatedDoctor = await User.findByIdAndUpdate(id, updateData, {
+    new: true,
+    runValidators: true,
+  });
+  if (!updatedDoctor) {
+    return next(new ErrorHandler("Doctor not found", 404));
+  }
+
+  res.status(200).json({
+    success: true,
+    message: "Doctor updated successfully!",
+    doctor: updatedDoctor,
+  });
+});

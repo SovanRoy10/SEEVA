@@ -184,7 +184,7 @@ export default function Profile() {
             <img
               src={doctor.profileImageUrl}
               alt="doctor-profile"
-              className="w-[100px] rounded-full"
+              className="w-[100px] h-[100px] rounded-full object-cover"
             />
             <div className="ml-3">
               <p>{doctor.name}</p>

@@ -20,7 +20,7 @@ export default function DoctorCard(props) {
           <img
             src={props.doctor.profileImageUrl}
             alt="profile-picture"
-            className="w-full"
+            className="w-full h-40 object-cover"
           />
         </div>
         <div className="p-6 text-center">

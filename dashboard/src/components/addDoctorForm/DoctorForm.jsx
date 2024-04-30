@@ -50,13 +50,16 @@ function DoctorRegistrationForm(props) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const data = new FormData();
-    for (const key in formData) {
-      if (key !== "status") {
-        // console.log(key , formData[key])
+    if (props.name === "Settings") {
+      for (const key in formData) {
         data.append(key, formData[key]);
       }
-
-      // console.log(data);
+    } else {
+      for (const key in formData) {
+        if (key !== "status") {
+          data.append(key, formData[key]);
+        }
+      }
     }
 
     // console.log(data);

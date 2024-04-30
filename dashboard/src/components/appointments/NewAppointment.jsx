@@ -1,6 +1,10 @@
 import React, { useState } from "react";
+import axios from "axios";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const AppointmentForm = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -22,10 +26,28 @@ const AppointmentForm = () => {
     }));
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(formData);
+    // console.log(formData);
     // Submit logic here
+
+    try {
+      const response = await axios.post(
+        "http://localhost:4000/api/v1/appointment/post",
+        formData,
+        { withCredentials: true }
+      );
+      toast.success("Booked appointment");
+      navigate("/appointments");
+    } catch (error) {
+      console.error("Failed to book appointment:", error);
+      const msg = error.data?.message;
+      toast.error(msg);
+    }
+  };
+
+  const handleCancel = () => {
+    navigate("/appointments");
   };
 
   return (
@@ -232,6 +254,7 @@ const AppointmentForm = () => {
       </button>
       <button
         type="button"
+        onClick={handleCancel}
         className="text-white bg-red-500 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center"
       >
         Cancel
