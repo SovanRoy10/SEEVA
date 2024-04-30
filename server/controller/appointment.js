@@ -18,23 +18,6 @@ export const postAppointment = catchAsyncErros(async (req, res, next) => {
     address,
   } = req.body;
 
-
-  if (
-    !name ||
-    !email ||
-    !phone ||
-    !dob ||
-    !gender ||
-    !appointment_date ||
-    !department ||
-    !doctor_name ||
-    !address ||
-    !reason
-  ) {
-    return next(new ErrorHandler("Please Fill Full Form!", 400));
-  }
-
-
   console.log(req.body);
 
   const fields = [
@@ -147,4 +130,3 @@ export const deleteAppointment = catchAsyncErros(async (req, res, next) => {
     message: "Appointment Deleted!",
   });
 });
-
