@@ -1,16 +1,16 @@
-import React from 'react';
-import BannerSectionStyle3 from '../Section/BannerSection/BannerSectionStyle3';
-import AppointmentWithContactInfoSection from '../Section/AppointmentWithContactInfoSection';
-import Section from '../Section';
-import { pageTitle } from '../../helpers/PageTitle';
+import React from "react";
+import BannerSectionStyle3 from "../Section/BannerSection/BannerSectionStyle3";
+import AppointmentWithContactInfoSection from "../Section/AppointmentWithContactInfoSection";
+import Section from "../Section";
+import { pageTitle } from "../../helpers/PageTitle";
 
 export default function Appointments() {
-  pageTitle('Appointments');
+  pageTitle("Appointments");
   return (
     <>
       <BannerSectionStyle3
         bgUrl="/images/appointments/banner_bg.svg"
-        imgUrl="/images/appointments/banner_img.png"
+        imgUrl="https://images.pexels.com/photos/7088488/pexels-photo-7088488.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
         title="Don’t Let Your Health Take a Backseat!"
         subTitle="Fill out the appointment form below to schedule a consultation with one of our healthcare professionals."
       />

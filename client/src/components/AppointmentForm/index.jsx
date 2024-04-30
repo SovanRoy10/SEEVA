@@ -3,7 +3,10 @@ import axios from "axios";
 import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import Datetime from "react-datetime";
+import "react-datetime/css/react-datetime.css";
 import { toast } from "react-toastify";
+import { departments } from "../data";
 
 export default function AppointmentForm() {
   const [appointment_date, setSelectedDate] = useState(null);
@@ -12,19 +15,10 @@ export default function AppointmentForm() {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState(0);
   const [address, setAddress] = useState("");
-
-  const [reason, setReasonForVisit] = useState("");
-  const [department, setDepartment] = useState("");
+  // const [department, setDepartment] = useState("");
   const [gender, setGender] = useState("");
   const [doctor_name, setDoctor] = useState("");
-  const [hasVisited, setIsVisited] = useState(false);
 
-  const handleReasonChange = (event) => {
-    setReasonForVisit(event.target.value);
-  };
-  const handleDepartmentChange = (event) => {
-    setDepartment(event.target.value);
-  };
   const handleGenderChange = (event) => {
     setGender(event.target.value);
   };
@@ -40,11 +34,10 @@ export default function AppointmentForm() {
       appointment_date: appointment_date
         ? appointment_date.toISOString()
         : null,
-      department,
+      // department,
       doctor_name,
-      hasVisited,
+
       address,
-      reason,
     };
     try {
       await axios.post("http://localhost:8000/api/post", formData);
@@ -57,11 +50,22 @@ export default function AppointmentForm() {
   return (
     <form action="#" className="row" onSubmit={handleSubmit}>
       <div className="col-lg-6">
-        <label className="cs_input_label cs_heading_color">Name</label>
+        <label className="cs_input_label cs_heading_color">First Name</label>
         <input
           type="text"
           className="cs_form_field"
-          placeholder="Sovan Roy"
+          placeholder="Sovan"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+        <div className="cs_height_42 cs_height_xl_25" />
+      </div>
+      <div className="col-lg-6">
+        <label className="cs_input_label cs_heading_color">Last Name</label>
+        <input
+          type="text"
+          className="cs_form_field"
+          placeholder="Roy"
           value={name}
           onChange={(e) => setName(e.target.value)}
         />
@@ -70,9 +74,8 @@ export default function AppointmentForm() {
       <div className="col-lg-6">
         <label className="cs_input_label cs_heading_color">Phone Number</label>
         <input
-          type="text"
+          type="number"
           className="cs_form_field"
-          placeholder="(123) 456 - 789"
           value={phone}
           onChange={(e) => setPhone(e.target.value)}
         />
@@ -84,17 +87,24 @@ export default function AppointmentForm() {
         </label>
 
         <div className="cs_with_icon_input">
-          <DatePicker
+          {/* <DatePicker
             selected={appointment_date}
             onChange={(date) => setSelectedDate(date)}
             dateFormat="dd/MM/yyyy"
             minDate={new Date()}
             isClearable
             placeholderText="dd/mm/yyyy"
+          /> */}
+          <Datetime
+            value={appointment_date}
+            onChange={(date) => setSelectedDate(date)}
+            inputProps={{ placeholder: "dd/mm/yyyy hh:mm" }}
+            dateFormat="DD/MM/YYYY"
+            timeFormat="HH:mm"
+            closeOnSelect
+            isClearable
+            placeholderText="dd/mm/yyyy hh:mm"
           />
-          <i>
-            <Icon icon="fa6-solid:calendar-days" />
-          </i>
         </div>
         <div className="cs_height_42 cs_height_xl_25" />
       </div>
@@ -127,6 +137,28 @@ export default function AppointmentForm() {
         />
         <div className="cs_height_42 cs_height_xl_25" />
       </div>
+      <div className="col-lg-6 mb-4">
+        <label className="cs_input_label cs_heading_color">Department</label>
+        <select className="cs_form_field" name="department" id="department">
+          {departments.map((department) => (
+            <option value={department}>
+              {department.charAt(0).toUpperCase() + department.slice(1)}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      <div className="col-lg-6">
+        <label className="cs_input_label cs_heading_color">Doctor Name</label>
+        <input
+          type="text"
+          className="cs_form_field"
+          placeholder="Dr Rupal Paul"
+          value={doctor_name}
+          onChange={(e) => setDoctor(e.target.value)}
+        />
+        <div className="cs_height_42 cs_height_xl_25" />
+      </div>
       <div className="col-lg-12">
         <label className="cs_input_label cs_heading_color">Address</label>
         <input
@@ -136,60 +168,6 @@ export default function AppointmentForm() {
           value={address}
           onChange={(e) => setAddress(e.target.value)}
         />
-        <div className="cs_height_42 cs_height_xl_25" />
-      </div>
-      <div className="col-lg-12">
-        <label className="cs_input_label cs_heading_color">
-          Reason for Visit
-        </label>
-        <div className="cs_radio_group">
-          <div className="cs_radio_wrap">
-            <input
-              className="cs_radio_input"
-              type="radio"
-              name="reasonForVisit"
-              id="routineCheckup"
-              defaultValue="routineCheckup"
-              value="Routine Checkup"
-              checked={reason === "Routine Checkup"}
-              onChange={handleReasonChange}
-            />
-            <label className="cs_radio_label" htmlFor="routineCheckup">
-              Routine Checkup
-            </label>
-          </div>
-          <div className="cs_radio_wrap">
-            <input
-              className="cs_radio_input"
-              type="radio"
-              name="reasonForVisit"
-              id="newPatientVisit"
-              defaultValue="newPatientVisit"
-              defaultChecked=""
-              value="New Patient Visit"
-              checked={reason === "New Patient Visit"}
-              onChange={handleReasonChange}
-            />
-            <label className="cs_radio_label" htmlFor="newPatientVisit">
-              New Patient Visit
-            </label>
-          </div>
-          <div className="cs_radio_wrap">
-            <input
-              className="cs_radio_input"
-              type="radio"
-              name="reasonForVisit"
-              id="specificConcern"
-              defaultValue="specificConcern"
-              value="Specific Concern"
-              checked={reason === "Specific Concern"}
-              onChange={handleReasonChange}
-            />
-            <label className="cs_radio_label" htmlFor="specificConcern">
-              Specific Concern
-            </label>
-          </div>
-        </div>
         <div className="cs_height_42 cs_height_xl_25" />
       </div>
       <div className="col-lg-12">
@@ -229,122 +207,7 @@ export default function AppointmentForm() {
         </div>
         <div className="cs_height_42 cs_height_xl_25" />
       </div>
-      <div className="col-lg-12">
-        <label className="cs_input_label cs_heading_color">Department</label>
-        <div className="cs_radio_group">
-          <div className="cs_radio_wrap">
-            <input
-              className="cs_radio_input"
-              type="radio"
-              name="department"
-              id="pediatric"
-              defaultValue="pediatric"
-              value="Pediatric"
-              checked={department === "Pediatric"}
-              onChange={handleDepartmentChange}
-            />
-            <label className="cs_radio_label" htmlFor="pediatric">
-              Pediatric
-            </label>
-          </div>
-          <div className="cs_radio_wrap">
-            <input
-              className="cs_radio_input"
-              type="radio"
-              name="department"
-              id="obstetricsGynecology"
-              defaultValue="obstetricsGynecology"
-              defaultChecked=""
-              value="Obstetrics and Gynecology"
-              checked={department === "Obstetrics and Gynecology"}
-              onChange={handleDepartmentChange}
-            />
-            <label className="cs_radio_label" htmlFor="obstetricsGynecology">
-              Obstetrics and Gynecology
-            </label>
-          </div>
-          <div className="cs_radio_wrap">
-            <input
-              className="cs_radio_input"
-              type="radio"
-              name="department"
-              id="cardiology"
-              defaultValue="cardiology"
-              value="Cardiology"
-              checked={department === "Cardiology"}
-              onChange={handleDepartmentChange}
-            />
-            <label className="cs_radio_label" htmlFor="cardiology">
-              Cardiology
-            </label>
-          </div>
-          <div className="cs_radio_wrap">
-            <input
-              className="cs_radio_input"
-              type="radio"
-              name="department"
-              id="neurology"
-              defaultValue="neurology"
-              value="Neurology"
-              checked={department === "Neurology"}
-              onChange={handleDepartmentChange}
-            />
-            <label className="cs_radio_label" htmlFor="neurology">
-              Neurology
-            </label>
-          </div>
-        </div>
-        <div className="cs_height_42 cs_height_xl_25" />
-      </div>
-      <div className="col-lg-6">
-        <label className="cs_input_label cs_heading_color">Doctor Name</label>
-        <input
-          type="text"
-          className="cs_form_field"
-          placeholder="Dr Rupal Paul"
-          value={doctor_name}
-          onChange={(e) => setDoctor(e.target.value)}
-        />
-        <div className="cs_height_42 cs_height_xl_25" />
-      </div>
-      <div className="col-lg-6">
-        <label className="cs_input_label cs_heading_color">
-          Visited Before?
-        </label>
-        <div className="cs_radio_group">
-          <div className="cs_radio_wrap">
-            <input
-              className="cs_radio_input"
-              type="radio"
-              name="visit"
-              id="visited"
-              defaultValue="routineCheckup"
-              value="true"
-              checked={hasVisited === true}
-              onChange={() => setIsVisited(true)}
-            />
-            <label className="cs_radio_label" htmlFor="routineCheckup">
-              Yes
-            </label>
-          </div>
-          <div className="cs_radio_wrap">
-            <input
-              className="cs_radio_input"
-              type="radio"
-              name="visit"
-              id="notVisited"
-              defaultValue="newPatientVisit"
-              value="false"
-              checked={hasVisited === false}
-              onChange={() => setIsVisited(false)}
-            />
-            <label className="cs_radio_label" htmlFor="newPatientVisit">
-              No
-            </label>
-          </div>
-        </div>
-        <div className="cs_height_42 cs_height_xl_25" />
-      </div>
+
       <div className="col-lg-12">
         <button className="cs_btn cs_style_1">
           <span>Submit</span>

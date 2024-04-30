@@ -5,11 +5,11 @@ const router = express.Router();
 import {
   forgotPassword,
   login,
-  register,
+  patientRegister,
   resetPassword,
-} from "../controller/auth.js";
+} from "../controller/user.js";
 
-router.post("/register", register);
+router.post("/register", patientRegister);
 router.post("/login", login);
 router.post("/forgot-password", forgotPassword);
 router.post("/reset-password/:id/:token", resetPassword);

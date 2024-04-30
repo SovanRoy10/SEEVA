@@ -1,37 +1,37 @@
 import React from "react";
-import BannerSectionStyle7 from "../Section/BannerSection/BannerSectionStyle7";
-import Section from "../Section";
-import AppointmentSection from "../Section/AppointmentSection";
-import BreadcrumbStyle2 from "../Breadcrumb/BreadcrumbStyle2";
-import AboutSectionStyle2 from "../Section/AboutSection/AboutSectionStyle2";
-import FeaturesSectionStyle3 from "../Section/FeaturesSection/FeaturesSectionStyle3";
-import TeamSectionStyle3 from "../Section/TeamSection/TeamSectionStyle3";
-import { pageTitle } from "../../helpers/PageTitle";
+import AboutSectionStyle2 from "../AboutSection/AboutSectionStyle2";
+import FeaturesSectionStyle3 from "../FeaturesSection/FeaturesSectionStyle3";
+import { pageTitle } from "../../../helpers/PageTitle";
+import BannerSectionStyle7 from "../BannerSection/BannerSectionStyle7";
+import BreadcrumbStyle2 from "../../Breadcrumb/BreadcrumbStyle2";
+import TeamSectionStyle3 from "../TeamSection/TeamSectionStyle3";
+import Section from "..";
+import SignupSection from "./FormSection";
 
 const featureData = [
   {
-    title: "Vaccinations Department",
+    title: "Neurology Department",
     subTitle:
-      "The Pediatric Department provides vaccinations to help protect children from a range of illnesses and diseases, including measles.",
-    iconUrl: "/images/departments/icon_9.svg",
+      "The neurology department specializes in diagnosing and treating disorders of the nervous system, including the brain, spinal cord, nerves, and muscles.",
+    iconUrl: "https://www.svgrepo.com/show/39705/brain.svg",
   },
   {
-    title: "Management of acute illnesses",
+    title: "Cardiology Department",
     subTitle:
-      "The Pediatric Department provides treatment for common childhood illnesses, such as ear infections, strep throat, and viral infections.",
-    iconUrl: "/images/departments/icon_10.svg",
-  },
-  {
-    title: "Treatment of chronic conditions",
-    subTitle:
-      "The Pediatric Department provides ongoing care and treatment for children with chronic conditions such as asthma, diabetes, and allergies.",
+      "The cardiology department focuses on the diagnosis and treatment of heart-related conditions, ranging from coronary artery disease to heart rhythm abnormalities.",
     iconUrl: "/images/departments/icon_11.svg",
   },
   {
-    title: "Developmental screenings",
+    title: "Obstetrics and Gynecology",
+    subTitle:
+      "The Obstetrics and Gynecology department specializes in women's reproductive health, encompassing prenatal care, childbirth, gynecological surgeries, and comprehensive wellness services.",
+    iconUrl: "https://www.svgrepo.com/show/493390/baby.svg",
+  },
+  {
+    title: "Pediatric Department",
     subTitle:
       "The Pediatric Department provides regular developmental screenings to identify any delays or concerns and provide early intervention services.",
-    iconUrl: "/images/departments/icon_12.svg",
+    iconUrl: "https://www.svgrepo.com/show/530384/food.svg",
   },
 ];
 
@@ -113,21 +113,21 @@ export default function DepartmentDetails() {
       <BreadcrumbStyle2 />
       <Section topMd={135} topLg={100} topXl={100}>
         <AboutSectionStyle2
-          title="Pediatric Department"
-          subTitle="This department specializes in the care of infants, children, adolescents, and provides a range of services including preventive care, developmental screenings, and treatment of childhood illnesses and conditions."
-          imgUrl="/images/departments/department_img_1.png"
+          title="We need more Doctors!🩺"
+          subTitle="Seeking additional doctors to join our team in delivering exceptional patient care across various specialties. Candidates should be passionate, compassionate, and dedicated to providing high-quality medical services to our community."
+          imgUrl="https://images.pexels.com/photos/4769130/pexels-photo-4769130.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
         />
       </Section>
 
       <Section topMd={170} topLg={145} topXl={90}>
         <FeaturesSectionStyle3
-          sectionTitle="Treatments"
-          sectionTitleUp="MORE TYPE OF"
+          sectionTitle="Departments"
+          sectionTitleUp="Actively hiring"
           data={featureData}
         />
       </Section>
       <Section topMd={200} topLg={150} topXl={100}>
-        <TeamSectionStyle3 sectionTitle="Related Doctor" data={doctorData} />
+        <TeamSectionStyle3 sectionTitle="Admins" data={doctorData} />
       </Section>
 
       {/* Start Appointment Section */}
@@ -140,16 +140,16 @@ export default function DepartmentDetails() {
         bottomXl={110}
         id="appointment"
       >
-        <AppointmentSection
-          sectionTitle="Appointment"
-          sectionTitleUp="BOOK AN"
+        <SignupSection
+          sectionTitle="Doctor"
+          sectionTitleUp="Join us as a"
           imgUrl="/images/home_1/appointment.jpeg"
         />
       </Section>
       {/* End Appointment Section */}
       <Section className="cs_footer_margin_0">
         <BannerSectionStyle7
-          imgUrl="/images/departments/banner_img_3.png"
+          imgUrl="https://images.pexels.com/photos/2324837/pexels-photo-2324837.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
           bgUrl="/images/departments/banner_bg_3.svg"
           title="Don’t Let Your Health <br />Take a Backseat!"
           subTitle="Schedule an appointment with one of our experienced <br />medical professionals today!"

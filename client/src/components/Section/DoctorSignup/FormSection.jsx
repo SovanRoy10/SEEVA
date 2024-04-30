@@ -1,9 +1,13 @@
 import React from "react";
 import SectionHeading from "../../SectionHeading";
-import AppointmentForm from "../../AppointmentForm";
 import Spacing from "../../Spacing";
+import SignupForm from "./DoctorForm";
 
-export default function AppointmentSection({ sectionTitle, sectionTitleUp }) {
+export default function SignupSection({
+  sectionTitle,
+  sectionTitleUp,
+  imgUrl,
+}) {
   return (
     <div className="cs_shape_wrap">
       <div className="cs_shape_2">
@@ -39,14 +43,10 @@ export default function AppointmentSection({ sectionTitle, sectionTitleUp }) {
           <div className="col-lg-6">
             <SectionHeading title={sectionTitle} titleUp={sectionTitleUp} />
             <Spacing md="72" lg="50" />
-            <AppointmentForm />
+            <SignupForm />
           </div>
           <div className="col-lg-5 offset-lg-1 text-center">
-            <img
-              src="https://images.pexels.com/photos/40568/medical-appointment-doctor-healthcare-40568.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-              alt="Appointment"
-              className="cs_radius_30"
-            />
+            <img src={imgUrl} alt="Appointment" className="cs_radius_30" />
           </div>
         </div>
       </div>
