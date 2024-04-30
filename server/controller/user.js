@@ -96,7 +96,14 @@ export const addNewAdmin = catchAsyncErros(async (req, res, next) => {
       { email },
 
       // Update: Push "Admin" role into the role array
-      { $push: { role: "Admin" } },
+      {
+        $push: {
+          role: ["Admin"],
+          dob,
+          gender,
+          phone,
+        },
+      },
 
       //options: Return the modified document after update
       { new: true }
