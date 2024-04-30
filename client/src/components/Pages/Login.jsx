@@ -12,10 +12,14 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await axios.post("http://localhost:8000/api/login", {
-        email,
-        password,
-      });
+      const { data } = await axios.post(
+        "http://localhost:8000/api/login",
+        {
+          email,
+          password,
+        },
+        { withCredentials: true }
+      );
 
       window.localStorage.setItem("user", JSON.stringify(data));
 

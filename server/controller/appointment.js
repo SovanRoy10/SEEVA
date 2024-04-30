@@ -5,8 +5,8 @@ import { User } from "../models/user.js";
 
 export const postAppointment = catchAsyncErros(async (req, res, next) => {
   const {
-    name,
-
+    firstName,
+    lastName,
     email,
     phone,
     dob,
@@ -16,8 +16,8 @@ export const postAppointment = catchAsyncErros(async (req, res, next) => {
     doctor_name,
     hasVisited,
     address,
-    reason,
   } = req.body;
+
 
   if (
     !name ||
@@ -33,6 +33,7 @@ export const postAppointment = catchAsyncErros(async (req, res, next) => {
   ) {
     return next(new ErrorHandler("Please Fill Full Form!", 400));
   }
+
 
   console.log(req.body);
 
@@ -84,8 +85,8 @@ export const postAppointment = catchAsyncErros(async (req, res, next) => {
   const doctorId = isConflict[0]._id;
   const patientId = req.user._id;
   const appointment = await Appointment.create({
-    name,
-
+    firstName,
+    lastName,
     email,
     phone,
     dob,
@@ -97,7 +98,6 @@ export const postAppointment = catchAsyncErros(async (req, res, next) => {
     },
     hasVisited,
     address,
-    reason,
     doctorId,
     patientId,
   });
@@ -147,3 +147,4 @@ export const deleteAppointment = catchAsyncErros(async (req, res, next) => {
     message: "Appointment Deleted!",
   });
 });
+

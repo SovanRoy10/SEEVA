@@ -1,6 +1,27 @@
-import { fakePatients } from "../../data";
+
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 export default function Patients() {
+  const [patients, setPatients] = useState([]);
+
+  useEffect( () => {
+    const getAllPatients = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:4000/api/v1/user/patients",
+          { withCredentials: true }
+        );
+        setPatients(response.data.patients);
+      } catch (error) {
+        console.error("Error fetching data: ", error);
+      }
+    };
+    getAllPatients();
+  }, []);
+
+  // console.log(patients)
+
   return (
     <div>
       <p className="text-2xl font-bold">Patients</p>
@@ -21,11 +42,14 @@ export default function Patients() {
             </tr>
           </thead>
           <tbody>
-            {fakePatients.map((Patient, index) => {
+            {patients.map((Patient, index) => {
               return (
-                <tr className="bg-white border-b">
-                  <td className="py-4 px-6"> {Patient.id}</td>
-                  <td className="py-4 px-6">{Patient.name}</td>
+                <tr className="bg-white border-b" key={index}>
+                  <td className="py-4 px-6"> {index+1}</td>
+                  <td className="py-4 px-6 flex gap-5 items-center">
+                    <img src={Patient.profileImageUrl} alt="" className="w-10"/>
+                    <p>{Patient.name}</p>
+                  </td>
                   <td className="py-4 px-6">{Patient.email}</td>
                 </tr>
               );

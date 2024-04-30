@@ -15,6 +15,7 @@ export function createTokenForUser(user) {
       expiresIn: process.env.JWT_EXPIRES,
     }),
     tokenName: user.role.includes("Admin") ? "AdminToken" : "UserToken",
+    user
   };
 }
 

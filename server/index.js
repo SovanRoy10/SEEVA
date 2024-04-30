@@ -6,9 +6,7 @@ import cookieParser from "cookie-parser";
 import fileUpload from "express-fileupload";
 
 import morgan from "morgan";
-import authRouter from "./router/auth.js";
 import path from "path";
-
 
 // cloudinary
 import cloudinary from "cloudinary";
@@ -22,7 +20,8 @@ cloudinary.v2.config({
 // routers
 import messageRouter from "./router/messageRouter.js";
 import userRouter from "./router/userRouter.js";
-import appointmentRouter from "./router/appointmentRouter.js"
+import appointmentRouter from "./router/appointmentRouter.js";
+import blogRouter from "./router/blogRouter.js"
 
 // middlewares
 import { errorMiddleware } from "./middlewares/errorMiddleware.js";
@@ -37,10 +36,17 @@ app.use(
   cors({
     origin: [process.env.FRONTEND_URL, process.env.DASHBOARD_URL],
     methods: ["GET", "POST", "DELETE", "PUT"],
-    origin: process.env.FRONTEND_URL,
     credentials: true,
   })
 );
+
+// app.use(
+//   cors({
+//     origin: ["https://myseeva.vercel.app", "https://seeva-admin.vercel.app"], // Add your production frontend URL here
+//     methods: ["GET", "POST", "DELETE", "PUT"],
+//     credentials: true, 
+//   })
+// );
 
 app.use(express.static(path.resolve("./public")));
 app.use(cookieParser());
@@ -60,6 +66,7 @@ app.use(
 app.use("/api/v1/message", messageRouter);
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/appointment", appointmentRouter);
+app.use("/api/v1/blog", blogRouter);
 
 // app.use("/api", authRouter);  /* Rupal made this route */
 

@@ -1,8 +1,31 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import AddDoctor from "../addDoctorForm/DoctorForm";
-import { weekdays, addDoctorFieldsUpdate } from "../../data";
+import { weekdays, addDoctorFieldsUpdate, getCouncil } from "../../data";
+import { useParams } from "react-router-dom";
+import axios from "axios";
 
 export default function Profile() {
+  let { id } = useParams();
+
+  const [doctor, setDoctor] = useState({});
+
+  useEffect(() => {
+    const fetchDoctor = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:4000/api/v1/user/doctors/${id}`,
+          { withCredentials: true }
+        );
+        setDoctor(response.data.user);
+      } catch (error) {
+        console.error("Error fetching data: ", error);
+      }
+    };
+    fetchDoctor();
+  }, []);
+
+  // console.log(typeof doctor.smcId)
+
   const [selectedItem, setSelectedItem] = useState("Overview");
   const handleSelectedItem = (content) => {
     setSelectedItem(content);
@@ -26,19 +49,23 @@ export default function Profile() {
           <tbody>
             <tr className="bg-gray-100 border-b ">
               <td className="py-4 px-6">Doctor Department</td>
-              <td className="py-4 px-6">Gynecologist</td>
+              <td className="py-4 px-6">{doctor?.doctorDepartment}</td>
             </tr>
             <tr className="bg-gray-300 ">
               <td className="py-4 px-6">Registration Number</td>
-              <td className="py-4 px-6">92657</td>
+              <td className="py-4 px-6">{doctor?.registrationNumber}</td>
             </tr>
             <tr className="bg-gray-100 ">
               <td className="py-4 px-6">Year</td>
-              <td className="py-4 px-6">2023</td>
+              <td className="py-4 px-6">{doctor?.year}</td>
             </tr>
             <tr className="bg-gray-300 ">
               <td className="py-4 px-6">Council</td>
-              <td className="py-4 px-6">West Bengal Medical Council</td>
+              <td className="py-4 px-6">{getCouncil(doctor?.smcId)?.name}</td>
+            </tr>
+            <tr className="bg-gray-100 ">
+              <td className="py-4 px-6">Fee Per Consultation</td>
+              <td className="py-4 px-6">{doctor?.feePerConsultation}</td>
             </tr>
           </tbody>
         </table>
@@ -52,7 +79,9 @@ export default function Profile() {
             {weekdays.map((val, index) => {
               return (
                 <tr
-                  className={`bg-gray-${index % 2 === 0 ? "300" : "100"}`}
+                  className={`border-white border-b-[2px] bg-gray-${
+                    index % 2 === 0 ? "300" : "100"
+                  } ${doctor[val] ? "bg-green-300" : "bg-red-300"}`}
                   key={val}
                 >
                   <td className="py-4 px-6 font-bold flex gap-3">
@@ -70,7 +99,7 @@ export default function Profile() {
                         d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
                       />
                     </svg>
-
+                    {console.log(doctor.monday)}
                     {val.charAt(0).toUpperCase() + val.slice(1)}
                   </td>
                   <td className="py-4 px-6">
@@ -103,7 +132,7 @@ export default function Profile() {
             Great doctor if you need your family member to get effective
             immediate assistance
           </p>
-          <p className="text-blue-600">+152 534-468-854</p>
+          <p className="text-blue-600">+91 {doctor.phone}</p>
         </div>
         <div className="flex flex-col w-1/4 gap-5 items-center text-slate-800">
           <div className="bg-blue-200 w-fit p-2 rounded-lg">
@@ -127,13 +156,14 @@ export default function Profile() {
             Great doctor if you need your family member to get effective
             immediate assistance
           </p>
-          <p className="text-blue-600">contact@example.com</p>
+          <p className="text-blue-600">{doctor.email}</p>
         </div>
       </div>
     );
   } else if (selectedItem === "Settings") {
     content = (
       <AddDoctor
+        doctor={doctor}
         name="Settings"
         button1="Update"
         button2="Delete"
@@ -152,13 +182,13 @@ export default function Profile() {
           <div className="h-1/2 w-full"></div>
           <div className="absolute ml-5 flex items-center">
             <img
-              src="https://doctris-react-admin.vercel.app/static/media/01.6ac85de7298319b1f8d5.jpg"
+              src={doctor.profileImageUrl}
               alt="doctor-profile"
-              className="w-[100px] rounded-full"
+              className="w-[100px] h-[100px] rounded-full object-cover"
             />
             <div className="ml-3">
-              <p>Dr. Calvin Carlo</p>
-              <p className="text-black">Orthopedic</p>
+              <p>{doctor.name}</p>
+              <p className="text-black">{doctor.doctorDepartment}</p>
             </div>
           </div>
         </div>

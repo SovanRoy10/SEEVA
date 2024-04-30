@@ -65,14 +65,20 @@ export const menu = [
     listItems: [
       {
         id: 1,
-        title: "Settings",
-        url: "/",
-        icon: "setting.svg",
+        title: "Login",
+        url: "/login",
+        icon: "signin.svg",
       },
       {
         id: 2,
+        title: "Forgot Password",
+        url: "/forgot-password",
+        icon: "forgot-password.svg",
+      },
+      {
+        id: 3,
         title: "Profile",
-        url: "/users/1",
+        url: "/profile",
         icon: "user.svg",
       },
     ],
@@ -749,7 +755,6 @@ export const departments = [
 export const addDoctorFieldsUpdate = [
   ["Name", "name", "text"],
   ["Email", "email", "email"],
-  ["Password", "password", "password"],
   ["Phone", "phone", "text"],
   ["Date of Birth", "dob", "date"],
   ["Gender", "gender", "select", ["Male", "Female", "Other"]], // Added 'select' with options
@@ -800,6 +805,7 @@ export const addDoctorFields = [
   ["Year of Registration", "year", "text"],
   ["Fee Per Consultation", "feePerConsultation", "number"],
 ];
+
 
 export const fakePatients = [
   {
@@ -1053,3 +1059,9 @@ export const fakePatients = [
     email: "tmale1d@amazon.co.uk",
   },
 ];
+
+
+export const getCouncil = (id) => {
+  return councils.find((council) => council.id == id);
+};
+

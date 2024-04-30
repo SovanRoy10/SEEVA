@@ -10,7 +10,11 @@ import {
   forgotPassword,
   resetPassword,
   getAllPatients,
-  getSingleUser
+  getSingleUser,
+  removeUser,
+  getAllAdmins,
+  getAllApprovedDoctors,
+  updateDoctor
 } from "../controller/user.js";
 import {
   isAdminAuthenticated,
@@ -32,5 +36,10 @@ router.get("/patients/:id", isAdminAuthenticated, getSingleUser);
 router.post("/admin/logout", isAdminAuthenticated, logoutAdmin);
 router.post("/patient/logout", isUserAuthenticated, logoutPatient);
 router.post("/doctor/addNew", addNewDoctor);
+
+router.delete("/:id", isAdminAuthenticated, removeUser);
+router.get("/admins", isAdminAuthenticated, getAllAdmins);
+router.get("/approved-doctors", isAdminAuthenticated, getAllApprovedDoctors);
+router.put("/doctor/update/:id", isAdminAuthenticated, updateDoctor);
 
 export default router;
