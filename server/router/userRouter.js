@@ -14,7 +14,8 @@ import {
   removeUser,
   getAllAdmins,
   getAllApprovedDoctors,
-  updateDoctor
+  updateDoctor,
+  getDoctorsByDepartment,
 } from "../controller/user.js";
 import {
   isAdminAuthenticated,
@@ -39,7 +40,8 @@ router.post("/doctor/addNew", addNewDoctor);
 
 router.delete("/:id", isAdminAuthenticated, removeUser);
 router.get("/admins", isAdminAuthenticated, getAllAdmins);
-router.get("/approved-doctors", isAdminAuthenticated, getAllApprovedDoctors);
+router.get("/approved-doctors", getAllApprovedDoctors);
 router.put("/doctor/update/:id", isAdminAuthenticated, updateDoctor);
+router.get("/doctor/:departmentSlug", getDoctorsByDepartment);
 
 export default router;

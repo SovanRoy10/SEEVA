@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import AddDoctor from "../addDoctorForm/DoctorForm";
+import DoctorRegistrationForm from "../addDoctorForm/DoctorForm";
 import { weekdays, addDoctorFieldsUpdate, getCouncil } from "../../data";
 import { useParams } from "react-router-dom";
 import axios from "axios";
@@ -23,8 +23,6 @@ export default function Profile() {
     };
     fetchDoctor();
   }, []);
-
-  // console.log(typeof doctor.smcId)
 
   const [selectedItem, setSelectedItem] = useState("Overview");
   const handleSelectedItem = (content) => {
@@ -103,7 +101,7 @@ export default function Profile() {
                     {val.charAt(0).toUpperCase() + val.slice(1)}
                   </td>
                   <td className="py-4 px-6">
-                    Time : <span className="text-blue-600">8:00 - 12:00</span>
+                    Time : <span className="text-blue-600">{doctor.startTime} - {doctor.endTime}</span>
                   </td>
                 </tr>
               );
@@ -162,19 +160,20 @@ export default function Profile() {
     );
   } else if (selectedItem === "Settings") {
     content = (
-      <AddDoctor
+      <DoctorRegistrationForm
         doctor={doctor}
         name="Settings"
         button1="Update"
         button2="Delete"
         fields={addDoctorFieldsUpdate}
+        id={doctor._id}
       />
     );
   }
 
   return (
     <div>
-      <h2 className="mb-5">Doctor Profile & Settings</h2>
+      <h2 className="mb-5 text-2xl font-bold">Doctor Profile & Settings</h2>
 
       <div className="bg-slate-100 rounded-xl min-h-screen">
         <div className="h-40 relative flex flex-col justify-center w-full">

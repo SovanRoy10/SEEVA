@@ -742,10 +742,8 @@ export const weekdays = [
 ];
 
 export const addDoctorFieldsUpdate = [
-  ["Name", "name", "text"],
   ["Email", "email", "email"],
   ["Phone", "phone", "text"],
-  ["Date of Birth", "dob", "date"],
   ["Gender", "gender", "select", ["Male", "Female", "Other"]], // Added 'select' with options
   [
     "Department",
@@ -762,8 +760,6 @@ export const addDoctorFieldsUpdate = [
       "Neurologist",
     ],
   ],
-  ["Registration Number", "registrationNumber", "text"],
-  ["Year of Registration", "year", "text"],
   ["Fee Per Consultation", "feePerConsultation", "number"],
   ["Status", "status", "select", ["Pending", "Accepted", "Rejected"]],
 ];
@@ -799,4 +795,15 @@ export const addDoctorFields = [
 export const getCouncil = (id) => {
   return councils.find((council) => council.id == id);
 };
+
+export const doctorDepartment = [
+  "Eye Care",
+  "Gynecologist",
+  "Psychotherapist",
+  "Orthopedic",
+  "Dentist",
+  "Gastrologist",
+  "Urologist",
+  "Neurologist",
+]
 

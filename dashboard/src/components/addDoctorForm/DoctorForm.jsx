@@ -44,15 +44,39 @@ function DoctorRegistrationForm(props) {
     }
   };
   const handleFileChange = (e) => {
-    setFormData({ ...formData, docAvatar: e.target.files[0] });
+    const file = e.target.files[0];
+    if (file) {
+      setFormData((prevState) => ({ ...prevState, docAvatar: file }));
+    }
   };
+
+  // console.log(props.doctor._id);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const data = new FormData();
     if (props.name === "Settings") {
       for (const key in formData) {
-        data.append(key, formData[key]);
+        if (
+          key === "doctorDepartment" ||
+          key === "email" ||
+          key === "gender" ||
+          key === "phone" ||
+          key === "feePerConsultation" ||
+          key === "startTime" ||
+          key === "endTime" ||
+          key === "monday" ||
+          key === "tuesday" ||
+          key === "wednesday" ||
+          key === "thursday" ||
+          key === "friday" ||
+          key === "saturday" ||
+          key === "sunday" ||
+          key === "status" ||
+          key === "docAvatar"
+        ) {
+          data.append(key, formData[key]);
+        }
       }
     } else {
       for (const key in formData) {
@@ -63,22 +87,61 @@ function DoctorRegistrationForm(props) {
     }
 
     // console.log(data);
-    try {
-      // console.log(formData);
-      const response = await axios.post(
-        "http://localhost:4000/api/v1/user/doctor/addNew",
-        data,
-        {
-          headers: { "Content-Type": "multipart/form-data" },
-        }
-      );
-      toast.success("Doctor registered successfully!");
+    if (props.name === "Settings") {
+      try {
+        const response = await axios.put(
+          `http://localhost:4000/api/v1/user/doctor/update/${props.doctor._id}`,
+          data,
+          {
+            headers: { "Content-Type": "multipart/form-data" },
+            withCredentials: true,
+          }
+        );
+
+        toast.success("Doctor Profile Updated successfully!");
+        navigate("/doctors");
+      } catch (error) {
+        console.error("Error:", error);
+        const errorMessage =
+          error.response?.data?.message || "Failed to update doctor.";
+        toast.error(errorMessage);
+      }
+    } else {
+      try {
+        const response = await axios.post(
+          "http://localhost:4000/api/v1/user/doctor/addNew",
+          data,
+          {
+            headers: { "Content-Type": "multipart/form-data" },
+            withCredentials: true,
+          }
+        );
+        toast.success("Doctor registered successfully!");
+        navigate("/doctors");
+      } catch (error) {
+        console.error("Error:", error);
+        const errorMessage =
+          error.response?.data?.message || "Failed to register doctor.";
+        toast.error(errorMessage);
+      }
+    }
+  };
+
+  const handleClickButton2 = async () => {
+    if (props.name === "Settings") {
+      try {
+        const response = await axios.delete(
+          `http://localhost:4000/api/v1/user/${props.id}`,
+          { withCredentials: true }
+        );
+        toast.success("Doctor Account Deleted Successfully!");
+        navigate("/doctors");
+      } catch (error) {
+        const errorMessage = error.data?.message || error.message;
+        toast.error(errorMessage);
+      }
+    } else {
       navigate("/doctors");
-    } catch (error) {
-      console.error("Error:", error);
-      const errorMessage =
-        error.response?.data?.message || "Failed to register doctor.";
-      toast.error(errorMessage);
     }
   };
 
@@ -90,7 +153,9 @@ function DoctorRegistrationForm(props) {
       {props.fields.map((val, index) => {
         return (
           <div
-            className={`mb-4 ${index === 0 ? "col-span-2" : undefined}`}
+            className={`mb-4 ${
+              props.name !== "Settings" && index === 0 && "col-span-2"
+            }`}
             key={index}
           >
             <label
@@ -131,28 +196,30 @@ function DoctorRegistrationForm(props) {
         );
       })}
 
-      <div className="mb-4">
-        <label
-          htmlFor="smcId"
-          className="block text-gray-700 text-sm font-bold mb-2"
-        >
-          Council
-        </label>
-        <select
-          name="smcId"
-          id="smcId"
-          className="block appearance-none w-full bg-white border border-gray-400 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
-          value={formData.smcId}
-          onChange={handleChange}
-          required
-        >
-          {councils.map((council) => (
-            <option key={council.id} value={council.id}>
-              {council.name}
-            </option>
-          ))}
-        </select>
-      </div>
+      {props.name !== "Settings" && (
+        <div className="mb-4">
+          <label
+            htmlFor="smcId"
+            className="block text-gray-700 text-sm font-bold mb-2"
+          >
+            Council
+          </label>
+          <select
+            name="smcId"
+            id="smcId"
+            className="block appearance-none w-full bg-white border border-gray-400 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
+            value={formData.smcId}
+            onChange={handleChange}
+            required
+          >
+            {councils.map((council) => (
+              <option key={council.id} value={council.id}>
+                {council.name}
+              </option>
+            ))}
+          </select>
+        </div>
+      )}
 
       <div className="mb-4">
         <label
@@ -231,7 +298,7 @@ function DoctorRegistrationForm(props) {
           id="docAvatar"
           className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           onChange={handleFileChange}
-          required
+          required={props.id ? false : true}
         />
       </div>
 
@@ -244,6 +311,7 @@ function DoctorRegistrationForm(props) {
         </button>
         <button
           type="button"
+          onClick={handleClickButton2}
           className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline flex-grow"
         >
           {props.button2}

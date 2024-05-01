@@ -96,20 +96,20 @@ export const addNewAdmin = catchAsyncErros(async (req, res, next) => {
     const updatedUser = await User.findByIdAndUpdate(
       existingUser._id,
       {
-        $push: { role: "Admin" },  
-        $set: { dob, gender, phone },  // Update these fields only if provided
+        $push: { role: "Admin" },
+        $set: { dob, gender, phone }, // Update these fields only if provided
       },
-      { new: true, runValidators: true }  // Return the updated document and run validators
+      { new: true, runValidators: true } // Return the updated document and run validators
     );
 
     return res.status(200).json({
       success: true,
       message: "User role updated to admin successfully!",
-      user: updatedUser
+      user: updatedUser,
     });
   } else {
     // Hash the password before saving it in the database
-    const hashedPassword = await hashPassword(password);  
+    const hashedPassword = await hashPassword(password);
 
     const newUser = await User.create({
       name,
@@ -118,17 +118,16 @@ export const addNewAdmin = catchAsyncErros(async (req, res, next) => {
       dob,
       gender,
       phone,
-      role: ["Admin"]
+      role: ["Admin"],
     });
 
     return res.status(200).json({
       success: true,
       message: "Admin user created successfully!",
-      user: newUser
+      user: newUser,
     });
   }
 });
-
 
 export const getAllDoctors = catchAsyncErros(async (req, res, next) => {
   const doctors = await User.find({ role: "Doctor" });
@@ -709,3 +708,32 @@ export const updateDoctor = catchAsyncErros(async (req, res, next) => {
     doctor: updatedDoctor,
   });
 });
+
+export const getDoctorsByDepartment = catchAsyncErros(
+  async (req, res, next) => {
+    const { departmentSlug } = req.params;
+
+    const department = convertSlugToDepartment(departmentSlug);
+    if (!department)
+      return next(new ErrorHandler("Please Provide The Department", 400));
+
+    const doctors = await User.find({
+      role: "Doctor",
+      doctorDepartment: department,
+      doctorStatus: "Accepted",
+    });
+
+    res.status(200).json({
+      success: true,
+      count: doctors.length,
+      doctors,
+    });
+  }
+);
+
+// Function to convert a slug back to the original department name
+function convertSlugToDepartment(slug) {
+  return slug
+    .replace(/-/g, " ") // Replace hyphens with spaces
+    .replace(/\b\w/g, (letter) => letter.toUpperCase()); // Capitalize the first letter of each word
+}

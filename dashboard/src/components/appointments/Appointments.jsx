@@ -33,6 +33,33 @@ export default function Appointments() {
     }
   };
 
+  const handleChangeVisited = async (id, val) => {
+    const newVal = !val;
+    try {
+      const response = await axios.put(
+        `http://localhost:4000/api/v1/appointment/update/${id}`,
+        { hasVisited: newVal },
+        { withCredentials: true }
+      );
+
+      if (response.data.success) {
+        setAppointments((prevAppointments) =>
+          prevAppointments.map((appointment) => {
+            return appointment._id === id
+              ? { ...appointment, hasVisited: newVal }
+              : appointment;
+          })
+        );
+        toast.success("Visited updated successfully");
+      } else {
+        toast.error("Failed to Visited status: " + response.data.message);
+      }
+    } catch (error) {
+      console.error("Failed to update Visited status:", error);
+      toast.error("Failed to update Visited Status");
+    }
+  };
+
   useEffect(() => {
     const fetchAppointments = async () => {
       try {
@@ -157,15 +184,18 @@ export default function Appointments() {
                     <td className="py-4 px-6">{appointment.doctor.name}</td>
                     <td className="py-4 px-6">{appointment.address}</td>
                     <td className="py-4 px-6">
-                      <span
+                      <button
                         className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
                           appointment.hasVisited
                             ? "bg-green-100 text-green-800"
                             : "bg-red-100 text-red-800"
                         }`}
+                        onClick={() =>
+                          handleChangeVisited(appointment._id, appointment.hasVisited)
+                        }
                       >
                         {appointment.hasVisited ? "Yes" : "No"}
-                      </span>
+                      </button>
                     </td>
                     <td className={`py-4 px-6`}>
                       <select

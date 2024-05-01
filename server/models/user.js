@@ -34,6 +34,7 @@ const userSchema = new Schema(
       unique: true,
       minLength: [10, "Phone Number Must Contain At Least 10 Digits!"],
       maxLength: [10, "Phone Number Must Contain At Max 10 Digits!"],
+      unique: true,
     },
     dob: {
       type: Date,
