@@ -17,16 +17,21 @@ export default function BlogCard() {
             exercitationem praesentium nihil.
           </p>
         </div>
-        <div className="flex items-center">
-          <img
-            className="w-10 h-10 rounded-full mr-4"
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS25GV-N6pGwDIns71mhCCIDEEMw0o7sfxnIAqTyfvEZbg_tFgY"
-            alt="Avatar of Jonathan Reinink"
-          />
-          <div className="text-sm">
-            <p className="text-gray-900 leading-none">Jonathan Reinink</p>
-            <p className="text-gray-600">Aug 18</p>
+        <div className="flex items-center justify-between">
+          <div className="flex items-center">
+            <img
+              className="w-7 h-7 rounded-full mr-4"
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS25GV-N6pGwDIns71mhCCIDEEMw0o7sfxnIAqTyfvEZbg_tFgY"
+              alt="Avatar of Jonathan Reinink"
+            />
+            <div className="text-xs">
+              <p className="text-gray-900 leading-none">Jonathan Reinink</p>
+              <p className="text-gray-600">Aug 18</p>
+            </div>
           </div>
+          <button className="bg-blue-600 text-xs p-1 rounded-md">
+            Learn More
+          </button>
         </div>
       </div>
     </div>
