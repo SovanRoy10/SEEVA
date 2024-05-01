@@ -58,7 +58,6 @@ export const handleGetSingleBlog = catchAsyncErros(async (req, res, next) => {
   return res.status(200).json({
     success: true,
     blog,
-    user: req.user,
     comments: comments,
   });
 });

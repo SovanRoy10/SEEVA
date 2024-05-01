@@ -78,7 +78,7 @@ const AppointmentForm = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    // console.log(formData);
+    console.log(formData);
 
     try {
       const response = await axios.post(
