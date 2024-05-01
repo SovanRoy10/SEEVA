@@ -47,10 +47,6 @@ const appointmentSchema = new mongoose.Schema({
       required: [true, "Doctor Name Is Required!"],
     },
   },
-  hasVisited: {
-    type: Boolean,
-    default: false,
-  },
   address: {
     type: String,
     required: [true, "Address Is Required!"],

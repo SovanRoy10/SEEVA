@@ -15,15 +15,20 @@ export default function Register() {
     e.preventDefault();
 
     try {
-       await axios.post("http://localhost:8000/api/register", {
-        email,
-        name,
-        password,
-      });
+      await axios.post(
+        "http://localhost:8000/api/v1/user/patient/register",
+        {
+          email,
+          name,
+          password,
+        },
+        { withCredentials: true }
+      );
       toast.success("Registration Successfull");
       navigate("/login");
-    } catch (err) {
-      toast.error(err.response.data);
+    } catch (error) {
+      const errorMsg = error.response?.data?.message || error.message;
+      toast.error(errorMsg);
     }
   };
 

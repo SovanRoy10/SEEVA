@@ -21,7 +21,7 @@ cloudinary.v2.config({
 import messageRouter from "./router/messageRouter.js";
 import userRouter from "./router/userRouter.js";
 import appointmentRouter from "./router/appointmentRouter.js";
-import blogRouter from "./router/blogRouter.js"
+import blogRouter from "./router/blogRouter.js";
 
 // middlewares
 import { errorMiddleware } from "./middlewares/errorMiddleware.js";
@@ -44,7 +44,7 @@ app.use(
 //   cors({
 //     origin: ["https://myseeva.vercel.app", "https://seeva-admin.vercel.app"], // Add your production frontend URL here
 //     methods: ["GET", "POST", "DELETE", "PUT"],
-//     credentials: true, 
+//     credentials: true,
 //   })
 // );
 
