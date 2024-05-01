@@ -9,13 +9,14 @@ import { toast } from "react-toastify";
 import { departments } from "../data";
 
 export default function AppointmentForm() {
-  const [appointment_date, setSelectedDate] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(null);
   const [dob, setSelectedDateofBirth] = useState(null);
-  const [name, setName] = useState("");
+  const [firstname, setFirstName] = useState("");
+  const [lastname, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState(0);
   const [address, setAddress] = useState("");
-  // const [department, setDepartment] = useState("");
+  const [selectedDepartment, setSelectedDepartment] = useState("");
   const [gender, setGender] = useState("");
   const [doctor_name, setDoctor] = useState("");
 
@@ -26,21 +27,24 @@ export default function AppointmentForm() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const formData = {
-      name,
+      firstname,
+      lastname,
       email,
       phone,
       dob: dob ? dob.toISOString() : null,
+
       gender,
-      appointment_date: appointment_date
-        ? appointment_date.toISOString()
-        : null,
-      // department,
+      appointmentDateTime: selectedDate.toISOString(),
+      selectedDepartment,
       doctor_name,
 
       address,
     };
     try {
-      await axios.post("http://localhost:8000/api/post", formData);
+      await axios.post(
+        "http://localhost:4000/api/v1/appointment/post",
+        formData
+      );
       toast.success("Registration Successfull");
     } catch (err) {
       toast.error(err.response.data);
@@ -55,8 +59,8 @@ export default function AppointmentForm() {
           type="text"
           className="cs_form_field"
           placeholder="Sovan"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
+          value={firstname}
+          onChange={(e) => setFirstName(e.target.value)}
         />
         <div className="cs_height_42 cs_height_xl_25" />
       </div>
@@ -66,8 +70,8 @@ export default function AppointmentForm() {
           type="text"
           className="cs_form_field"
           placeholder="Roy"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
+          value={lastname}
+          onChange={(e) => setLastName(e.target.value)}
         />
         <div className="cs_height_42 cs_height_xl_25" />
       </div>
@@ -96,7 +100,7 @@ export default function AppointmentForm() {
             placeholderText="dd/mm/yyyy"
           /> */}
           <Datetime
-            value={appointment_date}
+            value={selectedDate}
             onChange={(date) => setSelectedDate(date)}
             inputProps={{ placeholder: "dd/mm/yyyy hh:mm" }}
             dateFormat="DD/MM/YYYY"
@@ -139,7 +143,13 @@ export default function AppointmentForm() {
       </div>
       <div className="col-lg-6 mb-4">
         <label className="cs_input_label cs_heading_color">Department</label>
-        <select className="cs_form_field" name="department" id="department">
+        <select
+          className="cs_form_field"
+          name="department"
+          id="department"
+          onChange={(e) => setSelectedDepartment(e.target.value)}
+          value={selectedDepartment}
+        >
           {departments.map((department) => (
             <option value={department}>
               {department.charAt(0).toUpperCase() + department.slice(1)}

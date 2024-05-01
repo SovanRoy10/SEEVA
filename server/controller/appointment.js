@@ -14,7 +14,6 @@ export const postAppointment = catchAsyncErros(async (req, res, next) => {
     appointmentDateTime,
     department,
     doctor_name,
-    hasVisited,
     address,
   } = req.body;
 
@@ -79,7 +78,6 @@ export const postAppointment = catchAsyncErros(async (req, res, next) => {
     doctor: {
       name: doctor_name,
     },
-    hasVisited,
     address,
     doctorId,
     patientId,

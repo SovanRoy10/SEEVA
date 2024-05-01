@@ -13,7 +13,7 @@ export default function Login() {
     e.preventDefault();
     try {
       const { data } = await axios.post(
-        "http://localhost:8000/api/login",
+        "http://localhost:8000/api/v1/user/login",
         {
           email,
           password,
@@ -27,7 +27,7 @@ export default function Login() {
 
       navigate("/");
     } catch (err) {
-      toast.error(err.response.data);
+      toast.error("Error Signing in!!");
       setEmail("");
       setPassword("");
     }
