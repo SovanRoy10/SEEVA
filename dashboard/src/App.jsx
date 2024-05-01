@@ -27,6 +27,7 @@ import AddAdmin from "./components/adminForm/AddAdmin.jsx";
 
 import RTE from "./components/editor/RTE.jsx";
 import Blogs from "./pages/blogs/Blogs.jsx";
+import BlogDetails from "./components/singleBlog/BlogDetails.jsx";
 
 import { Toaster } from "react-hot-toast";
 
@@ -68,6 +69,7 @@ function App() {
         <Route path="login" element={<Login />} />
         <Route path="blogs" element={<Blogs />} />
         <Route path="blogs/add" element={<RTE />} />
+        <Route path="blogs/:id" element={<BlogDetails />} />
       </Route>
     )
   );

@@ -30,7 +30,7 @@ const appointmentSchema = new mongoose.Schema({
   gender: {
     type: String,
     required: [true, "Gender Is Required!"],
-    enum: ["Male", "Female"],
+    enum: ["Male", "Female","Other"],
   },
   appointmentDateTime: {
     type: Date,
@@ -46,6 +46,10 @@ const appointmentSchema = new mongoose.Schema({
       type: String,
       required: [true, "Doctor Name Is Required!"],
     },
+  },
+  hasVisited: {
+    type: Boolean,
+    default: false,
   },
   address: {
     type: String,

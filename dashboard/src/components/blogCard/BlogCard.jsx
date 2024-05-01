@@ -1,37 +1,37 @@
-export default function BlogCard() {
+import { Link } from "react-router-dom";
+
+export default function BlogCard(props) {
+  const titleLength = props.blog.title.length;
+  const bodyLength = props.blog.body.length;
   return (
-    <div className="max-w-sm lg:max-w-full lg:flex h-60">
+    <div className="max-w-full flex h-60">
       <img
-        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS25GV-N6pGwDIns71mhCCIDEEMw0o7sfxnIAqTyfvEZbg_tFgY"
-        alt=""
+        src={props.blog.coverImageUrl}
+        alt="coverImage"
         className="object-cover w-1/3"
       />
       <div className="overflow-hidden border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal">
         <div className="mb-8">
           <div className="text-gray-900 font-bold mb-2">
-            Can coffee make you a better developer?
+            {props.blog.title.slice(0, 50)} {titleLength > 50 && "..."}
           </div>
-          <p className="text-gray-700 text-xs">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-            Voluptatibus quia, nulla! Maiores et perferendis eaque,
-            exercitationem praesentium nihil.
+          <p
+            className="text-gray-700 text-xs"
+            // dangerouslySetInnerHTML={{
+            //   __html: props.blog.body.replace(/<[^>]*>/g, "").slice(0, 250)
+            // }}
+          >
+            {props.blog.body.replace(/<[^>]*>/g, "").slice(0, 250)}
+            {bodyLength > 250 && "..."}
           </p>
         </div>
         <div className="flex items-center justify-between">
-          <div className="flex items-center">
-            <img
-              className="w-7 h-7 rounded-full mr-4"
-              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS25GV-N6pGwDIns71mhCCIDEEMw0o7sfxnIAqTyfvEZbg_tFgY"
-              alt="Avatar of Jonathan Reinink"
-            />
-            <div className="text-xs">
-              <p className="text-gray-900 leading-none">Jonathan Reinink</p>
-              <p className="text-gray-600">Aug 18</p>
-            </div>
-          </div>
-          <button className="bg-blue-600 text-xs p-1 rounded-md">
+          <Link
+            to={`/blogs/${props.blog._id}`}
+            className="bg-blue-600 text-xs px-2 py-1 rounded-md"
+          >
             Learn More
-          </button>
+          </Link>
         </div>
       </div>
     </div>
