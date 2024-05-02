@@ -18,7 +18,6 @@ export const postAppointment = catchAsyncErros(async (req, res, next) => {
   } = req.body;
 
   // console.log(req.body);
-
   const fields = [
     "firstName",
     "lastName",
@@ -51,6 +50,9 @@ export const postAppointment = catchAsyncErros(async (req, res, next) => {
     name: doctor_name,
     doctorDepartment: department,
   });
+
+  // console.log(isConflict);
+  // return;
   if (isConflict.length === 0) {
     return next(new ErrorHandler("Doctor not found", 404));
   }
