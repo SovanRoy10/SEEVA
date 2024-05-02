@@ -446,6 +446,9 @@ export const login = catchAsyncErros(async (req, res, next) => {
         // httpOnly: true,
         // secure: true, // Ensure cookies are sent over HTTPS
         // sameSite: "None", // Essential for cross-site/cross-origin requests
+        domain: "seeva-server.vercel.app",
+        path: "/",
+        httpOnly: true,
       })
       .json({
         success: true,
