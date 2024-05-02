@@ -2,16 +2,20 @@ import { Link } from "react-router-dom";
 import DoctorCard from "../../components/doctorCards/DoctorCard";
 import axios from "axios";
 import { useState, useEffect } from "react";
+import Loader from "../../components/loader/Loader";
 
 export default function Users() {
   const [doctors, setDoctors] = useState([]);
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     const getAllDoctors = async () => {
+      setLoading(true);
       const response = axios.get("http://localhost:4000/api/v1/user/doctors", {
         withCredentials: true,
       });
 
       setDoctors((await response).data.doctors);
+      setLoading(false);
     };
     getAllDoctors();
   }, []);
@@ -25,11 +29,12 @@ export default function Users() {
           Add new
         </Link>
       </div>
-      <div className={`grid grid-cols-4 gap-5`}>
+      {!loading && <div className={`grid grid-cols-4 gap-5`}>
         {doctors.map((doctor, index) => {
           return <DoctorCard doctor={doctor} key={doctor._id} />;
         })}
-      </div>
+      </div>}
+      {loading && <Loader/>}
     </div>
   );
 }
