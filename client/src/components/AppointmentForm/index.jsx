@@ -237,7 +237,9 @@ export default function AppointmentForm() {
           value={formData.department}
         >
           {departments.map((department) => (
-            <option value={department}>
+            <option
+              value={department.charAt(0).toUpperCase() + department.slice(1)}
+            >
               {department.charAt(0).toUpperCase() + department.slice(1)}
             </option>
           ))}
