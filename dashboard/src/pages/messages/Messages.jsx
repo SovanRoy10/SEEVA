@@ -13,7 +13,7 @@ export default function Messages() {
       try {
         setLoading(true);
         const request = await axios.get(
-          "http://localhost:4000/api/v1/message/getAll",
+          `${import.meta.env.VITE_BACKEND_URL}/api/v1/message/getAll`,
           { withCredentials: true }
         );
         setMessages(request.data.messages);
@@ -30,7 +30,7 @@ export default function Messages() {
     try {
       setLoading(true);
       const response = await axios.delete(
-        `http://localhost:4000/api/v1/message/delete/${id}`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/v1/message/delete/${id}`,
         { withCredentials: true }
       );
       setMessages((prevMessages) =>

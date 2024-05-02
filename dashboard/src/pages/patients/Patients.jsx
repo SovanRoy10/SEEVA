@@ -11,7 +11,7 @@ export default function Patients() {
       try {
         setLoading(true);
         const response = await axios.get(
-          "http://localhost:4000/api/v1/user/patients",
+          `${import.meta.env.VITE_BACKEND_URL}/api/v1/user/patients`,
           { withCredentials: true }
         );
         setPatients(response.data.patients);

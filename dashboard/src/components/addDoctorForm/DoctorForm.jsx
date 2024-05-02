@@ -91,7 +91,7 @@ function DoctorRegistrationForm(props) {
     if (props.name === "Settings") {
       try {
         const response = await axios.put(
-          `http://localhost:4000/api/v1/user/doctor/update/${props.doctor._id}`,
+          `${import.meta.env.VITE_BACKEND_URL}/api/v1/user/doctor/update/${props.doctor._id}`,
           data,
           {
             headers: { "Content-Type": "multipart/form-data" },
@@ -110,7 +110,7 @@ function DoctorRegistrationForm(props) {
     } else {
       try {
         const response = await axios.post(
-          "http://localhost:4000/api/v1/user/doctor/addNew",
+          `${import.meta.env.VITE_BACKEND_URL}/api/v1/user/doctor/addNew`,
           data,
           {
             headers: { "Content-Type": "multipart/form-data" },
@@ -132,7 +132,7 @@ function DoctorRegistrationForm(props) {
     if (props.name === "Settings") {
       try {
         const response = await axios.delete(
-          `http://localhost:4000/api/v1/user/${props.id}`,
+          `${import.meta.env.VITE_BACKEND_URL}/api/v1/user/${props.id}`,
           { withCredentials: true }
         );
         toast.success("Doctor Account Deleted Successfully!");

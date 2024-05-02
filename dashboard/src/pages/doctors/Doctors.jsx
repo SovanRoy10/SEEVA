@@ -10,7 +10,7 @@ export default function Doctors() {
   useEffect(() => {
     const getAllDoctors = async () => {
       setLoading(true);
-      const response = axios.get("http://localhost:4000/api/v1/user/doctors", {
+      const response = axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/v1/user/doctors` , {
         withCredentials: true,
       });
 

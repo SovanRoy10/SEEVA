@@ -34,7 +34,7 @@ export default function ResetPassword() {
 
     try {
       const response = await axios.post(
-        `http://localhost:4000/api/v1/user/reset-password/${id}/${token}`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/v1/user/reset-password/${id}/${token}`,
         { password: passwords.password }
       );
 

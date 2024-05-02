@@ -21,7 +21,7 @@ export default function BlogDetails() {
     try {
       setLoading(true);
       const response = await axios.get(
-        `http://localhost:4000/api/v1/blog/${id}`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/v1/blog/${id}`,
         { withCredentials: true }
       );
       setBlog(response.data.blog);
@@ -41,7 +41,7 @@ export default function BlogDetails() {
     try {
       setLoading(true);
       const response = await axios.delete(
-        `http://localhost:4000/api/v1/blog/comment/${id}`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/v1/blog/comment/${id}`,
         { withCredentials: true }
       );
       setComments((prevComments) =>
@@ -65,7 +65,7 @@ export default function BlogDetails() {
     try {
       setLoading(true);
       const response = await axios.post(
-        `http://localhost:4000/api/v1/blog/${id}/comment`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/v1/blog/${id}/comment`,
         { content: comment },
         { withCredentials: true }
       );

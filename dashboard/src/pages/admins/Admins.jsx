@@ -13,7 +13,7 @@ export default function Admins() {
       try {
         setLoading(true);
         const response = await axios.get(
-          "http://localhost:4000/api/v1/user/admins",
+          `${import.meta.env.VITE_BACKEND_URL}/api/v1/user/admins`,
           {
             withCredentials: true,
           }
@@ -32,7 +32,7 @@ export default function Admins() {
     try {
       setLoading(true);
       const response = await axios.delete(
-        `http://localhost:4000/api/v1/user/${id}`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/v1/user/${id}`,
         { withCredentials: true }
       );
 

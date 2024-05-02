@@ -16,7 +16,7 @@ export default function Profile() {
       try {
         setLoading(true);
         const response = await axios.get(
-          `http://localhost:4000/api/v1/user/doctors/${id}`,
+          `${import.meta.env.VITE_BACKEND_URL}/api/v1/user/doctors/${id}`,
           { withCredentials: true }
         );
         setDoctor(response.data.user);

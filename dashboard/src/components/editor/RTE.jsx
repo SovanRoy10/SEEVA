@@ -56,167 +56,6 @@ function RTE({ name, control, label, defaultValue = "" }) {
   );
 }
 
-// function MyForm({ blog = {}, id = "" }) {
-//   // console.log(blog);
-//   const navigate = useNavigate();
-//   const [file, setFile] = useState(null);
-//   const [title, setTitle] = useState(blog ? blog.title : "");
-
-//   const {
-//     control,
-//     handleSubmit,
-//     formState: { errors },
-//   } = useForm({
-//     content: blog?.body || "",
-//   });
-
-//   useEffect(() => {
-//     if (blog) {
-//       setTitle(blog.title || ""); // Update title state when blog changes
-//     }
-//   }, [blog]);
-
-//   const handleFileChange = (e) => {
-//     const file = e.target.files[0];
-//     if (file) {
-//       setFile(file);
-//     }
-//   };
-
-//   const onSubmit = async (data) => {
-//     if (!blog) {
-//       try {
-//         const formData = new FormData();
-//         formData.append("title", title);
-//         formData.append("body", data.content);
-//         if (file) formData.append("coverImageUrl", file);
-
-//         const response = await axios.post(
-//           "http://localhost:4000/api/v1/blog/add",
-//           formData,
-//           {
-//             headers: { "Content-Type": "multipart/form-data" },
-//             withCredentials: true,
-//           }
-//         );
-
-//         toast.success("Blog added successfully");
-//         navigate("/blogs");
-//       } catch (error) {
-//         const errorMsg = error.response?.data?.message || error.message;
-//         toast.error(errorMsg);
-//       }
-//     } else {
-//       try {
-//         const formData = new FormData();
-//         formData.append("title", title);
-//         formData.append("body", data.content);
-//         if (file) formData.append("coverImageUrl", file);
-
-//         const response = await axios.put(
-//           `http://localhost:4000/api/v1/blog/${blog._id}`,
-//           formData,
-//           {
-//             headers: { "Content-Type": "multipart/form-data" },
-//             withCredentials: true,
-//           }
-//         );
-
-//         toast.success("Blog updated successfully");
-//         navigate("/blogs");
-//       } catch (error) {
-//         const errorMsg = error.response?.data?.message || error.message;
-//         toast.error(errorMsg);
-//       }
-//     }
-//   };
-
-//   const handleSecondButton = async () => {
-//     if (!blog) {
-//       navigate("/blogs");
-//     } else {
-//       try {
-//         const response = await axios.delete(
-//           `http://localhost:4000/api/v1/blog/${blog._id}`,
-//           {
-//             withCredentials: true,
-//           }
-//         );
-
-//         toast.success("Blog deleted successfully");
-//         navigate("/blogs");
-//       } catch (error) {
-//         const errorMsg = error.response?.data?.message || error.message;
-//         toast.error(errorMsg);
-//       }
-//     }
-//   };
-
-//   return (
-//     <form onSubmit={handleSubmit(onSubmit)}>
-//       <div className="mb-4">
-//         <label
-//           htmlFor="coverImageUrl"
-//           className="block text-2xl font-bold mb-2"
-//         >
-//           Cover Image:
-//         </label>
-//         {blog.coverImageUrl && (
-//           <img
-//             src={blog.coverImageUrl}
-//             alt="profileImage"
-//             className="w-[150px] my-5 border border-black rounded-lg"
-//           />
-//         )}
-//         <input
-//           type="file"
-//           name="coverImageUrl"
-//           id="coverImageUrl"
-//           className="shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
-//           onChange={handleFileChange}
-//           required={id ? false : true}
-//         />
-//       </div>
-
-//       <div className="mb-6">
-//         <label htmlFor="title" className="block mb-2 text-2xl font-bold">
-//           Title
-//         </label>
-//         <input
-//           type="text"
-//           id="title"
-//           name="title"
-//           value={title}
-//           onChange={(e) => setTitle(e.target.value)}
-//           placeholder="Enter title"
-//           className="bg-gray-50 border border-gray-300 text-gray-900  rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-//           required={id ? false : true}
-//         />
-//       </div>
-
-//       <RTE
-//         name="content"
-//         control={control}
-//         label="Content"
-//         defaultValue={blog?.body}
-//       />
-//       <div className="flex justify-between">
-//         <button type="submit" className="bg-blue-600 px-4 py-2 rounded-lg my-4">
-//           {id ? "Update" : "Submit"}
-//         </button>
-
-//         <button
-//           type="button"
-//           onClick={handleSecondButton}
-//           className="bg-red-600 px-4 py-2 rounded-lg my-4"
-//         >
-//           {id ? "Delete" : "Cancel"}
-//         </button>
-//       </div>
-//     </form>
-//   );
-// }
-
 function MyForm({ blog = null, id = "" }) {
   const navigate = useNavigate();
   const [file, setFile] = useState(null);
@@ -248,11 +87,11 @@ function MyForm({ blog = null, id = "" }) {
 
     try {
       const response = id
-        ? await axios.put(`http://localhost:4000/api/v1/blog/${id}`, formData, {
+        ? await axios.put(`${import.meta.env.VITE_BACKEND_URL}/api/v1/blog/${id}`, formData, {
             headers: { "Content-Type": "multipart/form-data" },
             withCredentials: true,
           })
-        : await axios.post("http://localhost:4000/api/v1/blog/add", formData, {
+        : await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/v1/blog/add`, formData, {
             headers: { "Content-Type": "multipart/form-data" },
             withCredentials: true,
           });
@@ -270,7 +109,7 @@ function MyForm({ blog = null, id = "" }) {
     } else {
       try {
         const response = await axios.delete(
-          `http://localhost:4000/api/v1/blog/${blog._id}`,
+          `${import.meta.env.VITE_BACKEND_URL}/api/v1/blog/${blog._id}`,
           {
             withCredentials: true,
           }

@@ -13,7 +13,7 @@ export default function Appointments() {
     try {
       setLoading(true);
       const response = await axios.put(
-        `http://localhost:4000/api/v1/appointment/update/${id}`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/v1/appointment/update/${id}`,
         { status: newStatus },
         { withCredentials: true }
       );
@@ -43,7 +43,7 @@ export default function Appointments() {
     try {
       setLoading(true);
       const response = await axios.put(
-        `http://localhost:4000/api/v1/appointment/update/${id}`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/v1/appointment/update/${id}`,
         { hasVisited: newVal },
         { withCredentials: true }
       );
@@ -73,7 +73,7 @@ export default function Appointments() {
       try {
         setLoading(true);
         const response = await axios.get(
-          "http://localhost:4000/api/v1/appointment/getAll",
+          `${import.meta.env.VITE_BACKEND_URL}/api/v1/appointment/getAll`,
           { withCredentials: true }
         );
         setAppointments(response.data.appointments);
@@ -92,7 +92,7 @@ export default function Appointments() {
       setLoading(true);
       // Make a delete request to the server
       await axios.delete(
-        `http://localhost:4000/api/v1/appointment/delete/${id}`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/v1/appointment/delete/${id}`,
         { withCredentials: true }
       );
 
