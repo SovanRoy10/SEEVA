@@ -55,28 +55,19 @@ export default function AppointmentForm() {
 
   function createSlug(text) {
     return text
-      .toLowerCase() // Convert text to lowercase
-      .replace(/\s+/g, "-") // Replace spaces with hyphens
-      .replace(/[^\w\-]+/g, "") // Remove all non-word characters
-      .replace(/\-\-+/g, "-"); // Replace multiple hyphens with a single hyphen
+      .toLowerCase()
+      .replace(/\s+/g, "-")
+      .replace(/[^\w\-]+/g, "")
+      .replace(/\-\-+/g, "-");
   }
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    console.log(name);
-    if (name === "doctor_name") {
-      const selectedDoctorName =
-        event.target.options[event.target.selectedIndex].text;
-      setFormData((prevState) => ({
-        ...prevState,
-        [name]: selectedDoctorName,
-      }));
-    } else {
-      setFormData((prevState) => ({
-        ...prevState,
-        [name]: value,
-      }));
-    }
+    console.log(name, value);
+    setFormData((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
   };
 
   const handleDateChange = (date) => {
@@ -88,8 +79,8 @@ export default function AppointmentForm() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(formData);
-    return;
+    // console.log(formData);
+    // return;
     try {
       const response = await axios.post(
         "http://localhost:4000/api/v1/appointment/post",
@@ -106,6 +97,7 @@ export default function AppointmentForm() {
 
   const isDoctorAvailable = (date) => {
     const day = date.getDay();
+
     const availability = {
       1: selectedDoctor?.monday || 0,
       2: selectedDoctor?.tuesday || 0,
@@ -253,20 +245,28 @@ export default function AppointmentForm() {
       </div>
 
       <div className="col-lg-6">
-        <label className="cs_input_label cs_heading_color">Doctor Name</label>
+        <label
+          className="cs_input_label cs_heading_color"
+          htmlFor="doctor_name"
+        >
+          Doctor Name
+        </label>
         <select
-          className="cs_form_field"
           id="doctor_name"
           name="doctor_name"
           value={formData.doctor_name}
           onChange={handleChange}
+          required
+          className="cs_form_field"
         >
+          <option value="">Select Doctor</option>
           {doctors.map((doctor) => (
             <option key={doctor._id} value={doctor.name}>
               {doctor.name}
             </option>
           ))}
         </select>
+
         <div className="cs_height_42 cs_height_xl_25" />
       </div>
       <div className="col-lg-12">

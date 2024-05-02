@@ -63,6 +63,7 @@ const AppointmentForm = () => {
 
   const handleChange = (event) => {
     const { name, value } = event.target;
+    console.log(name, value);
     setFormData((prevState) => ({
       ...prevState,
       [name]: value,
