@@ -3,15 +3,18 @@ import DoctorRegistrationForm from "../addDoctorForm/DoctorForm";
 import { weekdays, addDoctorFieldsUpdate, getCouncil } from "../../data";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import Loader from "../loader/Loader";
 
 export default function Profile() {
   let { id } = useParams();
 
   const [doctor, setDoctor] = useState({});
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchDoctor = async () => {
       try {
+        setLoading(true);
         const response = await axios.get(
           `http://localhost:4000/api/v1/user/doctors/${id}`,
           { withCredentials: true }
@@ -19,6 +22,8 @@ export default function Profile() {
         setDoctor(response.data.user);
       } catch (error) {
         console.error("Error fetching data: ", error);
+      } finally {
+        setLoading(false);
       }
     };
     fetchDoctor();
@@ -101,7 +106,10 @@ export default function Profile() {
                     {val.charAt(0).toUpperCase() + val.slice(1)}
                   </td>
                   <td className="py-4 px-6">
-                    Time : <span className="text-blue-600">{doctor.startTime} - {doctor.endTime}</span>
+                    Time :{" "}
+                    <span className="text-blue-600">
+                      {doctor.startTime} - {doctor.endTime}
+                    </span>
                   </td>
                 </tr>
               );
@@ -175,48 +183,51 @@ export default function Profile() {
     <div>
       <h2 className="mb-5 text-2xl font-bold">Doctor Profile & Settings</h2>
 
-      <div className="bg-slate-100 rounded-xl min-h-screen">
-        <div className="h-40 relative flex flex-col justify-center w-full">
-          <div className="bg-blue-600 h-1/2 rounded-t-xl w-full"></div>
-          <div className="h-1/2 w-full"></div>
-          <div className="absolute ml-5 flex items-center">
-            <img
-              src={doctor.profileImageUrl}
-              alt="doctor-profile"
-              className="w-[100px] h-[100px] rounded-full object-cover"
-            />
-            <div className="ml-3">
-              <p>{doctor.name}</p>
-              <p className="text-black">{doctor.doctorDepartment}</p>
+      {!loading && (
+        <div className="bg-slate-100 rounded-xl min-h-screen">
+          <div className="h-40 relative flex flex-col justify-center w-full">
+            <div className="bg-blue-600 h-1/2 rounded-t-xl w-full"></div>
+            <div className="h-1/2 w-full"></div>
+            <div className="absolute ml-5 flex items-center">
+              <img
+                src={doctor.profileImageUrl}
+                alt="doctor-profile"
+                className="w-[100px] h-[100px] rounded-full object-cover"
+              />
+              <div className="ml-3">
+                <p>{doctor.name}</p>
+                <p className="text-black">{doctor.doctorDepartment}</p>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div className="details px-5 pb-5">
-          <div className="buttons mt-5 flex justify-between">
-            <button
-              onClick={() => handleSelectedItem("Overview")}
-              className="bg-blue-600 px-10 py-2 rounded-lg"
-            >
-              Overview
-            </button>
-            <button
-              onClick={() => handleSelectedItem("TimeTable")}
-              className="bg-blue-600 px-10 py-2 rounded-lg"
-            >
-              Time Table
-            </button>
-            <button
-              onClick={() => handleSelectedItem("Settings")}
-              className="bg-blue-600 px-10 py-2 rounded-lg"
-            >
-              Settings
-            </button>
+          <div className="details px-5 pb-5">
+            <div className="buttons mt-5 flex justify-between">
+              <button
+                onClick={() => handleSelectedItem("Overview")}
+                className="bg-blue-600 px-10 py-2 rounded-lg"
+              >
+                Overview
+              </button>
+              <button
+                onClick={() => handleSelectedItem("TimeTable")}
+                className="bg-blue-600 px-10 py-2 rounded-lg"
+              >
+                Time Table
+              </button>
+              <button
+                onClick={() => handleSelectedItem("Settings")}
+                className="bg-blue-600 px-10 py-2 rounded-lg"
+              >
+                Settings
+              </button>
+            </div>
+
+            {content}
           </div>
-
-          {content}
         </div>
-      </div>
+      )}
+      {loading && <Loader />}
     </div>
   );
 }

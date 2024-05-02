@@ -2,10 +2,12 @@ import BlogCard from "../../components/blogCard/BlogCard";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import toast from 'react-hot-toast';
+import toast from "react-hot-toast";
+import Loader from "../../components/loader/Loader";
 
 export default function Blogs() {
   const [blogs, setBlogs] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     fetchBlogs();
@@ -13,6 +15,7 @@ export default function Blogs() {
 
   const fetchBlogs = async () => {
     try {
+      setLoading(true);
       const response = await axios.get("http://localhost:4000/api/v1/blog/", {
         withCredentials: true,
       });
@@ -20,6 +23,8 @@ export default function Blogs() {
     } catch (error) {
       const errorMsg = error.response?.data?.message || "Failed to fetch blogs";
       toast.error(errorMsg);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -31,15 +36,20 @@ export default function Blogs() {
           Add new
         </Link>
       </div>
-      {blogs.length > 0 ? (
-        <div className="grid grid-cols-3 gap-5">
-          {blogs.map((blog) => (
-            <BlogCard key={blog._id} blog={blog} />
-          ))}
+      {!loading && (
+        <div>
+          {blogs.length > 0 ? (
+            <div className="grid grid-cols-3 gap-5">
+              {blogs.map((blog) => (
+                <BlogCard key={blog._id} blog={blog} />
+              ))}
+            </div>
+          ) : (
+            <p>No blogs available to display 😔.</p>
+          )}
         </div>
-      ) : (
-        <p>No blogs available to display 😔.</p>
       )}
+      {loading && <Loader />}
     </div>
   );
 }

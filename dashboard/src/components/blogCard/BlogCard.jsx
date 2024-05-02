@@ -8,12 +8,12 @@ export default function BlogCard(props) {
       <img
         src={props.blog.coverImageUrl}
         alt="coverImage"
-        className="object-cover w-1/3"
+        className="object-cover w-1/3 rounded-l-xl"
       />
-      <div className="overflow-hidden border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal">
+      <div className="overflow-hidden border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal rounded-r-xl">
         <div className="mb-8">
           <div className="text-gray-900 font-bold mb-2">
-            {props.blog.title.slice(0, 50)} {titleLength > 50 && "..."}
+            {props.blog.title.slice(0,20)} {titleLength > 20 && "..."}
           </div>
           <p
             className="text-gray-700 text-xs"

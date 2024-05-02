@@ -42,7 +42,7 @@ const AppointmentForm = () => {
       setDoctors(response.data.doctors);
     } catch (error) {
       console.error("Failed to fetch doctors:", error);
-      toast.error("Failed to fetch doctors");
+      toast.error(error.data?.message || error.message)
     }
   };
 
@@ -90,9 +90,9 @@ const AppointmentForm = () => {
       toast.success("Booked appointment");
       navigate("/appointments");
     } catch (error) {
-      console.error("Failed to book appointment:", error);
+      console.log(error.data || error.message);
       const msg = error.data?.message || error.message;
-      toast.error(msg);
+      toast.error("The slot maybe already booked" || msg);
     }
   };
 

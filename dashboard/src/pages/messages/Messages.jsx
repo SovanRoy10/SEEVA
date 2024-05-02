@@ -2,23 +2,33 @@ import MessageCard from "../../components/message/MessageCard";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
+import Loader from "../../components/loader/Loader";
 
 export default function Messages() {
   const [messages, setMessages] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const getAllMessages = async () => {
-      const request = await axios.get(
-        "http://localhost:4000/api/v1/message/getAll",
-        { withCredentials: true }
-      );
-      setMessages(request.data.messages);
+      try {
+        setLoading(true);
+        const request = await axios.get(
+          "http://localhost:4000/api/v1/message/getAll",
+          { withCredentials: true }
+        );
+        setMessages(request.data.messages);
+      } catch (error) {
+        toast.error(error.data?.message || error.message);
+      } finally {
+        setLoading(false);
+      }
     };
     getAllMessages();
   }, []);
 
   const handleDeleteMessage = async (id) => {
     try {
+      setLoading(true);
       const response = await axios.delete(
         `http://localhost:4000/api/v1/message/delete/${id}`,
         { withCredentials: true }
@@ -31,17 +41,28 @@ export default function Messages() {
     } catch (error) {
       const errorMessage = error.data?.message;
       toast.error(errorMessage);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <div>
       <p className="mb-5 text-2xl">Messages</p>
-      <div className="grid grid-cols-3 gap-5">
-        {messages.map((message, index) => {
-          return <MessageCard key={index} message={message} handleDeleteMessage = {handleDeleteMessage}/>;
-        })}
-      </div>
+      {!loading && (
+        <div className="grid grid-cols-3 gap-5">
+          {messages.map((message, index) => {
+            return (
+              <MessageCard
+                key={index}
+                message={message}
+                handleDeleteMessage={handleDeleteMessage}
+              />
+            );
+          })}
+        </div>
+      )}
+      {loading && <Loader />}
     </div>
   );
 }
