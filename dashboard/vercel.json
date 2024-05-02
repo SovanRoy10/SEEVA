@@ -1,15 +1,8 @@
 {
-    "version": 2,
-    "routes": [
+    "rewrites": [
       {
-        "src": "/(.*)\\.(js|json|css|html|ico|jpg|jpeg|png|svg|woff|woff2|ttf|map)$",
-        "dest": "/$1.$2",
-        "continue": true
-      },
-      {
-        "src": "/(.*)",
-        "dest": "/index.html"
+        "source": "/(.*)",
+        "destination": "/index.html"
       }
     ]
   }
-  
