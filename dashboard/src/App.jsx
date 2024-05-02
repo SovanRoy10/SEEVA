@@ -31,6 +31,9 @@ import Protected from "./components/Protected.jsx";
 
 import { Toaster } from "react-hot-toast";
 
+import { Provider } from "react-redux";
+import store from "./app/store.js";
+
 function App() {
   const Layout = () => {
     return (
@@ -53,26 +56,121 @@ function App() {
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route path="/" element={<Layout />}>
-        <Route path="/" element={<Protected><Home /></Protected>} />
-        <Route path="doctors" element={<Protected><Doctors /></Protected>} />
-        <Route path="doctors/add" element={<Protected><AddDoctor /></Protected>} />
-        <Route path="doctors/:id" element={<Protected><DoctorProfile /></Protected>} />
-        <Route path="patients" element={<Protected><Patients /></Protected>} />
-        <Route path="appointments" element={<Protected><Appointments /></Protected>} />
-        <Route path="appointments/add" element={<Protected><NewAppointment /></Protected>} />
-        <Route path="messages" element={<Protected><Messages /></Protected>} />
-        <Route path="admins" element={<Protected><Admins /></Protected>} />
-        <Route path="admins/add" element={<Protected><AddAdmin /></Protected>} />
+        <Route
+          path="/"
+          element={
+            <Protected>
+              <Home />
+            </Protected>
+          }
+        />
+        <Route
+          path="doctors"
+          element={
+            <Protected>
+              <Doctors />
+            </Protected>
+          }
+        />
+        <Route
+          path="doctors/add"
+          element={
+            <Protected>
+              <AddDoctor />
+            </Protected>
+          }
+        />
+        <Route
+          path="doctors/:id"
+          element={
+            <Protected>
+              <DoctorProfile />
+            </Protected>
+          }
+        />
+        <Route
+          path="patients"
+          element={
+            <Protected>
+              <Patients />
+            </Protected>
+          }
+        />
+        <Route
+          path="appointments"
+          element={
+            <Protected>
+              <Appointments />
+            </Protected>
+          }
+        />
+        <Route
+          path="appointments/add"
+          element={
+            <Protected>
+              <NewAppointment />
+            </Protected>
+          }
+        />
+        <Route
+          path="messages"
+          element={
+            <Protected>
+              <Messages />
+            </Protected>
+          }
+        />
+        <Route
+          path="admins"
+          element={
+            <Protected>
+              <Admins />
+            </Protected>
+          }
+        />
+        <Route
+          path="admins/add"
+          element={
+            <Protected>
+              <AddAdmin />
+            </Protected>
+          }
+        />
         <Route path="forgot-password" element={<ForgotPassword />} />
         <Route path="reset-password/:id/:token" element={<ResetPassword />} />
         <Route path="login" element={<Login />} />
-        <Route path="blogs" element={<Protected><Blogs /></Protected>} />
-        <Route path="blogs/add" element={<Protected><RTE /></Protected>} />
-        <Route path="blogs/:id" element={<Protected><BlogDetails /></Protected>} />
+        <Route
+          path="blogs"
+          element={
+            <Protected>
+              <Blogs />
+            </Protected>
+          }
+        />
+        <Route
+          path="blogs/add"
+          element={
+            <Protected>
+              <RTE />
+            </Protected>
+          }
+        />
+        <Route
+          path="blogs/:id"
+          element={
+            <Protected>
+              <BlogDetails />
+            </Protected>
+          }
+        />
       </Route>
     )
   );
 
-  return <RouterProvider router={router} />;
+  return (
+    <Provider store={store}>
+      <RouterProvider router={router} />
+    </Provider>
+  );
 }
 export default App;

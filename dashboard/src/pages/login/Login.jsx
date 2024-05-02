@@ -2,8 +2,11 @@ import React, { useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from 'react-redux';
+import { setUser } from "../../features/userSlice";
 
 export default function Login() {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [inputs, setInputs] = useState({
     email: "",
@@ -27,6 +30,7 @@ export default function Login() {
         { withCredentials: true }
       );
       localStorage.setItem("user", JSON.stringify(response.data.user));
+      dispatch(setUser(response.data.user));
       toast.success("Login successful");
       navigate("/"); // Redirect the user
     } catch (error) {
