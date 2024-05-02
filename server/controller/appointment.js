@@ -17,7 +17,7 @@ export const postAppointment = catchAsyncErros(async (req, res, next) => {
     address,
   } = req.body;
 
-  console.log(req.body);
+  // console.log(req.body);
 
   const fields = [
     "firstName",

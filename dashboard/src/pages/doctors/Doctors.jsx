@@ -29,12 +29,15 @@ export default function Users() {
           Add new
         </Link>
       </div>
-      {!loading && <div className={`grid grid-cols-4 gap-5`}>
-        {doctors.map((doctor, index) => {
-          return <DoctorCard doctor={doctor} key={doctor._id} />;
-        })}
-      </div>}
-      {loading && <Loader/>}
+      {!loading && (
+        <div className={`grid grid-cols-4 gap-5`}>
+          {doctors.map((doctor, index) => {
+            return <DoctorCard doctor={doctor} key={doctor._id} />;
+          })}
+          {!doctors && <p>No doctor availabel 😔</p>}
+        </div>
+      )}
+      {loading && <Loader />}
     </div>
   );
 }

@@ -2,24 +2,35 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
+import Loader from "../../components/loader/Loader";
 
 export default function Admins() {
   const [admins, setAdmins] = useState([]);
+  const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     const getAllAdmins = async () => {
-      const response = await axios.get(
-        "http://localhost:4000/api/v1/user/admins",
-        {
-          withCredentials: true,
-        }
-      );
-      setAdmins(response.data.admins);
+      try {
+        setLoading(true);
+        const response = await axios.get(
+          "http://localhost:4000/api/v1/user/admins",
+          {
+            withCredentials: true,
+          }
+        );
+        setAdmins(response.data.admins);
+      } catch (error) {
+        toast.error(error.data?.message || error.message);
+      } finally {
+        setLoading(false);
+      }
     };
     getAllAdmins();
   }, []);
 
   const handleDelete = async (id) => {
     try {
+      setLoading(true);
       const response = await axios.delete(
         `http://localhost:4000/api/v1/user/${id}`,
         { withCredentials: true }
@@ -32,6 +43,8 @@ export default function Admins() {
     } catch (error) {
       console.log("Error: ", error);
       toast.error("Cannot delete the admin!");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -44,7 +57,7 @@ export default function Admins() {
           Add new
         </Link>
       </div>
-      <div className="grid grid-cols-4 gap-5">
+     {!loading && <div className="grid grid-cols-4 gap-5">
         {admins &&
           admins.map((admin) => {
             return (
@@ -90,7 +103,10 @@ export default function Admins() {
               </div>
             );
           })}
-      </div>
+      </div>}
+      {
+        loading && <Loader/>
+      }
     </div>
   );
 }
