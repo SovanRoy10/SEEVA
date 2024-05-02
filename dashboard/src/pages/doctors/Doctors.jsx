@@ -4,7 +4,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import Loader from "../../components/loader/Loader";
 
-export default function Users() {
+export default function Doctors() {
   const [doctors, setDoctors] = useState([]);
   const [loading, setLoading] = useState(false);
   useEffect(() => {

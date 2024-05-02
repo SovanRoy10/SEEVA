@@ -20,7 +20,6 @@ import NewAppointment from "./components/appointments/NewAppointment.jsx";
 import Messages from "./pages/messages/Messages.jsx";
 import ForgotPassword from "./components/auth/ForgotPassword.jsx";
 import ResetPassword from "./components/auth/ResetPassword.jsx";
-import Profile from "./pages/profile/Profile.jsx";
 import Login from "./pages/login/Login.jsx";
 import Admins from "./pages/admins/Admins.jsx";
 import AddAdmin from "./components/adminForm/AddAdmin.jsx";
@@ -28,24 +27,25 @@ import AddAdmin from "./components/adminForm/AddAdmin.jsx";
 import RTE from "./components/editor/RTE.jsx";
 import Blogs from "./pages/blogs/Blogs.jsx";
 import BlogDetails from "./components/singleBlog/BlogDetails.jsx";
+import Protected from "./components/Protected.jsx";
 
 import { Toaster } from "react-hot-toast";
 
 function App() {
   const Layout = () => {
     return (
-      <div className="main overflow-hidden">
+      <div className="main h-screen flex flex-col overflow-hidden">
         <Navbar />
-        <div className="container">
-          <div className="menuContainer">
+        <div className="flex flex-grow overflow-hidden">
+          <div className="menuContainer overflow-y-auto">
             <Menu />
           </div>
-          <div className="contentContainer">
+          <div className="contentContainer flex-grow overflow-y-auto">
             <Outlet />
           </div>
         </div>
-        <Toaster />
         <Footer />
+        <Toaster />
       </div>
     );
   };
@@ -53,28 +53,26 @@ function App() {
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route path="/" element={<Layout />}>
-        <Route path="/" element={<Home />} />
-        <Route path="doctors" element={<Doctors />} />
-        <Route path="doctors/add" element={<AddDoctor />} />
-        <Route path="doctors/:id" element={<DoctorProfile />} />
-        <Route path="patients" element={<Patients />} />
-        <Route path="appointments" element={<Appointments />} />
-        <Route path="appointments/add" element={<NewAppointment />} />
-        <Route path="messages" element={<Messages />} />
-        <Route path="admins" element={<Admins />} />
-        <Route path="admins/add" element={<AddAdmin />} />
+        <Route path="/" element={<Protected><Home /></Protected>} />
+        <Route path="doctors" element={<Protected><Doctors /></Protected>} />
+        <Route path="doctors/add" element={<Protected><AddDoctor /></Protected>} />
+        <Route path="doctors/:id" element={<Protected><DoctorProfile /></Protected>} />
+        <Route path="patients" element={<Protected><Patients /></Protected>} />
+        <Route path="appointments" element={<Protected><Appointments /></Protected>} />
+        <Route path="appointments/add" element={<Protected><NewAppointment /></Protected>} />
+        <Route path="messages" element={<Protected><Messages /></Protected>} />
+        <Route path="admins" element={<Protected><Admins /></Protected>} />
+        <Route path="admins/add" element={<Protected><AddAdmin /></Protected>} />
         <Route path="forgot-password" element={<ForgotPassword />} />
         <Route path="reset-password/:id/:token" element={<ResetPassword />} />
-        <Route path="profile" element={<Profile />} />
         <Route path="login" element={<Login />} />
-        <Route path="blogs" element={<Blogs />} />
-        <Route path="blogs/add" element={<RTE />} />
-        <Route path="blogs/:id" element={<BlogDetails />} />
+        <Route path="blogs" element={<Protected><Blogs /></Protected>} />
+        <Route path="blogs/add" element={<Protected><RTE /></Protected>} />
+        <Route path="blogs/:id" element={<Protected><BlogDetails /></Protected>} />
       </Route>
     )
   );
 
   return <RouterProvider router={router} />;
 }
-
 export default App;
