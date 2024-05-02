@@ -147,11 +147,14 @@ export const handleAddNewComment = catchAsyncErros(async (req, res, next) => {
   const { content } = req.body;
   if (!content) return next(new ErrorHandler("Please Fill up the form", 400));
 
-  const comment = await Comment.create({
+  const comment = new Comment({
     content: req.body.content,
     blogId: id,
     createdBy: req.user._id,
   });
+
+  await comment.save();
+  await comment.populate("createdBy");
 
   return res.status(200).json({
     success: true,
