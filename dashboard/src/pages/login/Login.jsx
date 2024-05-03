@@ -4,6 +4,7 @@ import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 import { setUser } from "../../features/userSlice";
+import Loader from "../../components/loader/Loader";
 
 export default function Login() {
   const dispatch = useDispatch();
@@ -12,6 +13,7 @@ export default function Login() {
     email: "",
     password: "",
   });
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -24,6 +26,7 @@ export default function Login() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
+      setLoading(true);
       const response = await axios.post(
         `${import.meta.env.VITE_BACKEND_URL}/api/v1/user/login`,
         inputs,
@@ -42,11 +45,14 @@ export default function Login() {
         error.response?.data?.message || "An unexpected error occurred";
       toast.error(errorMessage);
     }
+    finally{
+      setLoading(false);
+    }
   };
 
   return (
     <section>
-      <div className="flex flex-col items-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+     {!loading && <div className="flex flex-col items-center px-6 py-8 mx-auto md:h-screen lg:py-0">
         <div className="w-full bg-white rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0">
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl">
@@ -98,7 +104,10 @@ export default function Login() {
             </form>
           </div>
         </div>
-      </div>
+      </div>}
+      {
+        loading && <Loader/>
+      }
     </section>
   );
 }
