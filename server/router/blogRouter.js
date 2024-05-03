@@ -11,8 +11,8 @@ import { handlePostAddBlog,handleGetSingleBlog, handleGetAllBlogs,handleDeleteBl
 
 //blogs
 router.post("/add", isAdminAuthenticated, handlePostAddBlog);
-router.get("/:id", isUserAuthenticated, handleGetSingleBlog);
-router.get("/", isUserAuthenticated, handleGetAllBlogs);
+router.get("/:id", handleGetSingleBlog);
+router.get("/", handleGetAllBlogs);
 router.delete("/:id", isAdminAuthenticated, handleDeleteBlog);
 router.put("/:id", isAdminAuthenticated, handleUpdateBlog);
 

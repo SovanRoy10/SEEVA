@@ -30,8 +30,8 @@ router.post("/forgot-password", forgotPassword);
 router.post("/reset-password/:id/:token", resetPassword);
 
 router.post("/admin/addnew", isAdminAuthenticated, addNewAdmin);
-router.get("/doctors", isAdminAuthenticated, getAllDoctors);
-router.get("/doctors/:id", isAdminAuthenticated, getSingleUser);
+router.get("/doctors",getAllDoctors);
+router.get("/doctors/:id", getSingleUser);
 router.get("/patients", isAdminAuthenticated, getAllPatients);
 router.get("/patients/:id", isAdminAuthenticated, getSingleUser);
 router.post("/admin/logout", isAdminAuthenticated, logoutAdmin);
