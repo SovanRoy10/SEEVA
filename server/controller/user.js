@@ -274,7 +274,7 @@ export const addNewDoctor = catchAsyncErros(async (req, res, next) => {
     response.data.recordsTotal === 1 &&
     response.data.data[0][1].toString() === year &&
     response.data.data[0][2].toString() === registrationNumber &&
-    response.data.data[0][4].toString() === name
+    response.data.data[0][4].toString().trim() === name
   ) {
     // Doctor is registered
 

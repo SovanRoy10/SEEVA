@@ -19,7 +19,7 @@ export default function Protected({ children }) {
   }, [user, navigate]);
 
   if (!user || isLoading) {
-    return <Loader/>; // Show loading or any other fallback UI
+    return <Loader/>; // Show loading
   }
 
   return <>{children}</>;

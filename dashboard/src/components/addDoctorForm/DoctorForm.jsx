@@ -3,10 +3,12 @@ import { councils, weekdays } from "../../data";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import Loader from "../loader/Loader";
 
 function DoctorRegistrationForm(props) {
   // console.log(new Date(props.doctor.dob).toLocaleDateString())
   const navigate = useNavigate();
+  const [loading , setLoading] = useState(false);
 
   const [formData, setFormData] = useState({
     name: props.doctor?.name || "",
@@ -55,6 +57,7 @@ function DoctorRegistrationForm(props) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    // console.log(formData.feePerConsultation)
     const data = new FormData();
     if (props.name === "Settings") {
       for (const key in formData) {
@@ -90,6 +93,7 @@ function DoctorRegistrationForm(props) {
     // console.log(data);
     if (props.name === "Settings") {
       try {
+        setLoading(true);
         const response = await axios.put(
           `${import.meta.env.VITE_BACKEND_URL}/api/v1/user/doctor/update/${props.doctor._id}`,
           data,
@@ -107,8 +111,12 @@ function DoctorRegistrationForm(props) {
           error.response?.data?.message || "Failed to update doctor.";
         toast.error(errorMessage);
       }
+      finally{
+        setLoading(false);
+      }
     } else {
       try {
+        setLoading(true);
         const response = await axios.post(
           `${import.meta.env.VITE_BACKEND_URL}/api/v1/user/doctor/addNew`,
           data,
@@ -125,12 +133,16 @@ function DoctorRegistrationForm(props) {
           error.response?.data?.message || "Failed to register doctor.";
         toast.error(errorMessage);
       }
+      finally{
+        setLoading(false);
+      }
     }
   };
 
   const handleClickButton2 = async () => {
     if (props.name === "Settings") {
       try {
+        setLoading(true);
         const response = await axios.delete(
           `${import.meta.env.VITE_BACKEND_URL}/api/v1/user/${props.id}`,
           { withCredentials: true }
@@ -140,6 +152,9 @@ function DoctorRegistrationForm(props) {
       } catch (error) {
         const errorMessage = error.data?.message || error.message;
         toast.error(errorMessage);
+      }
+      finally{
+        setLoading(false);
       }
     } else {
       navigate("/doctors");
