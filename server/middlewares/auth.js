@@ -26,7 +26,7 @@ export const isUserAuthenticated = catchAsyncErros(async (req, res, next) => {
 
   if (
     !userPayLoad.role.includes("Patient") &&
-    !userPayLoad.role.includes("Doctor")
+    !userPayLoad.role.includes("Doctor") &&  !userPayLoad.role.includes("Admin")
   ) {
     return next(
       new ErrorHandler("You are not authrized for this resources!", 403)
