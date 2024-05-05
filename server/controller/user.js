@@ -184,6 +184,9 @@ export const addNewDoctor = catchAsyncErros(async (req, res, next) => {
     friday,
     saturday,
     sunday,
+    // doctorDegrees,
+    // doctorExperience,
+    doctorDescription,
   } = req.body;
 
   // console.log(req.body);
@@ -209,6 +212,9 @@ export const addNewDoctor = catchAsyncErros(async (req, res, next) => {
     "friday",
     "saturday",
     "sunday",
+    // "doctorDegrees",
+    // "doctorExperience",
+    "doctorDescription",
   ];
 
   // Check if all required fields are present
@@ -217,6 +223,38 @@ export const addNewDoctor = catchAsyncErros(async (req, res, next) => {
       return next(new ErrorHandler(`Please fill the ${field} field.`, 400));
     }
   }
+
+  // Manually parse doctorDegrees
+  const doctorDegrees = [];
+  const degreeKeys = Object.keys(req.body).filter((key) =>
+    key.startsWith("doctorDegrees[")
+  );
+  const degreePattern = /doctorDegrees\[(\d+)\]\[(institution|description)\]/;
+
+  degreeKeys.forEach((key) => {
+    const match = key.match(degreePattern);
+    if (match) {
+      const index = parseInt(match[1]);
+      const field = match[2];
+      doctorDegrees[index] = doctorDegrees[index] || {};
+      doctorDegrees[index][field] = req.body[key];
+    }
+  });
+
+  // Manually parse doctorExperience
+  const doctorExperience = [];
+  const experienceKeys = Object.keys(req.body).filter((key) =>
+    key.startsWith("doctorExperience[")
+  );
+  const experiencePattern = /doctorExperience\[(\d+)\]/;
+
+  experienceKeys.forEach((key) => {
+    const match = key.match(experiencePattern);
+    if (match) {
+      const index = parseInt(match[1]);
+      doctorExperience[index] = req.body[key];
+    }
+  });
 
   // Calculate age from dob
   const registrationYear = new Date(year);
@@ -343,6 +381,9 @@ export const addNewDoctor = catchAsyncErros(async (req, res, next) => {
             saturday,
             sunday,
             feePerConsultation,
+            doctorDegrees,
+            doctorExperience: doctorExperience.split(","),
+            doctorDescription,
           },
         },
         { new: true } // Options: return updated document
@@ -378,6 +419,9 @@ export const addNewDoctor = catchAsyncErros(async (req, res, next) => {
         sunday,
         feePerConsultation,
         doctorStatus: "Pending", // default status
+        doctorDegrees,
+        doctorExperience,
+        doctorDescription,
       });
 
       return res.status(200).json({
@@ -634,26 +678,69 @@ export const updateDoctor = catchAsyncErros(async (req, res, next) => {
     friday,
     saturday,
     sunday,
+    // doctorDegrees,
+    // doctorExperience,
+    doctorDescription,
   } = req.body;
 
-  if (
-    !doctorDepartment ||
-    !email ||
-    !gender ||
-    !phone ||
-    !feePerConsultation ||
-    !status ||
-    !startTime ||
-    !endTime ||
-    !monday ||
-    !tuesday ||
-    !wednesday ||
-    !thursday ||
-    !friday ||
-    !saturday ||
-    !sunday
-  )
-    return next(new ErrorHandler("Fill up form!", 400));
+  const fields = [
+    "doctorDepartment",
+    "email",
+    "gender",
+    "phone",
+    "feePerConsultation",
+    "startTime",
+    "endTime",
+    "monday",
+    "tuesday",
+    "wednesday",
+    "thursday",
+    "friday",
+    "saturday",
+    "sunday",
+    // "doctorDegrees",
+    // "doctorExperience",
+    "doctorDescription",
+  ];
+
+  // Check if all required fields are present
+  for (const field of fields) {
+    if (!req.body[field]) {
+      return next(new ErrorHandler(`Please fill the ${field} field.`, 400));
+    }
+  }
+
+  // Manually parse doctorDegrees
+  const doctorDegrees = [];
+  const degreeKeys = Object.keys(req.body).filter((key) =>
+    key.startsWith("doctorDegrees[")
+  );
+  const degreePattern = /doctorDegrees\[(\d+)\]\[(institution|description)\]/;
+
+  degreeKeys.forEach((key) => {
+    const match = key.match(degreePattern);
+    if (match) {
+      const index = parseInt(match[1]);
+      const field = match[2];
+      doctorDegrees[index] = doctorDegrees[index] || {};
+      doctorDegrees[index][field] = req.body[key];
+    }
+  });
+
+  // Manually parse doctorExperience
+  const doctorExperience = [];
+  const experienceKeys = Object.keys(req.body).filter((key) =>
+    key.startsWith("doctorExperience[")
+  );
+  const experiencePattern = /doctorExperience\[(\d+)\]/;
+
+  experienceKeys.forEach((key) => {
+    const match = key.match(experiencePattern);
+    if (match) {
+      const index = parseInt(match[1]);
+      doctorExperience[index] = req.body[key];
+    }
+  });
 
   // Initialize update object
   let updateData = {
@@ -672,6 +759,9 @@ export const updateDoctor = catchAsyncErros(async (req, res, next) => {
     saturday,
     sunday,
     doctorStatus: status,
+    doctorDegrees,
+    doctorExperience,
+    doctorDescription,
   };
 
   // Handling profile image update

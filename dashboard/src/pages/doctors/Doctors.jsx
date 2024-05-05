@@ -34,7 +34,7 @@ export default function Doctors() {
           {doctors.map((doctor, index) => {
             return <DoctorCard doctor={doctor} key={doctor._id} />;
           })}
-          {!doctors && <p>No doctor availabel 😔</p>}
+          {!doctors && <p>No doctor available 😔</p>}
         </div>
       )}
       {loading && <Loader />}
