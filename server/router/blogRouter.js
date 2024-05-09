@@ -26,6 +26,6 @@ router.put("/:id", isAdminAuthenticated, handleUpdateBlog);
 
 // comments
 router.post("/:id/comment", isUserAuthenticated, handleAddNewComment);
-router.delete("/comment/:id", isUserAuthenticated, handleDeleteComment);
+router.delete("/comment/:id", isAdminAuthenticated, handleDeleteComment);
 
 export default router;

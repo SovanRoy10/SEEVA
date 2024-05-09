@@ -18,7 +18,7 @@ export default function BlogCard(props) {
           <p
             className="text-gray-700 text-xs"
             // dangerouslySetInnerHTML={{
-            //   __html: props.blog.body.replace(/<[^>]*>/g, "").slice(0, 250)
+            //   __html: props.blog.body
             // }}
           >
             {props.blog.body.replace(/<[^>]*>/g, "").slice(0, 250)}

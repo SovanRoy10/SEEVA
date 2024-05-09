@@ -10,7 +10,7 @@ export default function Doctors() {
   useEffect(() => {
     const getAllDoctors = async () => {
       setLoading(true);
-      const response = axios.get("http://localhost:4000/api/v1/user/doctors", {
+      const response = axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/v1/user/doctors` , {
         withCredentials: true,
       });
 
@@ -34,7 +34,7 @@ export default function Doctors() {
           {doctors.map((doctor, index) => {
             return <DoctorCard doctor={doctor} key={doctor._id} />;
           })}
-          {!doctors && <p>No doctor availabel 😔</p>}
+          {!doctors && <p>No doctor available 😔</p>}
         </div>
       )}
       {loading && <Loader />}

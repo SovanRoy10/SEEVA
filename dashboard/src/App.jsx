@@ -28,6 +28,7 @@ import RTE from "./components/editor/RTE.jsx";
 import Blogs from "./pages/blogs/Blogs.jsx";
 import BlogDetails from "./components/singleBlog/BlogDetails.jsx";
 import Protected from "./components/Protected.jsx";
+import NotFound from "./components/NotFound/NotFound.jsx";
 
 import { Toaster } from "react-hot-toast";
 
@@ -163,6 +164,7 @@ function App() {
             </Protected>
           }
         />
+        <Route path="*" element={<NotFound />} />
       </Route>
     )
   );

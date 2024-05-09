@@ -16,7 +16,7 @@ export default function Profile() {
       try {
         setLoading(true);
         const response = await axios.get(
-          `http://localhost:4000/api/v1/user/doctors/${id}`,
+          `${import.meta.env.VITE_BACKEND_URL}/api/v1/user/doctors/${id}`,
           { withCredentials: true }
         );
         setDoctor(response.data.user);
@@ -102,7 +102,7 @@ export default function Profile() {
                         d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
                       />
                     </svg>
-                    {console.log(doctor.monday)}
+                    {/* {console.log(doctor.monday)} */}
                     {val.charAt(0).toUpperCase() + val.slice(1)}
                   </td>
                   <td className="py-4 px-6">

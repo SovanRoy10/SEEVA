@@ -16,7 +16,7 @@ export default function Blogs() {
   const fetchBlogs = async () => {
     try {
       setLoading(true);
-      const response = await axios.get("http://localhost:4000/api/v1/blog/", {
+      const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/v1/blog/`, {
         withCredentials: true,
       });
       setBlogs(response.data.blogs);
