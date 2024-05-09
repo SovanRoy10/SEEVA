@@ -96,6 +96,7 @@ const userSchema = new Schema(
       type: String,
       enum: ["Pending", "Accepted", "Rejected"],
     },
+
     doctorDegrees: [
       {
         institution: { type: String },

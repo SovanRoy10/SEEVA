@@ -153,6 +153,8 @@ export const logoutPatient = catchAsyncErros(async (req, res, next) => {
 });
 
 export const addNewDoctor = catchAsyncErros(async (req, res, next) => {
+  // console.log(req.body);
+  // return;
   if (!req.files || Object.keys(req.files).length === 0)
     return next(new ErrorHandler("Doctor Avatar Required!", 400));
 

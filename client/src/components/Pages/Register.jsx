@@ -16,7 +16,7 @@ export default function Register() {
 
     try {
       await axios.post(
-        "http://localhost:8000/api/v1/user/patient/register",
+        "http://localhost:4000/api/v1/user/patient/register",
         {
           email,
           name,
@@ -29,6 +29,7 @@ export default function Register() {
     } catch (error) {
       const errorMsg = error.response?.data?.message || error.message;
       toast.error(errorMsg);
+      console.log(error);
     }
   };
 

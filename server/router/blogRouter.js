@@ -7,7 +7,15 @@ import {
 
 const router = express.Router();
 
-import { handlePostAddBlog,handleGetSingleBlog, handleGetAllBlogs,handleDeleteBlog,handleUpdateBlog,handleAddNewComment,handleDeleteComment } from "../controller/blog.js";
+import {
+  handlePostAddBlog,
+  handleGetSingleBlog,
+  handleGetAllBlogs,
+  handleDeleteBlog,
+  handleUpdateBlog,
+  handleAddNewComment,
+  handleDeleteComment,
+} from "../controller/blog.js";
 
 //blogs
 router.post("/add", isAdminAuthenticated, handlePostAddBlog);

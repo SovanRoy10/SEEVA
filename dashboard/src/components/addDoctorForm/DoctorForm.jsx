@@ -107,8 +107,6 @@ function DoctorRegistrationForm(props) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // console.log(formData.feePerConsultation)
-    // console.log(formData);
     const data = new FormData();
     if (props.name === "Settings") {
       for (const key in formData) {
@@ -161,6 +159,7 @@ function DoctorRegistrationForm(props) {
     }
 
     // console.log(data);
+    // return;
     if (props.name === "Settings") {
       // for (let [key, value] of data.entries()) {
       //   console.log(key, value);

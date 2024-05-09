@@ -1,6 +1,30 @@
-import React from 'react';
+import axios from "axios";
+import React from "react";
+import { useState } from "react";
+import { toast } from "react-toastify";
 
-export default function ReplyWidget({ title }) {
+export default function ReplyWidget({ title, id }) {
+  const [comment, setComment] = useState("");
+  const handleAddComment = async (e) => {
+    e.preventDefault();
+    if (!comment.trim()) {
+      toast.error("Comment cannot be empty");
+      return;
+    }
+    try {
+      const response = await axios.post(
+        `http://localhost:4000/api/v1/blog/${id}/comment`,
+        { content: comment },
+        { withCredentials: true }
+      );
+      setComment("");
+      // console.log(response.data.comment)
+      toast.success("Comment added successfully");
+    } catch (error) {
+      const errorMsg = error?.data.message || error?.message;
+      toast.error(errorMsg);
+    }
+  };
   return (
     <>
       <h3 className="cs_semibold cs_fs_24 mb-0">{title}</h3>
@@ -17,7 +41,7 @@ export default function ReplyWidget({ title }) {
           cols={30}
           rows={8}
           className="cs_form_field_2"
-          defaultValue={''}
+          defaultValue={""}
         />
         <div className="cs_height_20" />
         <label className="cs_input_label cs_heading_color cs_fs_18 cs_medium">

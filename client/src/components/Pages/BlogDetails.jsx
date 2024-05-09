@@ -1,67 +1,114 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import Section from '../Section';
-import Breadcrumb from '../Breadcrumb';
-import BannerSectionStyle9 from '../Section/BannerSection/BannerSectionStyle9';
-import { Icon } from '@iconify/react';
-import Spacing from '../Spacing';
-import Post from '../Post';
-import Sidebar from '../Sidebar';
-import AuthorWidget from '../Widget/AuthorWidget';
-import CommentsWidget from '../Widget/CommentsWidget';
-import ReplyWidget from '../Widget/ReplyWidget';
-import { pageTitle } from '../../helpers/PageTitle';
+import React, { useEffect, useRef, useState } from "react";
+import { Link, useParams } from "react-router-dom";
+import Section from "../Section";
+import Breadcrumb from "../Breadcrumb";
+import BannerSectionStyle9 from "../Section/BannerSection/BannerSectionStyle9";
+import { Icon } from "@iconify/react";
+import Spacing from "../Spacing";
+import Post from "../Post";
+import Sidebar from "../Sidebar";
+import AuthorWidget from "../Widget/AuthorWidget";
+import CommentsWidget from "../Widget/CommentsWidget";
+import ReplyWidget from "../Widget/ReplyWidget";
+import { pageTitle } from "../../helpers/PageTitle";
+import axios from "axios";
+
 const tags = [
-  { tag: 'Emergency', href: '/blog/blog-details' },
-  { tag: 'Pediatric', href: '/blog/blog-details' },
-  { tag: 'Cardiology', href: '/blog/blog-details' },
-  { tag: 'Psychiatry', href: '/blog/blog-details' },
-  { tag: 'Others', href: '/blog/blog-details' },
+  { tag: "Emergency", href: "/blog/blog-details" },
+  { tag: "Pediatric", href: "/blog/blog-details" },
+  { tag: "Cardiology", href: "/blog/blog-details" },
+  { tag: "Psychiatry", href: "/blog/blog-details" },
+  { tag: "Others", href: "/blog/blog-details" },
 ];
 const relatedBlog = [
   {
     title:
-      'The Importance of Mental Health: Understanding and Managing Anxiety Disorders',
-    thumbUrl: '/images/blog/post_1.jpeg',
-    date: 'March 12',
-    btnText: 'Learn More',
-    href: '/blog/blog-details',
+      "The Importance of Mental Health: Understanding and Managing Anxiety Disorders",
+    thumbUrl: "/images/blog/post_1.jpeg",
+    date: "March 12",
+    btnText: "Learn More",
+    href: "/blog/blog-details",
   },
   {
     title: `A Parent's Guide to Childhood Vaccinations: What You Need to Know`,
-    thumbUrl: '/images/blog/post_2.jpeg',
-    date: 'March 11',
-    btnText: 'Learn More',
-    href: '/blog/blog-details',
+    thumbUrl: "/images/blog/post_2.jpeg",
+    date: "March 11",
+    btnText: "Learn More",
+    href: "/blog/blog-details",
   },
   {
-    title: 'Preventing Heart Disease: Tips for a Heart-Healthy Lifestyle',
-    thumbUrl: '/images/blog/post_3.jpeg',
-    date: 'March 9',
-    btnText: 'Learn More',
-    href: '/blog/blog-details',
+    title: "Preventing Heart Disease: Tips for a Heart-Healthy Lifestyle",
+    thumbUrl: "/images/blog/post_3.jpeg",
+    date: "March 9",
+    btnText: "Learn More",
+    href: "/blog/blog-details",
   },
 ];
 
 export default function BlogDetails() {
-  pageTitle('Blog Details');
+  const { blogId } = useParams();
+  const blogRef = useRef(null);
+  const [blog, setBlog] = useState({});
+  const [blogs, setBlogs] = useState([]);
+  const [blogComments, setBlogComments] = useState([]);
+  // console.log(blogId);
+
+  useEffect(() => {
+    loadDoctor();
+  }, []);
+  const loadDoctor = async (id) => {
+    try {
+      const { data } = await axios.get(
+        `http://localhost:4000/api/v1/blog/${blogId}`
+      );
+      // console.log(data.blog);
+      setBlog(data.blog);
+      setBlogComments(data.comments);
+    } catch (error) {
+      console.error("Error loading doctor:", error);
+    }
+  };
+
+  useEffect(() => {
+    const fetchCourses = async () => {
+      const { data } = await axios.get("http://localhost:4000/api/v1/blog/");
+      // console.log(data);
+      setBlogs(data.blogs);
+    };
+    fetchCourses();
+  }, []);
+
+  useEffect(() => {
+    if (blogRef.current) {
+      const images = blogRef.current.querySelectorAll("img");
+      images.forEach((image) => {
+        image.style.width = "100%";
+        image.style.height = "auto";
+      });
+    }
+  }, [blog]);
+
+  const date = new Date(blog.createdAt);
+
+  pageTitle("Blog Details");
   return (
     <>
       <Section topMd={170} bottomMd={54} bottomLg={54}>
-        <Breadcrumb title="The Importance of Mental Health: Understanding and Managing Anxiety Disorders" />
+        <Breadcrumb title={blog.title} />
       </Section>
       <div className="container">
         <div className="cs_blog_details_info">
           <div className="cs_blog_details_info_left">
-            <div className="cs_blog_details_tags">
+            {/* <div className="cs_blog_details_tags">
               {tags.map((item, index) => (
                 <Link key={index} to={item.href}>
                   {item.tag}
                 </Link>
               ))}
-            </div>
+            </div> */}
             <div className="cs_blog_details_date">
-              March 12, 2023 | Debri Bianca
+              {date.toLocaleDateString()} |{" "}
+              {blog.createdBy && blog.createdBy.name}
             </div>
           </div>
           <div className="cs_social_links_wrap">
@@ -80,15 +127,22 @@ export default function BlogDetails() {
           </div>
         </div>
         <Spacing md="55" />
-        <img
-          src="/images/blog/blog_details_1.jpeg"
-          alt="Blog Details"
-          className="w-100 cs_radius_20"
-        />
+        {blog.coverImageUrl && (
+          <img
+            src={blog.coverImageUrl}
+            alt="Blog Details"
+            className="w-100 cs_radius_20"
+          />
+        )}
         <Spacing md="90" lg="50" />
         <div className="row">
           <div className="col-lg-8">
-            <div className="cs_blog_details">
+            <div
+              ref={blogRef}
+              className="cs_blog_details"
+              dangerouslySetInnerHTML={{ __html: blog.body }}
+            />
+            {/* <div className="cs_blog_details">
               <h2>What is Anxiety Disorders</h2>
               <p>
                 Anxiety disorders are a type of mental health disorder
@@ -198,7 +252,7 @@ export default function BlogDetails() {
                   <b>Mindful meditation and relaxation techniques:</b> Deep
                   breathing exercises, progressive muscle relaxation, and
                   mindfulness meditation can reduce symptoms of anxiety by
-                  promoting relaxation and reducing feelings of fear and worry.{' '}
+                  promoting relaxation and reducing feelings of fear and worry.{" "}
                   <br />
                   <br />
                   <b>Healthy lifestyle:</b> Regular physical exercise, a healthy
@@ -231,7 +285,7 @@ export default function BlogDetails() {
                 Anxiety disorders can be daunting, but with the right
                 combination of professional help and personal coping strategies,
                 they can be managed effectively. It's essential to remember that
-                help is available and that you're not alone in your struggle.{' '}
+                help is available and that you're not alone in your struggle.{" "}
                 <br />
                 <br />
                 Remember, it's crucial to reach out to a mental health
@@ -240,17 +294,17 @@ export default function BlogDetails() {
                 type of anxiety disorder, and it's essential to get a
                 professional's guidance for effective management.
               </p>
-            </div>
+            </div> */}
             <Spacing md="85" />
             <AuthorWidget
-              imgUrl="/images/blog/author.png"
-              name="Author Bio"
-              description="John Smith is a freelance writer and content strategist with a passion for helping businesses tell their stories. With over 10 years of experience in the industry, John has worked with a wide range of clients, from startups to Fortune 500 companies. He holds a Bachelor's degree in English from the University of California, Los Angeles (UCLA), and is an avid reader and traveler in his free time. Follow him on Twitter @johnsmithwriter for the latest updates on his work."
+              imgUrl={blog.createdBy && blog.createdBy.profileImageUrl}
+              name={blog.createdBy && blog.createdBy.name}
+              description="Our Seeva group administrators are key leaders in healthcare institutions, managing finances, staff, and facilities to ensure smooth operations. They oversee strategic planning, policy implementation, and resource allocation while maintaining high standards of care. Their role involves collaboration with medical professionals, regulatory compliance, and advocacy for the hospital's interests. In essence, hospital administrators drive efficiency, quality, and innovation in healthcare delivery, ultimately improving patient outcomes and community well-being."
             />
             <Spacing md="110" />
-            <CommentsWidget title="Comments" />
+            <CommentsWidget title="Comments" comments={blogComments} />
             <Spacing md="92" />
-            <ReplyWidget title="Leave a Reply" />
+            <ReplyWidget title="Leave a Reply" id={blogId} />
           </div>
           <div className="col-lg-4">
             <Sidebar />
@@ -260,7 +314,7 @@ export default function BlogDetails() {
         <h2 className="mb-0 cs_fs_40 cs_medium">Related Articles</h2>
         <Spacing md="57" />
         <div className="row cs_gap_y_40">
-          {relatedBlog?.map((item, index) => (
+          {blogs?.map((item, index) => (
             <div className="col-xl-4 col-md-6" key={index}>
               <Post {...item} />
             </div>

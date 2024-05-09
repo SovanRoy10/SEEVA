@@ -1,9 +1,10 @@
-import React from 'react';
-import Pagination from '../../Pagination';
-import Post from '../../Post';
-import Spacing from '../../Spacing';
+import React from "react";
+import Pagination from "../../Pagination";
+import Post from "../../Post";
+import Spacing from "../../Spacing";
 
 export default function BlogSectionStyle2({ data }) {
+  // console.log(data);
   return (
     <div className="container">
       <div className="row cs_row_gap_50">

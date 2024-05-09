@@ -1,47 +1,55 @@
-import React, { useState } from 'react';
-import Spacing from '../../Spacing';
-import TeamStyle2 from '../../Team/TeamStyle2';
-import Pagination from '../../Pagination';
+import React, { useState } from "react";
+import Spacing from "../../Spacing";
+import TeamStyle2 from "../../Team/TeamStyle2";
+import Pagination from "../../Pagination";
 
 export default function TeamSectionStyle2({ data }) {
-  const [view, setView] = useState('grid');
-  const [active, setActive] = useState('all');
+  const [view, setView] = useState("grid");
+  const [active, setActive] = useState("all");
   const [filteredData, setFilteredData] = useState(data);
   // Extracting unique categories from teamData
-  const uniqueCategories = [...new Set(data.map(doctor => doctor.category))];
-  const handleFilter = category => {
-    if (category === 'all') {
+  // console.log(data);
+  // return;
+  const uniqueCategories = [
+    ...new Set(data?.map((doctor) => doctor.doctorDepartment)),
+  ];
+  // console.log(uniqueCategories);
+  const handleFilter = (category) => {
+    if (category === "all") {
       setFilteredData(data);
     } else {
-      const filtered = data.filter(doctor => doctor.category === category);
+      const filtered = data?.filter(
+        (doctor) => doctor.doctorDepartment === category
+      );
       setFilteredData(filtered);
     }
     setActive(category);
   };
-
+  // console.log(filteredData);
+  // return;
   return (
     <div className="container">
       <div className="cs_doctors_heading">
         <div className="cs_isotop_filter cs_style1">
           <p className="mb-0">Sort by</p>
           <ul className="cs_mp0">
-            <li className={active === 'all' ? 'active' : ''}>
-              <span onClick={() => handleFilter('all')}>All</span>
+            <li className={active === "all" ? "active" : ""}>
+              <span onClick={() => handleFilter("all")}>All</span>
             </li>
-            {uniqueCategories?.map(item => (
-              <li className={active === item ? 'active' : ''} key={item}>
+            {uniqueCategories?.map((item) => (
+              <li className={active === item ? "active" : ""} key={item}>
                 <span onClick={() => handleFilter(item)}>{item}</span>
               </li>
             ))}
           </ul>
         </div>
         <div className="cs_view_box">
-          <span>Showing {filteredData.length} items</span>
+          {data && data.length > 0 && <span>Showing {data.length} items</span>}
           <div className="cs_view_box_in">
             <button
               type="button"
-              className={`cs_grid_view ${view === 'grid' ? 'active' : ''}`}
-              onClick={() => setView('grid')}
+              className={`cs_grid_view ${view === "grid" ? "active" : ""}`}
+              onClick={() => setView("grid")}
             >
               <svg
                 width={25}
@@ -58,8 +66,8 @@ export default function TeamSectionStyle2({ data }) {
             </button>
             <button
               type="button"
-              className={`cs_list_view ${view === 'list' ? 'active' : ''}`}
-              onClick={() => setView('list')}
+              className={`cs_list_view ${view === "list" ? "active" : ""}`}
+              onClick={() => setView("list")}
             >
               <svg
                 width={25}
@@ -80,7 +88,7 @@ export default function TeamSectionStyle2({ data }) {
       <Spacing md="65" />
       <div className={`cs_team_grid cs_${view}_view_wrap`}>
         {filteredData?.map((item, index) => (
-          <TeamStyle2 {...item} key={index} />
+          <TeamStyle2 {...item} key={index} id={filteredData[index]._id} />
         ))}
       </div>
       <Spacing md="90" />
