@@ -7,12 +7,20 @@ import {
 
 const router = express.Router();
 
-import { handlePostAddBlog,handleGetSingleBlog, handleGetAllBlogs,handleDeleteBlog,handleUpdateBlog,handleAddNewComment,handleDeleteComment } from "../controller/blog.js";
+import {
+  handlePostAddBlog,
+  handleGetSingleBlog,
+  handleGetAllBlogs,
+  handleDeleteBlog,
+  handleUpdateBlog,
+  handleAddNewComment,
+  handleDeleteComment,
+} from "../controller/blog.js";
 
 //blogs
 router.post("/add", isAdminAuthenticated, handlePostAddBlog);
-router.get("/:id", isUserAuthenticated, handleGetSingleBlog);
-router.get("/", isUserAuthenticated, handleGetAllBlogs);
+router.get("/:id", handleGetSingleBlog);
+router.get("/", handleGetAllBlogs);
 router.delete("/:id", isAdminAuthenticated, handleDeleteBlog);
 router.put("/:id", isAdminAuthenticated, handleUpdateBlog);
 

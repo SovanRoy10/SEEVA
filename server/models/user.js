@@ -88,13 +88,25 @@ const userSchema = new Schema(
     monday: { type: Boolean },
     tuesday: { type: Boolean },
     wednesday: { type: Boolean },
-    thursday: { type: Boolean},
+    thursday: { type: Boolean },
     friday: { type: Boolean },
     saturday: { type: Boolean },
     sunday: { type: Boolean },
     doctorStatus: {
       type: String,
       enum: ["Pending", "Accepted", "Rejected"],
+    },
+    doctorDegree: [
+      {
+        institution: { type: String },
+        description: { type: String },
+      },
+    ],
+    doctorExperience: {
+      type: [String],
+    },
+    doctorDescription: {
+      type: String,
     },
   },
   { timestamps: true }

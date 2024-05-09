@@ -55,6 +55,8 @@ function DoctorRegistrationForm(props) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    // console.log(formData);
+    // return;
     const data = new FormData();
     if (props.name === "Settings") {
       for (const key in formData) {
@@ -88,6 +90,7 @@ function DoctorRegistrationForm(props) {
     }
 
     // console.log(data);
+    // return;
     if (props.name === "Settings") {
       try {
         const response = await axios.put(
