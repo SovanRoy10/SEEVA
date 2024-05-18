@@ -44,14 +44,14 @@ const featureListData = [
   },
 ];
 const brandData = [
-  { imgUrl: 'images/brand_1.png', imgAlt: 'Brand' },
-  { imgUrl: 'images/brand_2.png', imgAlt: 'Brand' },
-  { imgUrl: 'images/brand_3.png', imgAlt: 'Brand' },
-  { imgUrl: 'images/brand_4.png', imgAlt: 'Brand' },
-  { imgUrl: 'images/brand_5.png', imgAlt: 'Brand' },
-  { imgUrl: 'images/brand_6.png', imgAlt: 'Brand' },
-  { imgUrl: 'images/brand_7.png', imgAlt: 'Brand' },
-  { imgUrl: 'images/brand_8.png', imgAlt: 'Brand' },
+  { imgUrl: 'https://images.pexels.com/photos/3769151/pexels-photo-3769151.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', imgAlt: 'Brand' },
+  { imgUrl: 'https://images.pexels.com/photos/3279209/pexels-photo-3279209.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', imgAlt: 'Brand' },
+  { imgUrl: 'https://images.pexels.com/photos/3814571/pexels-photo-3814571.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', imgAlt: 'Brand' },
+  { imgUrl: 'https://images.pexels.com/photos/3845653/pexels-photo-3845653.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', imgAlt: 'Brand' },
+  { imgUrl: 'https://images.pexels.com/photos/5726794/pexels-photo-5726794.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', imgAlt: 'Brand' },
+  { imgUrl: 'https://images.pexels.com/photos/3957993/pexels-photo-3957993.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', imgAlt: 'Brand' },
+  { imgUrl: 'https://images.pexels.com/photos/4021817/pexels-photo-4021817.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', imgAlt: 'Brand' },
+  { imgUrl: 'https://images.pexels.com/photos/6129237/pexels-photo-6129237.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', imgAlt: 'Brand' },
 ];
 const faqData = [
   {
@@ -267,22 +267,22 @@ export default function Home() {
       </Section>
       {/* End Banner Section */}
       {/* Start Blog Section */}
-      <Section topMd={190} topLg={145} topXl={105}>
+      {/* <Section topMd={190} topLg={145} topXl={105}>
         <BlogSection
           sectionTitle="Latest Update"
           sectionTitleUp="BLOG POSTS"
           data={blogData}
         />
-      </Section>
+      </Section> */}
       {/* End Blog Section */}
       {/* Start Appointment Section */}
-      <Section topMd={190} topLg={145} topXl={105} id="appointment">
+      {/* <Section topMd={190} topLg={145} topXl={105} id="appointment">
         <AppointmentSection
           sectionTitle="Appointment"
           sectionTitleUp="BOOK AN"
           imgUrl="/images/home_1/appointment.jpeg"
         />
-      </Section>
+      </Section> */}
       {/* End Appointment Section */}
       {/* Start FAQ Section */}
       <Section topMd={190} topLg={145} topXl={105}>

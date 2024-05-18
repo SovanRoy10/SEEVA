@@ -11,7 +11,7 @@ export default function Contact() {
     <>
       <BannerSectionStyle5
         bgUrl="/images/contact/banner_bg.svg"
-        imgUrl="/images/contact/banner_img.png"
+        imgUrl="https://images.pexels.com/photos/1416530/pexels-photo-1416530.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
         title="Contact Us"
         subTitle="Kindly reach us to get the fastest response and treatment"
       />

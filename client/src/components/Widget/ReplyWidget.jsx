@@ -3,7 +3,7 @@ import React from "react";
 import { useState } from "react";
 import { toast } from "react-toastify";
 
-export default function ReplyWidget({ title, id }) {
+export default function ReplyWidget({ title, id ,loadBlog}) {
   const [comment, setComment] = useState("");
   const handleAddComment = async (e) => {
     e.preventDefault();
@@ -13,13 +13,14 @@ export default function ReplyWidget({ title, id }) {
     }
     try {
       const response = await axios.post(
-        `http://localhost:4000/api/v1/blog/${id}/comment`,
+        `${process.env.REACT_APP_API_URL}/v1/blog/${id}/comment`,
         { content: comment },
         { withCredentials: true }
       );
       setComment("");
       // console.log(response.data.comment)
       toast.success("Comment added successfully");
+      loadBlog();
     } catch (error) {
       const errorMsg = error?.data.message || error?.message;
       toast.error(errorMsg);
@@ -33,7 +34,7 @@ export default function ReplyWidget({ title, id }) {
         Your email address will not be published. Required fields are marked *
       </p>
       <div className="cs_height_7" />
-      <form action="#">
+      <form action="#" onSubmit={handleAddComment}>
         <label className="cs_input_label cs_heading_color cs_fs_18 cs_medium">
           Comment*
         </label>
@@ -42,9 +43,10 @@ export default function ReplyWidget({ title, id }) {
           rows={8}
           className="cs_form_field_2"
           defaultValue={""}
+          onChange={(e) => setComment(e.target.value)}
         />
         <div className="cs_height_20" />
-        <label className="cs_input_label cs_heading_color cs_fs_18 cs_medium">
+        {/* <label className="cs_input_label cs_heading_color cs_fs_18 cs_medium">
           Your Name*
         </label>
         <input type="text" className="cs_form_field_2" />
@@ -64,7 +66,7 @@ export default function ReplyWidget({ title, id }) {
           <label className="form-check-label" htmlFor="flexCheckDefault">
             Save my name and email in this browser for the next time I comment.
           </label>
-        </div>
+        </div> */}
         <div className="cs_height_60" />
         <button className="cs_btn cs_style_1">
           <span>Submit</span>

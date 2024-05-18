@@ -54,12 +54,12 @@ export default function BlogDetails() {
   // console.log(blogId);
 
   useEffect(() => {
-    loadDoctor();
+    loadBlog();
   }, []);
-  const loadDoctor = async (id) => {
+  const loadBlog = async (id) => {
     try {
       const { data } = await axios.get(
-        `http://localhost:4000/api/v1/blog/${blogId}`
+        `${process.env.REACT_APP_API_URL}/v1/blog/${blogId}`
       );
       // console.log(data.blog);
       setBlog(data.blog);
@@ -70,12 +70,12 @@ export default function BlogDetails() {
   };
 
   useEffect(() => {
-    const fetchCourses = async () => {
-      const { data } = await axios.get("http://localhost:4000/api/v1/blog/");
+    const fetchBlogs = async () => {
+      const { data } = await axios.get(`${process.env.REACT_APP_API_URL}/v1/blog/`);
       // console.log(data);
       setBlogs(data.blogs);
     };
-    fetchCourses();
+    fetchBlogs();
   }, []);
 
   useEffect(() => {
@@ -304,7 +304,7 @@ export default function BlogDetails() {
             <Spacing md="110" />
             <CommentsWidget title="Comments" comments={blogComments} />
             <Spacing md="92" />
-            <ReplyWidget title="Leave a Reply" id={blogId} />
+            <ReplyWidget title="Leave a Reply" id={blogId} loadBlog={loadBlog}/>
           </div>
           <div className="col-lg-4">
             <Sidebar />
@@ -326,7 +326,7 @@ export default function BlogDetails() {
         <BannerSectionStyle9
           title="Don’t Let Your Health <br />Take a Backseat!"
           subTitle="Schedule an appointment with one of our experienced <br />medical professionals today!"
-          imgUrl="/images/doctors/banner_img_3.png"
+          
         />
       </Section>
     </>

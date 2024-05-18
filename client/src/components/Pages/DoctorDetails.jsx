@@ -18,7 +18,7 @@ export default function DoctorDetails() {
   const loadDoctor = async (id) => {
     try {
       const { data } = await axios.get(
-        `http://localhost:4000/api/v1/user/doctors/${doctorId}`
+        `${process.env.REACT_APP_API_URL}/v1/user/doctors/${doctorId}`
       );
       console.log(data.user);
       setDoctor(data.user);

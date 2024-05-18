@@ -2,9 +2,11 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Spacing from "../Spacing";
 import { Icon } from "@iconify/react";
+import Avatar from 'react-avatar';
+
 
 export default function CommentsWidget({ title, comments }) {
-  console.log(comments);
+  // console.log(comments);
   return (
     <div id="comments" className="comments-area">
       <h2 className="comments-title cs-semi_bold cs_fs_24 cs_semibold mb-0">
@@ -76,11 +78,13 @@ export default function CommentsWidget({ title, comments }) {
             <li key={comment._id} className="comment">
               <div className="comment-body">
                 <div className="comment-author vcard">
-                  <img
+                  {/* <img
                     className="avatar"
                     src={comment.createdBy?.profileImageUrl}
                     alt="Author"
-                  />
+                  /> */}
+                  <Avatar name={comment.createdBy.name} size="50" round={true} className="avatar"/>
+
                   <Link to="/" className="url">
                     {comment.createdBy.name}
                   </Link>

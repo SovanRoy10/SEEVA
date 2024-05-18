@@ -27,10 +27,12 @@ import DoctorSignup from "./components/Section/DoctorSignup/Page";
 function App() {
   const { pathname } = useLocation();
 
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [pathname]);
   return (
+    
     <Routes>
       <Route path="/" element={<Layout />}>
         <Route index element={<Home />} />
@@ -59,6 +61,8 @@ function App() {
 
       <Route path="*" element={<ErrorPage />} />
     </Routes>
+  
+
   );
 }
 
