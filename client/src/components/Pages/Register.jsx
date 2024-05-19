@@ -16,7 +16,7 @@ export default function Register() {
 
     try {
       await axios.post(
-        "http://localhost:4000/api/v1/user/patient/register",
+        `${process.env.REACT_APP_API_URL}/v1/user/patient/register`,
         {
           email,
           name,

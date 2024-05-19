@@ -195,14 +195,14 @@ export default function Doctors() {
   const [doctors, setDoctors] = useState([]);
 
   useEffect(() => {
-    const fetchCourses = async () => {
+    const fetchDoctors = async () => {
       const { data } = await axios.get(
-        "http://localhost:4000/api/v1/user/doctors"
+        `${process.env.REACT_APP_API_URL}/v1/user/doctors`
       );
       // console.log(data);
       setDoctors(data);
     };
-    fetchCourses();
+    fetchDoctors();
   }, []);
 
   pageTitle("Doctors");

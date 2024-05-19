@@ -1,16 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import DropDown from "./DropDown";
 import SocialWidget from "../Widget/SocialWidget";
 import Newsletter from "../Widget/Newsletter";
 import IconBoxStyle11 from "../IconBox/IconBoxStyle11";
 import Spacing from "../Spacing";
+import Button from "../Button";
+import { UserContext } from "../../context/context";
+import { toast } from "react-toastify";
 
 export default function Header({ logoSrc, variant }) {
   const [isSticky, setIsSticky] = useState(false);
   const [mobileToggle, setMobileToggle] = useState(false);
   const [sideNav, setSideNav] = useState(false);
   const [searchToggle, setSearchToggle] = useState(false);
+  const [state, setState] = useContext(UserContext);
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 0) {
@@ -25,6 +29,11 @@ export default function Header({ logoSrc, variant }) {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+  const logout = () => {
+    window.localStorage.removeItem("auth");
+    setState(null);
+    toast.success("We will always be here to help you!");
+  };
   return (
     <>
       <header
@@ -68,36 +77,33 @@ export default function Header({ logoSrc, variant }) {
                           <li>
                             <Link to="/appointments">Appointments</Link>
                           </li>
-                          <li>
+                          {/* <li>
                             <Link to="/departments">Departments</Link>
                           </li>
                           <li>
                             <Link to="/departments/department-details">
                               Department Details
                             </Link>
-                          </li>
+                          </li> */}
                           <li>
                             <Link to="/doctors">Doctors</Link>
                           </li>
-                          <li>
+                          {/* <li>
                             <Link to="doctors/doctor-details">
                               Doctor Details
                             </Link>
-                          </li>
-                          <li>
+                          </li> */}
+                          {/* <li>
                             <Link to="/pricing-plan">Pricing Plan</Link>
                           </li>
                           <li>
                             <Link to="/gallery">Gallery</Link>
-                          </li>
+                          </li> */}
                           <li>
                             <Link to="/timetable">Timetable</Link>
                           </li>
                           <li>
                             <Link to="/contact">Contact</Link>
-                          </li>
-                          <li>
-                            <Link to="/login">Login</Link>
                           </li>
                         </ul>
                       </DropDown>
@@ -117,6 +123,13 @@ export default function Header({ logoSrc, variant }) {
               </div>
               <div className="cs_main_header_right">
                 <div className="cs_toolbox">
+                  {state ? (
+                    <button className="cs_btn cs_style_1" onClick={logout}>
+                      <span>Logout</span>
+                    </button>
+                  ) : (
+                    <Button btnUrl="/login" btnText="Login" />
+                  )}
                   <button
                     className="cs_toolbox_btn cs_search_toggle_btn"
                     type="button"

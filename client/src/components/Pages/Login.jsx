@@ -13,7 +13,7 @@ export default function Login() {
     e.preventDefault();
     try {
       const { data } = await axios.post(
-        "http://localhost:4000/api/v1/user/login",
+        `${process.env.REACT_APP_API_URL}/v1/user/login`,
         {
           email,
           password,
@@ -21,11 +21,11 @@ export default function Login() {
         { withCredentials: true }
       );
 
-      window.localStorage.setItem("user", JSON.stringify(data));
+      window.localStorage.setItem("auth", JSON.stringify(data.user));
 
       toast.success("Welcome Back!🙇‍♂️");
-
       navigate("/");
+      window.location.reload();
     } catch (err) {
       toast.error("Error Signing in!!");
       setEmail("");

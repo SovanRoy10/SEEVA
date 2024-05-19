@@ -30,6 +30,9 @@ export default function SignupForm() {
     saturday: false,
     sunday: false,
     docAvatar: null,
+    doctorDegrees: [{ institution: "", description: "" }],
+    doctorExperience: [""],
+    doctorDescription: "",
   });
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -45,6 +48,34 @@ export default function SignupForm() {
       setFormData((prevState) => ({ ...prevState, docAvatar: file }));
     }
   };
+  const handleDegreeChange = (index, e) => {
+    const updatedDegrees = [...formData.doctorDegrees];
+    updatedDegrees[index][e.target.name] = e.target.value;
+    setFormData({ ...formData, doctorDegrees: updatedDegrees });
+  };
+
+  const handleAddDegree = () => {
+    setFormData({
+      ...formData,
+      doctorDegrees: [
+        ...formData.doctorDegrees,
+        { institution: "", description: "" },
+      ],
+    });
+  };
+
+  const handleAddExperience = () => {
+    setFormData({
+      ...formData,
+      doctorExperience: [...formData.doctorExperience, ""],
+    });
+  };
+
+  const handleExperienceChange = (index, e) => {
+    const updatedExperience = [...formData.doctorExperience];
+    updatedExperience[index] = e.target.value;
+    setFormData({ ...formData, doctorExperience: updatedExperience });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -54,9 +85,18 @@ export default function SignupForm() {
     for (const key in formData) {
       data.append(key, formData[key]);
     }
+    formData.doctorDegrees.forEach((degree, index) => {
+      data.append(`doctorDegrees[${index}][institution]`, degree.institution);
+      data.append(`doctorDegrees[${index}][description]`, degree.description);
+    });
+    formData.doctorExperience.forEach((experience, index) => {
+      data.append(`doctorExperience[${index}]`, experience);
+    });
+    // console.log([...data]);
+    // return;
     try {
       const response = await axios.post(
-        "http://localhost:4000/api/v1/user/doctor/addNew",
+        `${process.env.REACT_APP_API_URL}/v1/user/doctor/addNew`,
         data,
         {
           headers: { "Content-Type": "multipart/form-data" },
@@ -303,6 +343,82 @@ export default function SignupForm() {
           </div>
         </div>
         <div className="cs_height_42 cs_height_xl_25" />
+      </div>
+      <div className="col-lg-8">
+        <label className="cs_input_label cs_heading_color">
+          Any Degrees you want to show?
+        </label>
+        {formData.doctorDegrees.map((degree, index) => (
+          <div key={index} className="space-y-2 flex flex-col items-end">
+            <input
+              type="text"
+              name="institution"
+              placeholder="Institution"
+              value={degree.institution}
+              onChange={(e) => handleDegreeChange(index, e)}
+              required
+              className="cs_form_field"
+            />
+            <input
+              type="text"
+              name="description"
+              placeholder="Degree Description"
+              value={degree.description}
+              onChange={(e) => handleDegreeChange(index, e)}
+              required
+              className="cs_form_field"
+            />
+          </div>
+        ))}
+      </div>
+      <div className="col-lg-4">
+        <button
+          type="button"
+          onClick={handleAddDegree}
+          className="cs_btn cs_style_1"
+        >
+          <span>Add Another Degree</span>
+        </button>
+      </div>
+      <div className="col-lg-8">
+        <label className="cs_input_label cs_heading_color">
+          Do you have any prior experiences in medical field?
+        </label>
+        {formData.doctorExperience.map((experience, index) => (
+          <div key={index} className="space-y-2 flex items-center gap-2">
+            <textarea
+              type="text"
+              name="doctorExperience"
+              placeholder="Enter Experience"
+              value={experience}
+              onChange={(e) => handleExperienceChange(index, e)}
+              required
+              className="cs_form_field"
+            />
+          </div>
+        ))}
+      </div>
+      <div className="col-lg-4">
+        <button
+          type="button"
+          onClick={handleAddExperience}
+          className="cs_btn cs_style_1"
+        >
+          <span>Add Another Experience</span>
+        </button>
+      </div>
+      <div className="col-lg-12">
+        <label className="cs_input_label cs_heading_color">
+          Write about yourself
+        </label>
+        <textarea
+          name="doctorDescription"
+          placeholder="Description"
+          value={formData.doctorDescription}
+          onChange={handleChange}
+          required
+          className="cs_form_field"
+        />
       </div>
       <div className="col-lg-6">
         <label className="cs_input_label cs_heading_color">

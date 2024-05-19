@@ -34,7 +34,7 @@ export default function AppointmentForm() {
   const fetchDoctors = async (department) => {
     try {
       const response = await axios.get(
-        `http://localhost:4000/api/v1/user/doctor/${createSlug(department)}`,
+        `${process.env.REACT_APP_API_URL}/v1/user/doctor/${createSlug(department)}`,
         {
           withCredentials: true,
         }
@@ -83,7 +83,7 @@ export default function AppointmentForm() {
     // return;
     try {
       const response = await axios.post(
-        "http://localhost:4000/api/v1/appointment/post",
+        `${process.env.REACT_APP_API_URL}/v1/appointment/post`,
         formData,
         { withCredentials: true }
       );
