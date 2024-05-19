@@ -86,7 +86,7 @@ export default function Blog() {
 
   useEffect(() => {
     const fetchBlogs = async () => {
-      const { data } = await axios.get(`${process.env.REACT_APP_API_URL}/api/v1/blog/`);
+      const { data } = await axios.get(`${process.env.REACT_APP_API_URL}/v1/blog/`);
       // console.log(data);
       setBlogs(data.blogs);
     };
