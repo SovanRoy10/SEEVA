@@ -196,11 +196,11 @@ export default function Doctors() {
 
   useEffect(() => {
     const fetchDoctors = async () => {
-      const { data } = await axios.get(
-        `${process.env.REACT_APP_API_URL}/v1/user/doctors`
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URL}/api/v1/user/approved-doctors`
       );
-      // console.log(data);
-      setDoctors(data);
+      // console.log(response.data);
+      setDoctors(response.data.doctors);
     };
     fetchDoctors();
   }, []);
@@ -216,7 +216,7 @@ export default function Doctors() {
         subTitle="The list of certified doctors with years of <br />professional experiences"
       />
       <Section topMd={65} bottomMd={200} bottomLg={150} bottomXl={110}>
-        <TeamSectionStyle2 data={doctors.doctors} />
+        <TeamSectionStyle2 data={doctors} />
       </Section>
       <Section className="cs_footer_margin_0">
         <BannerSectionStyle4
