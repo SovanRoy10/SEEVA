@@ -54,7 +54,7 @@ export default function Header({ logoSrc, variant }) {
                       mobileToggle ? "cs_nav_list cs_active" : "cs_nav_list"
                     }`}
                   >
-                    <li className="menu-item-has-children">
+                    <li>
                       <Link to="/">Home</Link>
                     </li>
                     <li>
