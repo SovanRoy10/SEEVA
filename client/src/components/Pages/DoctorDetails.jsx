@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-// import BreadcrumbStyle2 from "../Breadcrumb/BreadcrumbStyle2";
 import Section from "../Section";
 import BannerSectionStyle9 from "../Section/BannerSection/BannerSectionStyle9";
 import DoctorDetailsSection from "../Section/DoctorDetailsSection";
@@ -11,21 +10,27 @@ import { useParams } from "react-router-dom";
 export default function DoctorDetails() {
   const { doctorId } = useParams();
   const [doctor, setDoctor] = useState({});
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     loadDoctor();
-  }, []);
-  const loadDoctor = async (id) => {
+  }, [doctorId]);
+
+  const loadDoctor = async () => {
     try {
+      setLoading(true);
       const { data } = await axios.get(
         `${process.env.REACT_APP_API_URL}/v1/user/doctors/${doctorId}`
       );
       console.log(data.user);
       setDoctor(data.user);
+      setLoading(false);
     } catch (error) {
       console.error("Error loading doctor:", error);
+      setLoading(false);
     }
   };
+
   const dayToSchedule = {
     monday: { day: "Monday", time: doctor.startTime + "-" + doctor.endTime },
     tuesday: { day: "Tuesday", time: doctor.startTime + "-" + doctor.endTime },
@@ -44,24 +49,24 @@ export default function DoctorDetails() {
     },
     sunday: { day: "Sunday", time: doctor.startTime + "-" + doctor.endTime },
   };
+
   const schedules = Object.keys(doctor)
     .filter((day) => doctor[day] === true)
     .map((day) => dayToSchedule[day.toLowerCase()]);
+
   const degrees = doctor.doctorDegree?.map((degree) => ({
     title: degree.institution.trim(),
     subTitle: degree.description.trim(),
   }));
+
   const experience = doctor.doctorExperience?.map((experience) => ({
     title: experience,
   }));
-  // console.log(schedules);
-  // console.log(degrees);
-  console.log(experience);
+
   pageTitle(doctor.name);
+
   return (
     <>
-      {/* {JSON.stringify(doctor, null, 4)} */}
-      {/* <BreadcrumbStyle2 /> */}
       <Section bottomMd={190} bottomLg={150} bottomXl={110}>
         <DoctorDetailsSection
           bgUrl="/images/doctors/doctor_details_bg.svg"
@@ -70,17 +75,9 @@ export default function DoctorDetails() {
           department={doctor.doctorDepartment}
           designation={`Board-certified ${doctor.doctorDepartment}`}
           description={doctor.doctorDescription}
-          // social={[
-          //   { icon: "fa6-brands:facebook-f", href: "/about" },
-          //   { icon: "fa6-brands:linkedin-in", href: "/about" },
-          //   { icon: "fa6-brands:twitter", href: "/about" },
-          // ]}
           contactInfo={[
             { iconUrl: "/images/icons/call.svg", title: doctor.phone },
-            {
-              iconUrl: "/images/icons/envlope.svg",
-              title: doctor.email,
-            },
+            { iconUrl: "/images/icons/envlope.svg", title: doctor.email },
           ]}
           contactInfoHeading="Contact Info"
           schedules={schedules}
@@ -89,14 +86,7 @@ export default function DoctorDetails() {
           degreesHeading="Degrees"
           experiences={experience}
           experiencesHeading="Experiences"
-          // awards={[
-          //   { title: "Fellow of the American Psychiatric Association (FAPA)." },
-          //   {
-          //     title:
-          //       "Recognized for research contributions with grants from the National Institute of Mental Health (NIMH) and the American Foundation for Suicide Prevention.",
-          //   },
-          // ]}
-          // awardHeading="Awards/Achievements"
+          loading={loading}
         />
       </Section>
       <Section bottomMd={200} bottomLg={150} bottomXl={110}>
@@ -107,7 +97,6 @@ export default function DoctorDetails() {
           sectionTitleUp="BOOK AN"
         />
       </Section>
-
       <Section className="cs_footer_margin_0">
         <BannerSectionStyle9
           title="Don’t Let Your Health <br />Take a Backseat!"

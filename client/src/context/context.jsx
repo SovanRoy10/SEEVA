@@ -5,12 +5,12 @@ const UserContext = createContext();
 
 const UserProvider = ({ children }) => {
   const [state, setState] = useState({
-    user: {},
+    user: null,
   });
 
   useEffect(() => {
     const authData = JSON.parse(window.localStorage.getItem("auth"));
-    setState(authData || { user: {} });
+    setState(authData || null);
   }, []);
 
   axios.interceptors.response.use(

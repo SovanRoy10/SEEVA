@@ -2,18 +2,21 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { SyncOutlined } from "@ant-design/icons";
+
 
 export default function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [name, setName] = useState("");
+  const [loading,setLoading]=useState(false);
 
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    setLoading(true);
     try {
       await axios.post(
         `${process.env.REACT_APP_API_URL}/v1/user/patient/register`,
@@ -24,11 +27,13 @@ export default function Register() {
         },
         { withCredentials: true }
       );
+      setLoading(false);
       toast.success("Registration Successfull");
       navigate("/login");
     } catch (error) {
       const errorMsg = error.response?.data?.message || error.message;
       toast.error(errorMsg);
+      setLoading(false);
       console.log(error);
     }
   };
@@ -123,7 +128,7 @@ export default function Register() {
                 type="submit"
                 class="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
               >
-                Create an account
+                {loading ? <SyncOutlined spin className="py-1" /> : "Create an account"}
               </button>
               <p class="text-sm font-light text-gray-500 dark:text-gray-400">
                 Already have an account?{" "}
