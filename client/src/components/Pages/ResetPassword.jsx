@@ -2,16 +2,18 @@ import React, { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";
+import { SyncOutlined } from "@ant-design/icons";
 
 export default function ResetPassword() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { id, token } = useParams();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
       await axios.post(
         `http://localhost:8000/api/reset-password/${id}/${token}`,
@@ -19,9 +21,10 @@ export default function ResetPassword() {
           password,
         }
       );
-
+      setLoading(false);
       toast.success("Password Reset successfull!🙇‍♂️");
-
+      setPassword("");
+      setConfirmPassword("");
       navigate("/login");
     } catch (err) {
       toast.error(err.response.data);
@@ -85,7 +88,7 @@ export default function ResetPassword() {
                   type="submit"
                   class="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
                 >
-                  Reset
+                  {loading ? <SyncOutlined spin className="py-1" /> : "Reset"}
                 </button>
               </form>
             </div>

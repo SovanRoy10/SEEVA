@@ -2,15 +2,18 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";
+import { SyncOutlined } from "@ant-design/icons";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
       const { data } = await axios.post(
         `${process.env.REACT_APP_API_URL}/v1/user/login`,
@@ -22,7 +25,7 @@ export default function Login() {
       );
 
       window.localStorage.setItem("auth", JSON.stringify(data.user));
-
+      setLoading(false);
       toast.success("Welcome Back!🙇‍♂️");
       navigate("/");
       window.location.reload();
@@ -30,6 +33,7 @@ export default function Login() {
       toast.error("Error Signing in!!");
       setEmail("");
       setPassword("");
+      setLoading(false);
     }
   };
 
@@ -95,7 +99,7 @@ export default function Login() {
                   type="submit"
                   class="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
                 >
-                  Sign in
+                  {loading ? <SyncOutlined spin className="py-1" /> : "Sign in"}
                 </button>
                 <p class="text-sm font-light text-gray-500 ">
                   Don’t have an account yet?{" "}

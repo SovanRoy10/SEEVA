@@ -2,9 +2,11 @@ import axios from "axios";
 import React from "react";
 import { useState } from "react";
 import { toast } from "react-toastify";
+import { SyncOutlined } from "@ant-design/icons";
 
-export default function ReplyWidget({ title, id ,loadBlog}) {
+export default function ReplyWidget({ title, id, loadBlog }) {
   const [comment, setComment] = useState("");
+  const [loading, setLoading] = useState(false);
   const handleAddComment = async (e) => {
     e.preventDefault();
     if (!comment.trim()) {
@@ -12,13 +14,14 @@ export default function ReplyWidget({ title, id ,loadBlog}) {
       return;
     }
     try {
+      setLoading(true);
       const response = await axios.post(
         `${process.env.REACT_APP_API_URL}/v1/blog/${id}/comment`,
         { content: comment },
         { withCredentials: true }
       );
       setComment("");
-      // console.log(response.data.comment)
+      setLoading(false);
       toast.success("Comment added successfully");
       loadBlog();
     } catch (error) {
@@ -69,11 +72,11 @@ export default function ReplyWidget({ title, id ,loadBlog}) {
         </div> */}
         <div className="cs_height_60" />
         <button className="cs_btn cs_style_1">
-          <span>Submit</span>
-          <i>
-            <img src="/images/icons/arrow_white.svg" alt="Icon" />
-            <img src="/images/icons/arrow_white.svg" alt="Icon" />
-          </i>
+          {loading ? (
+            <SyncOutlined spin className="py-1" />
+          ) : (
+            <span>Submit</span>
+          )}
         </button>
       </form>
     </>

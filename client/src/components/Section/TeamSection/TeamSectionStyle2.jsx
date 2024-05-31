@@ -1,19 +1,24 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Spacing from "../../Spacing";
 import TeamStyle2 from "../../Team/TeamStyle2";
 import Pagination from "../../Pagination";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
-export default function TeamSectionStyle2({ data }) {
+export default function TeamSectionStyle2({ data, loading }) {
   const [view, setView] = useState("grid");
   const [active, setActive] = useState("all");
-  const [filteredData, setFilteredData] = useState(data);
+  const [filteredData, setFilteredData] = useState(data); // Initial state set to data
+
   // Extracting unique categories from teamData
-  // console.log(data);
-  // return;
   const uniqueCategories = [
     ...new Set(data?.map((doctor) => doctor.doctorDepartment)),
   ];
-  // console.log(uniqueCategories);
+
+  useEffect(() => {
+    setFilteredData(data);
+  }, [data]);
+
   const handleFilter = (category) => {
     if (category === "all") {
       setFilteredData(data);
@@ -25,8 +30,7 @@ export default function TeamSectionStyle2({ data }) {
     }
     setActive(category);
   };
-  // console.log(filteredData);
-  // return;
+
   return (
     <div className="container">
       <div className="cs_doctors_heading">
@@ -87,9 +91,18 @@ export default function TeamSectionStyle2({ data }) {
       </div>
       <Spacing md="65" />
       <div className={`cs_team_grid cs_${view}_view_wrap`}>
-        {filteredData?.map((item, index) => (
-          <TeamStyle2 {...item} key={index} id={filteredData[index]._id} />
-        ))}
+        {loading
+          ? [...Array(6)].map((_, index) => (
+              <TeamStyle2 key={index} loading={loading} />
+            ))
+          : filteredData?.map((item, index) => (
+              <TeamStyle2
+                {...item}
+                key={index}
+                id={filteredData[index]._id}
+                loading={loading}
+              />
+            ))}
       </div>
       <Spacing md="90" />
       <Pagination />

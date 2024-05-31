@@ -2,25 +2,29 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";
+import { SyncOutlined } from "@ant-design/icons";
+
 
 export default function ForgotPassword() {
   const [email, setEmail] = useState("");
-
+  const [loading,setLoading]=useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
       await axios.post("http://localhost:8000/api/forgot-password", {
         email,
       });
 
       toast.success("Email sent!🙇‍♂️");
-
+      setLoading(false);
       navigate("/login");
     } catch (err) {
       toast.error(err.response.data);
       setEmail("");
+      setLoading(false);
     }
   };
 
@@ -61,7 +65,7 @@ export default function ForgotPassword() {
                   type="submit"
                   class="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
                 >
-                  Send Mail
+                  {loading ? <SyncOutlined spin className="py-1" /> : "Send Mail"}
                 </button>
               </form>
             </div>
