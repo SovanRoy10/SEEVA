@@ -113,7 +113,7 @@ export default function SignupForm() {
   };
 
   return (
-    <form action="#" className="row" onSubmit={handleSubmit}>
+    <form action="post" className="row" onSubmit={handleSubmit}>
       <div className="col-lg-6">
         <label className="cs_input_label cs_heading_color">Name</label>
         <input
@@ -263,7 +263,7 @@ export default function SignupForm() {
           onChange={handleChange}
         >
           {departments.map((department) => (
-            <option value={department}>
+            <option value={department.charAt(0).toUpperCase() + department.slice(1)}>
               {department.charAt(0).toUpperCase() + department.slice(1)}
             </option>
           ))}
