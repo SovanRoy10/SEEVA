@@ -7,6 +7,8 @@ import "react-datetime/css/react-datetime.css";
 import { toast } from "react-toastify";
 import { departments } from "../data";
 import { useEffect } from "react";
+import { SyncOutlined } from "@ant-design/icons";
+
 
 export default function AppointmentForm() {
   const [formData, setFormData] = useState({
@@ -24,6 +26,7 @@ export default function AppointmentForm() {
 
   const [doctors, setDoctors] = useState([]);
   const [selectedDoctor, setSelectedDoctor] = useState(null);
+  const [loading,setLoading]=useState(false);
 
   useEffect(() => {
     if (formData.department) {
@@ -81,17 +84,20 @@ export default function AppointmentForm() {
     event.preventDefault();
     // console.log(formData);
     // return;
+    setLoading(true);
     try {
       const response = await axios.post(
         `${process.env.REACT_APP_API_URL}/v1/appointment/post`,
         formData,
         { withCredentials: true }
       );
+      setLoading(false)
       toast.success("Booked appointment");
     } catch (error) {
       console.error("Failed to book appointment:", error);
       const msg = error.data?.message || error.message;
       toast.error(msg);
+      setLoading(false);
     }
   };
 
@@ -323,11 +329,11 @@ export default function AppointmentForm() {
 
       <div className="col-lg-12">
         <button className="cs_btn cs_style_1">
-          <span>Submit</span>
-          <i>
-            <img src="/images/icons/arrow_white.svg" alt="Icon" />
-            <img src="/images/icons/arrow_white.svg" alt="Icon" />
-          </i>
+          {loading ? (
+            <SyncOutlined spin className="py-1" />
+          ) : (
+            <span>Submit</span>
+          )}
         </button>
       </div>
     </form>

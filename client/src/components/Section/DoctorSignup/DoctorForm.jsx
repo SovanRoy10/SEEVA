@@ -5,6 +5,8 @@ import "react-datepicker/dist/react-datepicker.css";
 import { councils, departments, weekdays } from "../../data";
 import { toast } from "react-toastify";
 import axios from "axios";
+import { SyncOutlined } from "@ant-design/icons";
+
 
 export default function SignupForm() {
   const [formData, setFormData] = useState({
@@ -34,6 +36,7 @@ export default function SignupForm() {
     doctorExperience: [""],
     doctorDescription: "",
   });
+  const [loading,setLoading]=useState(false);
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     if (type === "checkbox") {
@@ -81,6 +84,7 @@ export default function SignupForm() {
     e.preventDefault();
     // console.log(formData);
     // return;
+    setLoading(true);
     const data = new FormData();
     for (const key in formData) {
       data.append(key, formData[key]);
@@ -103,12 +107,14 @@ export default function SignupForm() {
           withCredentials: true,
         }
       );
+      setLoading(false);
       toast.success("Doctor registered successfully!");
     } catch (error) {
       console.error("Error:", error);
       const errorMessage =
         error.response?.data?.message || "Failed to register doctor.";
       toast.error(errorMessage);
+      setLoading(false);
     }
   };
 
@@ -434,11 +440,11 @@ export default function SignupForm() {
       </div>
       <div className="col-lg-12">
         <button className="cs_btn cs_style_1">
-          <span>Submit</span>
-          <i>
-            <img src="/images/icons/arrow_white.svg" alt="Icon" />
-            <img src="/images/icons/arrow_white.svg" alt="Icon" />
-          </i>
+          {loading ? (
+            <SyncOutlined spin className="py-1" />
+          ) : (
+            <span>Submit</span>
+          )}
         </button>
       </div>
     </form>
