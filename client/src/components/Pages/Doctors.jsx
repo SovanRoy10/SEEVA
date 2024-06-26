@@ -34,7 +34,7 @@ export default function Doctors() {
         subTitle="The list of certified doctors with years of <br />professional experiences"
       />
       <Section topMd={65} bottomMd={200} bottomLg={150} bottomXl={110}>
-        <TeamSectionStyle2 data={doctors.doctors} loading={loading} />
+        <TeamSectionStyle2 data={doctors} loading={loading} />
       </Section>
       <Section className="cs_footer_margin_0">
         <BannerSectionStyle4
