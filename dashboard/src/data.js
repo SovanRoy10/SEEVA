@@ -33,6 +33,12 @@ export const menu = [
         url: "/appointments",
         icon: "appointment.svg",
       },
+      {
+        id: 3,
+        title: "Vaccine Bookings",
+        url: "/vaccines",
+        icon: "vaccine.png",
+      },
     ],
   },
   {
@@ -779,7 +785,6 @@ export const addDoctorFields = [
   ["Fee Per Consultation", "feePerConsultation", "number"],
 ];
 
-
 export const getCouncil = (id) => {
   return councils.find((council) => council.id == id);
 };
@@ -793,5 +798,4 @@ export const doctorDepartment = [
   "Gastrologist",
   "Urologist",
   "Neurologist",
-]
-
+];

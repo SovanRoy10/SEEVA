@@ -14,7 +14,7 @@ export default function Doctors() {
     const fetchDoctors = async () => {
       setLoading(true);
       const { data } = await axios.get(
-        `${process.env.REACT_APP_API_URL}/v1/user/doctors`
+        `${process.env.REACT_APP_API_URL}/v1/user/approved-doctors`
       );
       setDoctors(data);
       setLoading(false);

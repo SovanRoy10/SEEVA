@@ -34,6 +34,7 @@ import { Toaster } from "react-hot-toast";
 
 import { Provider } from "react-redux";
 import store from "./app/store.js";
+import Vaccines from "./components/Vaccine/vaccine.jsx";
 
 function App() {
   const Layout = () => {
@@ -102,6 +103,14 @@ function App() {
           element={
             <Protected>
               <Appointments />
+            </Protected>
+          }
+        />
+        <Route
+          path="vaccines"
+          element={
+            <Protected>
+              <Vaccines />
             </Protected>
           }
         />

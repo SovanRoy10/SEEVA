@@ -7,7 +7,7 @@ import fileUpload from "express-fileupload";
 
 import morgan from "morgan";
 import path from "path";
-
+import axios from "axios";
 // cloudinary
 import cloudinary from "cloudinary";
 
@@ -22,6 +22,8 @@ import messageRouter from "./router/messageRouter.js";
 import userRouter from "./router/userRouter.js";
 import appointmentRouter from "./router/appointmentRouter.js";
 import blogRouter from "./router/blogRouter.js";
+import vaccineRouter from "./router/vaccine.js";
+
 
 // middlewares
 import { errorMiddleware } from "./middlewares/errorMiddleware.js";
@@ -56,11 +58,15 @@ app.use(
   })
 );
 
+
+
 // routes
 app.use("/api/v1/message", messageRouter);
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/appointment", appointmentRouter);
 app.use("/api/v1/blog", blogRouter);
+app.use("/api/v1/vaccine", vaccineRouter);
+
 
 // app.use("/api", authRouter);  /* Rupal made this route */
 
