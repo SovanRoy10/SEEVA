@@ -22,7 +22,6 @@ export default function DoctorDetails() {
       const { data } = await axios.get(
         `${process.env.REACT_APP_API_URL}/v1/user/doctors/${doctorId}`
       );
-      console.log(data.user);
       setDoctor(data.user);
       setLoading(false);
     } catch (error) {
@@ -54,7 +53,7 @@ export default function DoctorDetails() {
     .filter((day) => doctor[day] === true)
     .map((day) => dayToSchedule[day.toLowerCase()]);
 
-  const degrees = doctor.doctorDegree?.map((degree) => ({
+  const degrees = doctor?.doctorDegrees?.map((degree) => ({
     title: degree.institution.trim(),
     subTitle: degree.description.trim(),
   }));

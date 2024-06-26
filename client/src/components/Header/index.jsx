@@ -67,6 +67,9 @@ export default function Header({ logoSrc, variant }) {
                       <Link to="/doctors">Find Doctor</Link>
                     </li>
                     <li>
+                      <Link to="/covid">Covid</Link>
+                    </li>
+                    <li>
                       <Link to="/blog">Blog</Link>
                     </li>
 
