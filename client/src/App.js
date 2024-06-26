@@ -12,7 +12,6 @@ import DepartmentDetails from "./components/Pages/DepartmentDetails";
 import BlogDetails from "./components/Pages/BlogDetails";
 import DoctorDetails from "./components/Pages/DoctorDetails";
 import PricingPlan from "./components/Pages/PricingPlan";
-import Gallery from "./components/Pages/Gallery";
 import Timetable from "./components/Pages/Timetable";
 import Contact from "./components/Pages/Contact";
 import { useEffect } from "react";
@@ -23,6 +22,7 @@ import Register from "./components/Pages/Register";
 import ForgotPassword from "./components/Pages/ForgotPassword";
 import ResetPassword from "./components/Pages/ResetPassword";
 import DoctorSignup from "./components/Section/DoctorSignup/Page";
+import Covid from "./components/Pages/Gallery";
 
 function App() {
   const { pathname } = useLocation();
@@ -54,7 +54,7 @@ function App() {
           element={<DepartmentDetails />}
         />
         <Route path="pricing-plan" element={<PricingPlan />} />
-        <Route path="gallery" element={<Gallery />} />
+        <Route path="covid" element={<Covid />} />
         <Route path="timetable" element={<Timetable />} />
         <Route path="contact" element={<Contact />} />
       </Route>
