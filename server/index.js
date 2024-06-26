@@ -17,14 +17,13 @@ cloudinary.v2.config({
 });
 
 // set up rate limiter: maximum of five requests per minute
-var RateLimit = require('express-rate-limit');
-var limiter = RateLimit({
+import RateLimit from 'express-rate-limit';
+const limiter = RateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
   max: 100, // max 100 requests per windowMs
 });
 
-// apply rate limiter to all requests
-app.use(limiter);
+
 
 // routers
 import messageRouter from "./router/messageRouter.js";
@@ -43,6 +42,9 @@ const port = process.env.PORT || 4000;
 
 // cors for connecting frontend with backend
 // console.log(typeof process.env.FRONTEND_URL, typeof process.env.DASHBOARD_URL)
+
+// apply rate limiter to all requests
+app.use(limiter);
 
 app.use(
   cors({
