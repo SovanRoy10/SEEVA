@@ -7,7 +7,6 @@ import fileUpload from "express-fileupload";
 
 import morgan from "morgan";
 import path from "path";
-import axios from "axios";
 // cloudinary
 import cloudinary from "cloudinary";
 
