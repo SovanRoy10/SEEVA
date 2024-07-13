@@ -45,8 +45,16 @@ export default function Header({ logoSrc, variant }) {
           <div className="container">
             <div className="cs_main_header_in">
               <div className="cs_main_header_left">
-                <Link className="cs_site_branding" to="/">
-                  <img src={logoSrc} alt="Logo" />
+                <Link to="/" className="flex items-center font-bold gap-[10px]">
+                  <img src="logo.svg" alt="" className="w-[35px]" />
+                  <span>
+                    <img
+                      src="/logoText.svg"
+                      alt="logotext"
+                      className="h-[50px]"
+                    />
+                    {/* SEEVA */}
+                  </span>
                 </Link>
                 <nav className="cs_nav">
                   <ul
