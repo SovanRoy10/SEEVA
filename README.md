@@ -1,6 +1,6 @@
 # SEEVA: Comprehensive Hospital Management Website
 
-SEEVA is a sophisticated hospital management website designed to streamline patient registration, doctor appointment booking, and doctor verification through integration with the National Medical Council API. Developed on a robust tech stack, SEEVA ensures efficient hospital operations and enhanced patient experiences.
+SEEVA is a sophisticated hospital management website designed to streamline patient registration, doctor appointment booking, and doctor verification through integration with the National Medical Council API. SEEVA ensures efficient hospital operations and enhanced patient experiences.
 
 # To set up SEEVA on your local machine, follow these simple steps:
 
@@ -34,18 +34,12 @@ To start the server:
 
 # Features
 
-    Doctor Registration and Approval: Implemented a robust system for doctor registration and approval to ensure only verified medical professionals are listed.
-    Admin Dashboard: Created a dedicated admin dashboard for verifying doctor registrations, managing appointments, editing hospital details, and publishing blogs.
-    Interactive Chatbot: Integrated Dialogflow to develop an interactive chatbot, enhancing patient support and user experience on the website.
-    Data Analytics: Utilized data analysis tools within the admin dashboard to provide comprehensive insights and analytics for hospital management.
-    Responsive Design: Use SEEVA on any device with its responsive design.
+    1.  Doctor Registration and Approval: Implemented a robust system for doctor registration and approval to ensure only verified medical professionals are listed.
+    2. Admin Dashboard: Created a dedicated admin dashboard for verifying doctor registrations, managing appointments, editing hospital details, and publishing blogs.
+    3. Interactive Chatbot: Integrated Dialogflow to develop an interactive chatbot, enhancing patient support and user experience on the website.
+    4. Data Analytics: Utilized data analysis tools within the admin dashboard to provide comprehensive insights and analytics for hospital management.
+    5.  Responsive Design: Use SEEVA on any device with its responsive design.
 
-# Contributing
-
-We welcome contributions from the community. If you'd like to contribute to SEEVA, please fork the repository and submit pull requests with your changes.
-License
-
-This project is licensed under the MIT License.
 
 # Acknowledgements
 
