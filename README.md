@@ -35,9 +35,10 @@ To start the server:
 # Features
 
     1.  Doctor Registration and Approval: Implemented a robust system for doctor registration and approval to ensure only verified medical professionals are listed.
+    2.  Patient Registration and Appointment: Streamlined patient registration and appointment booking processes for efficient and user-friendly experiences.
     2. Admin Dashboard: Created a dedicated admin dashboard for verifying doctor registrations, managing appointments, editing hospital details, and publishing blogs.
     3. Interactive Chatbot: Integrated Dialogflow to develop an interactive chatbot, enhancing patient support and user experience on the website.
-    4. Data Analytics: Utilized data analysis tools within the admin dashboard to provide comprehensive insights and analytics for hospital management.
+    4. COVID Facilities: Included features for COVID-19 vaccine booking and related facilities. Additionally, the COVID section provides worldwide news related to the pandemic and integrates Google Maps API to get the patient's address from where he has odered the              vaccination.
     5.  Responsive Design: Use SEEVA on any device with its responsive design.
 
 
