@@ -58,5 +58,3 @@ For any questions or concerns, please contact us at [roysovan00@gmail.com](mailt
 For detailed API documentation, visit [SEEVA Documentation](https://documenter.getpostman.com/view/30063038/2sA3BuUo11).
 
 ---
-
-Feel free to adjust any details or add further information as needed!
